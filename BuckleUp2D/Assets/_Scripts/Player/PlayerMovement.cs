@@ -15,19 +15,26 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigidB;
     private int speedMultiplier = 1;
 
+  
+
+    private string rollRightAnimation = "Roll_Right";
+    private string rollLeftAnimation = "Roll_Left";
+
     private PlayerAnimation playerAnim;
-    private string rollAnimation = "Roll";
+    private CharacterFlip characterFlip;
 
     private void Awake()
     {
         rigidB = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<PlayerAnimation>();
+        characterFlip = GetComponentInChildren<CharacterFlip>();
     }
 
     public void Move(Vector2 direction)
     {
         rigidB.velocity = direction * moveSpeed;
-        playerAnim.Play(rollAnimation);
+        playerAnim.Play(direction.x > 0 ? rollRightAnimation : rollLeftAnimation);
+        characterFlip.FlipCharacterToDirection(direction);
     }
 
     public void SpeedBoost(float multiplier)

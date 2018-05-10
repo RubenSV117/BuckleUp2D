@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Base class for projectiles
@@ -14,8 +15,9 @@ public class Projectile : MonoBehaviour
 
     [SerializeField]
     private float damage;
-
+ 
     private Rigidbody2D rigidB;
+    private Coroutine disableCoroutine;
 
     private void Awake()
     {
@@ -25,5 +27,10 @@ public class Projectile : MonoBehaviour
     public void Shoot(Vector2 direction)
     {
         rigidB.velocity = direction * speed;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        gameObject.SetActive(false);
     }
 }

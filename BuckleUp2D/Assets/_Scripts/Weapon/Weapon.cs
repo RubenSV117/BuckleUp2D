@@ -13,9 +13,6 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField]
-    private Projectile projectile;
-
-    [SerializeField]
     private Transform shootPoint;
 
     [Tooltip("Cooldown between single shots or bursts")]
@@ -44,9 +41,11 @@ public class Weapon : MonoBehaviour
 
     private CharacterFlip characterFlip;
 
+    private string basicBulletTag = "BasicBullet";
+
     private void Awake()
     {
-        characterFlip = GetComponent<CharacterFlip>();
+        characterFlip = GetComponentInChildren<CharacterFlip>();
     }
 
     private void Update()
@@ -94,8 +93,10 @@ public class Weapon : MonoBehaviour
 
     public void FireSingleShot(Vector2 direction)
     {
-        Projectile proj = Instantiate(projectile, shootPoint.position, projectile.transform.rotation).GetComponent<Projectile>();
-        proj.Shoot(direction);
+        Projectile bullet = ObjectPooler.Instance.GetPooledObject(basicBulletTag).GetComponent<Projectile>();
+        bullet.transform.position = shootPoint.position;
+        bullet.gameObject.SetActive(true);
+        bullet.Shoot(direction);
     }
 
     public void SetBurst(bool canBurst)
