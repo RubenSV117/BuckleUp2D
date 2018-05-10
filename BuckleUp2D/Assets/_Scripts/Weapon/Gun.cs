@@ -10,10 +10,12 @@ using UnityEngine;
 /// 5/10/18
 /// </summary>
 
-public class Weapon : MonoBehaviour
+public class Gun : MonoBehaviour
 {
+    public Transform shootPoint;
+
     [SerializeField]
-    private Transform shootPoint;
+    private string basicBulletTag = "BasicBullet";
 
     [Tooltip("Cooldown between single shots or bursts")]
     [SerializeField]
@@ -27,12 +29,12 @@ public class Weapon : MonoBehaviour
     [Tooltip("Number of shots in one burst")]
     [SerializeField]
     [Range(1, 5)]
-    private int fireBurstCount;
+    private int fireBurstCount = 3;
 
     [Tooltip("Shots per second")]
     [SerializeField]
     [Range(1, 5)]
-    private int fireRate;
+    private int fireRate = 3;
 
     private float fireRateTimer;
     private float cooldownTimer;
@@ -41,7 +43,7 @@ public class Weapon : MonoBehaviour
 
     private CharacterFlip characterFlip;
 
-    private string basicBulletTag = "BasicBullet";
+  
 
     private void Awake()
     {

@@ -4,7 +4,7 @@ using UnityEngine.Events;
 /// <summary>
 /// Detects touch input for the player
 /// Sends direction to PlayerMovement
-/// Sends direction to Weapon
+/// Sends direction to Gun
 /// Sends direction and deltaMovement to DirectionArrows
 /// 
 /// Ruben Sanchez
@@ -30,13 +30,13 @@ public class TouchInputManager : MonoBehaviour
     private float minDeltaThreshold = .1f;
 
     private PlayerMovement playerMove;
-    private Weapon weapon;
+    private Gun _gun;
     private DirectionalArrows directionalArrows;
 
     private void Awake()
     {
         playerMove = GetComponent<PlayerMovement>();
-        weapon = GetComponent<Weapon>();
+        _gun = GetComponent<Gun>();
         directionalArrows = GetComponent<DirectionalArrows>();
     }
 
@@ -100,7 +100,7 @@ public class TouchInputManager : MonoBehaviour
                 if (delta.magnitude > minDeltaThreshold)
                 {
                     Vector2 direction = Vector3.Normalize(delta);
-                    weapon.Fire(direction);
+                    _gun.Fire(direction);
                 }
 
                 onShootRelease.Invoke();

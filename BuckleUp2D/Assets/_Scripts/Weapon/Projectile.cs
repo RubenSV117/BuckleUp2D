@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
     private float speed;
 
     [SerializeField]
-    private float damage;
+    private int damage;
  
     private Rigidbody2D rigidB;
     private Coroutine disableCoroutine;
@@ -31,6 +31,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        gameObject.SetActive(false);
+        if (other.gameObject.GetComponent<Health>() != null)
+            other.gameObject.GetComponent<Health>().TakeDamage(damage);
     }
 }

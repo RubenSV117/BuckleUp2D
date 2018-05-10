@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
-/// Base class for the enemies
+/// Base enemy class
 /// 
 /// Ruben Sanchez
 /// 5/10/18
@@ -10,16 +11,30 @@
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private bool isAShooter;
+    private float fireCooldown = 2;
 
-    [SerializeField] private GameObject projectile;
-	void Start () 
+    private GameObject player;
+    private Gun gun;
+
+    private Coroutine shootCoroutine;
+
+	void Start ()
 	{
-		
+	    player = FindObjectOfType<PlayerMovement>().gameObject;
+	    gun = GetComponent<Gun>();
 	}
-	
-	void Update () 
-	{
-		
-	}
+
+    private void Update()
+    {
+        if (shootCoroutine == null)
+            shootCoroutine = StartCoroutine(ShootPlayer());
+    }
+
+    public IEnumerator ShootPlayer()
+    {
+        print("trying to fire");
+        gun.FireSingleShot(player.transform.position - gun.shootPoint.position);
+        yield return new WaitForSeconds(fireCooldown);
+        shootCoroutine = null;
+    }
 }
