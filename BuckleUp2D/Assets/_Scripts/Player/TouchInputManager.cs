@@ -1,36 +1,26 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Controls touch input for the player
+/// Detects touch input for the player
+/// Sends direction to PlayerMovement
+/// Sends direction to Weapon
 /// 
 /// Ruben Sanchez
 /// 4/26/19
 /// </summary>
 
-public class TouchControlManager : MonoBehaviour
+public class TouchInputManager : MonoBehaviour
 {
-    [SerializeField]
-    private float moveSpeed;
-
-    [SerializeField]
-    private GameObject projectile;
-
-    private Touch moveTouch;
-    private int moveTouchIndex = -1;
     private Vector2 initialMoveTouchPosition;
-
-    private int shootTouchIndex = -1;
     private Vector2 initialShootTouchPosition;
 
-    private Rigidbody2D rigidB;
-
-    
-
+    private PlayerMovement playerMove;
+    private Weapon weapon;
 
     private void Awake()
     {
-        rigidB = GetComponent<Rigidbody2D>();
+        playerMove = GetComponent<PlayerMovement>();
+        weapon = GetComponent<Weapon>();
     }
 
     void Update () 
@@ -53,16 +43,14 @@ public class TouchControlManager : MonoBehaviour
             else if (touch.phase == TouchPhase.Ended && Camera.main.ScreenToViewportPoint(touch.position).x < .5f)
             {
                 Vector2 direction = Vector3.Normalize(touch.position - initialMoveTouchPosition);
-                rigidB.velocity = direction * moveSpeed;
+                playerMove.Move(direction);
             }
 
             // release of shoot touch
             else if (touch.phase == TouchPhase.Ended && Camera.main.ScreenToViewportPoint(touch.position).x > .5f)
             {
                 Vector2 direction = Vector3.Normalize(touch.position - initialShootTouchPosition);
-
-                Projectile proj = Instantiate(projectile, transform.position, projectile.transform.rotation).GetComponent<Projectile>();
-                proj.Shoot(direction);
+                weapon.Fire(direction);
             }
         }
     }
