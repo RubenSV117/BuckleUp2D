@@ -36,7 +36,7 @@ public class TouchInputManager : MonoBehaviour
     private void Awake()
     {
         playerMove = GetComponent<PlayerMovement>();
-        weapon = GetComponent<WeaponManager>();
+        weapon = GetComponentInChildren<WeaponManager>();
         directionalArrows = GetComponent<DirectionalArrows>();
     }
 

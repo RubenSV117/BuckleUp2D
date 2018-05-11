@@ -26,9 +26,13 @@ public class SlowDownManager : MonoBehaviour
         Time.fixedDeltaTime = 0.02F * Time.timeScale;
     }
 
-    public void Return()
+    private void Update()
     {
-        Time.timeScale = 1;
-        Time.fixedDeltaTime = 0.02F;
+        if (!DirectionalArrows.Instance.moveArrow.activeInHierarchy &&
+            !DirectionalArrows.Instance.shootArrow.activeInHierarchy)
+        {
+            Time.timeScale = 1;
+            Time.fixedDeltaTime = 0.02F;
+        }
     }
 }

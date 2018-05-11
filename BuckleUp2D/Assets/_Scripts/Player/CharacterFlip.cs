@@ -14,7 +14,7 @@ public class CharacterFlip : MonoBehaviour
 
     private Vector2 originalScale;
 
-    private bool facingRight = true;
+    public bool facingRight { get; private set; }
 
     private void Awake()
     {
@@ -24,11 +24,14 @@ public class CharacterFlip : MonoBehaviour
     public void FaceRight()
     {
         player.transform.localScale = originalScale;
+        facingRight = true;
+
     }
 
     public void FaceLeft()
     {
         player.transform.localScale = new Vector2(-originalScale.x, originalScale.y);
+        facingRight = false;
     }
 
     public void FlipCharacterToDirection(Vector2 direction)

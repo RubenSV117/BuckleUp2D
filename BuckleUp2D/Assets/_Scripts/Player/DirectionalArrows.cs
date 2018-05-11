@@ -9,13 +9,18 @@
 
 public class DirectionalArrows : MonoBehaviour
 {
+    public static DirectionalArrows Instance;
     public GameObject moveArrow;
-
     public GameObject shootArrow;
 
     [SerializeField]
     [Range(.5f, 2)]
     private float maxScale = 2;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void UpdateMoveArrow(Vector2 direction)
     {

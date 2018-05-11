@@ -30,21 +30,13 @@ public class Rifle : Weapon
 
     [Tooltip("Shots per second")]
     [SerializeField]
-    [Range(1, 5)]
+    [Range(1, 10)]
     private float fireRate = 3;
 
     private float fireRateTimer;
     private float cooldownTimer;
     private bool onCooldown;
     private Coroutine burstFireCoroutine;
-
-    private CharacterFlip characterFlip;
-
-
-    private void Awake()
-    {
-        characterFlip = GetComponentInChildren<CharacterFlip>();
-    }
 
     private void Update()
     {
@@ -62,7 +54,7 @@ public class Rifle : Weapon
         if (onCooldown)
             return;
 
-        characterFlip.FlipCharacterToDirection(direction);
+        if (characterFlip != null) characterFlip.FlipCharacterToDirection(direction);
 
         if (!burst)
         {
