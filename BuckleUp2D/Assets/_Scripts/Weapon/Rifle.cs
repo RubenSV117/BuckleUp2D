@@ -1,17 +1,14 @@
 ﻿using System.Collections;
-using System.Reflection;
 using UnityEngine;
 
 /// <summary>
-/// Base class for weapons, can do single shot or burst fire
-/// Sends fire direction to CharacterFlip
-/// 
+/// Projectile weapon, can single short or burst 
 /// Ruben Sanchez
-/// 5/10/18
+/// 
 /// </summary>
 
-public class Gun : MonoBehaviour
-{
+public class Rifle : Weapon
+ {
     public Transform shootPoint;
 
     [SerializeField]
@@ -22,7 +19,7 @@ public class Gun : MonoBehaviour
     [Range(.2f, 2)]
     private float cooldown = .2f;
 
-    [Header("Burst Fire")]
+    [Header("Burst Attack")]
     [SerializeField]
     private bool burst;
 
@@ -43,7 +40,6 @@ public class Gun : MonoBehaviour
 
     private CharacterFlip characterFlip;
 
-  
 
     private void Awake()
     {
@@ -61,7 +57,7 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void Fire(Vector2 direction)
+    public override void Attack(Vector2 direction)
     {
         if (onCooldown)
             return;

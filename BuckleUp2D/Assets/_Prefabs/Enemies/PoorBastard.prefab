@@ -51,10 +51,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4956417976883294}
-  - component: {fileID: 114743507626188308}
   - component: {fileID: 114417026599015168}
   - component: {fileID: 114377195842054312}
-  - component: {fileID: 114197969413809560}
+  - component: {fileID: 114324631533131200}
+  - component: {fileID: 114850309759542068}
   m_Layer: 10
   m_Name: PoorBastard
   m_TagString: Untagged
@@ -125,7 +125,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1820699951419606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.800001, y: -8.400001, z: -0.6}
+  m_LocalPosition: {x: 17.800001, y: 7, z: -0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4024859169204674}
@@ -157,7 +157,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.21, y: 1.67}
   m_EdgeRadius: 0
---- !u!114 &114197969413809560
+--- !u!114 &114324631533131200
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -165,10 +165,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1820699951419606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4db99b8ca8834f349bcf12add15b195a, type: 3}
+  m_Script: {fileID: 11500000, guid: eadd76915fe38dc4c8f389362d9ae35d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireCooldown: 3
+  fireCooldown: 2
 --- !u!114 &114377195842054312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -184,18 +184,7 @@ MonoBehaviour:
   body: {fileID: 1344020091778032}
   onRespawn:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114743507626188308}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114417026599015168
@@ -226,9 +215,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114743507626188308}
-        m_MethodName: set_enabled
-        m_Mode: 6
+      - m_Target: {fileID: 114324631533131200}
+        m_MethodName: StopShot
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -239,7 +228,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114743507626188308
+--- !u!114 &114850309759542068
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -247,7 +236,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1820699951419606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6051c84b76458944a8fed58d3cd206ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e03c5bfb776888459de27c4bb860b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 4528945478274174}

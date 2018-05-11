@@ -38,13 +38,8 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.GetComponentInParent<Health>() != null)
-            other.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
-
-        else
-        {
-            print("reee");
-        }
+        if (other.gameObject.GetComponent<Health>() != null)
+            other.gameObject.GetComponent<Health>().TakeDamage(damage);
 
         gameObject.SetActive(false);
     }
