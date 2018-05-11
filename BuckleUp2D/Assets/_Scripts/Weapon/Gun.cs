@@ -34,7 +34,7 @@ public class Gun : MonoBehaviour
     [Tooltip("Shots per second")]
     [SerializeField]
     [Range(1, 5)]
-    private int fireRate = 3;
+    private float fireRate = 3;
 
     private float fireRateTimer;
     private float cooldownTimer;

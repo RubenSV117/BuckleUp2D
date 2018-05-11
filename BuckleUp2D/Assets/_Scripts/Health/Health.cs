@@ -14,9 +14,13 @@ public class Health : MonoBehaviour
     private int startingHealth = 3;
 
     [SerializeField]
-    private UnityEvent onDeath;
-
     private int currentHealth;
+
+    [SerializeField]
+    private GameObject body;
+
+    [SerializeField]
+    private UnityEvent onDeath;
 
     void Start ()
 	{
@@ -29,9 +33,9 @@ public class Health : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            gameObject.SetActive(false);
             onDeath.Invoke();
+            body.SetActive(false);
+            currentHealth = startingHealth;
         }
-
     }
 }

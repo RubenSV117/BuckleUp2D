@@ -18,10 +18,17 @@ public class Projectile : MonoBehaviour
  
     private Rigidbody2D rigidB;
     private Coroutine disableCoroutine;
+    private float timeToDisable = 3;
 
     private void Awake()
     {
         rigidB = GetComponent<Rigidbody2D>();
+    }
+
+    private void OnEnable()
+    {
+        if (disableCoroutine == null)
+            disableCoroutine = StartCoroutine(DisableObject());
     }
 
     public void Shoot(Vector2 direction)
@@ -31,7 +38,23 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.GetComponent<Health>() != null)
-            other.gameObject.GetComponent<Health>().TakeDamage(damage);
+        if (other.gameObject.GetComponentInParent<Health>() != null)
+            other.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
+
+        else
+        {
+            print("reee");
+        }
+
+        gameObject.SetActive(false);
+    }
+
+    public IEnumerator DisableObject()
+    {
+        yield return new WaitForSeconds(timeToDisable);
+        if(gameObject.activeInHierarchy)
+            gameObject.SetActive(false);
+
+        disableCoroutine = null;
     }
 }

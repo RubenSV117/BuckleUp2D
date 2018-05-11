@@ -32,8 +32,7 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator ShootPlayer()
     {
-        print("trying to fire");
-        gun.FireSingleShot(player.transform.position - gun.shootPoint.position);
+        gun.FireSingleShot(Vector3.Normalize(player.transform.position - gun.shootPoint.position));
         yield return new WaitForSeconds(fireCooldown);
         shootCoroutine = null;
     }

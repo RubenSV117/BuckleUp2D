@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Reactivates object
@@ -11,7 +12,13 @@ using UnityEngine;
 public class Respawn : MonoBehaviour
  {
      [SerializeField]
-     private float respawnTime;
+     private float respawnTime = 2;
+
+     [SerializeField]
+     private GameObject body;
+
+     [SerializeField]
+     private UnityEvent onRespawn;
 
      private Coroutine respawnCoroutine;
 
@@ -24,7 +31,9 @@ public class Respawn : MonoBehaviour
      public IEnumerator RespawnCo()
      {
          yield return new WaitForSeconds(respawnTime);
-         gameObject.SetActive(true);
+         body.SetActive(true);
+         respawnCoroutine = null;
+         onRespawn.Invoke();
      }
 
 }
