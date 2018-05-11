@@ -34,21 +34,23 @@ public class PickUp : MonoBehaviour
             yield return null;
         }
 
+        transform.localScale = obj.transform.root.GetComponentInChildren<CharacterFlip>().facingRight
+            ? transform.localScale
+            : new Vector3(-transform.localScale.x, weaponRoot.transform.localScale.y);
+
         WeaponManager wp = obj.transform.root.GetComponentInChildren<WeaponManager>(); // get weapon manager on the player
-            wp.weapon = GetComponentInParent<Weapon>(); // set weapon manager's weapon to this
-            weaponRoot.root.SetParent(wp.transform); // parent weapon
-            GetComponentInParent<Weapon>().characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
-            transform.position = wp.transform.position;
-            weaponRoot.eulerAngles = Vector3.zero;
+        wp.weapon = GetComponentInParent<Weapon>(); // set weapon manager's weapon to this
+        weaponRoot.root.SetParent(wp.transform); // parent weapon
+        GetComponentInParent<Weapon>().characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
+        transform.position = wp.transform.position;
+        weaponRoot.eulerAngles = Vector3.zero;
 
-        weaponRoot.transform.localScale = obj.transform.root.GetComponentInChildren<CharacterFlip>().facingRight
-            ? weaponRoot.transform.localScale
-            : new Vector3(-weaponRoot.transform.localScale.x, weaponRoot.transform.localScale.y);
+ 
 
-            onPickup.Invoke();
-        
+        onPickup.Invoke();
 
-       
+
+
     }
 
 }
