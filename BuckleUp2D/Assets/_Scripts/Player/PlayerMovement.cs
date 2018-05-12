@@ -15,11 +15,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigidB;
     private int speedMultiplier = 1;
 
-  
-
-    private string rollRightAnimation = "Roll_Right";
-    private string rollLeftAnimation = "Roll_Left";
-
     private PlayerAnimation playerAnim;
     private CharacterFlip characterFlip;
 
@@ -32,8 +27,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector2 direction)
     {
+        print(direction);
         rigidB.velocity = direction * moveSpeed;
-        playerAnim.Play(direction.x > 0 ? rollRightAnimation : rollLeftAnimation);
+        playerAnim.Play(direction);
         characterFlip.FlipCharacterToDirection(direction);
     }
 

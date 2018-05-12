@@ -25,12 +25,10 @@ public class DirectionalArrows : MonoBehaviour
     public void UpdateMoveArrow(Vector2 direction)
     {
         moveArrow.transform.right = direction;
-        //moveArrow.transform.localScale = scale;
     }
 
     public void UpdateShootArrow(Vector2 direction)
     {
         shootArrow.transform.right = direction;
-        //shootArrow.transform.localScale = scale;
     }
 }

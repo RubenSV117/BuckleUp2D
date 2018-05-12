@@ -10,37 +10,63 @@
 public class CharacterFlip : MonoBehaviour
 {
     [SerializeField]
+
     private GameObject player;
 
-    private Vector2 originalScale;
+    [SerializeField]
+    private float verticalFlipThreshold = .8f;
 
-    public bool facingRight { get; private set; }
+    [SerializeField]
+    private Sprite downSprite;
+    [SerializeField]
+    private Sprite upSprite;
+    [SerializeField]
+    private Sprite sideSprite;
+
+    private Vector2 originalScale;
+    private SpriteRenderer playerRenderer;
 
     private void Awake()
     {
         originalScale = player.transform.localScale;
+        playerRenderer = player.GetComponent<SpriteRenderer>();
     }
 
     public void FaceRight()
     {
+        playerRenderer.sprite = sideSprite;
         player.transform.localScale = originalScale;
-        facingRight = true;
-
     }
 
     public void FaceLeft()
     {
+        playerRenderer.sprite = sideSprite;
         player.transform.localScale = new Vector2(-originalScale.x, originalScale.y);
-        facingRight = false;
+    }
+
+    public void FaceUp()
+    {
+        playerRenderer.sprite = upSprite;
+    }
+
+    public void FaceDown()
+    {
+        playerRenderer.sprite = downSprite;
     }
 
     public void FlipCharacterToDirection(Vector2 direction)
     {
-        if(direction.x > 0)
+        if(direction.x > 0 && Mathf.Abs(direction.y) < verticalFlipThreshold)
             FaceRight();
 
-        else
+        else if(direction.x < 0 && Mathf.Abs(direction.y) < verticalFlipThreshold)
             FaceLeft();
+
+        else if(direction.y > verticalFlipThreshold)
+            FaceUp();
+
+        else if(direction.y < -verticalFlipThreshold)
+            FaceDown();
     }
 }
 

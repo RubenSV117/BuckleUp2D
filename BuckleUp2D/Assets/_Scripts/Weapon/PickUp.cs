@@ -19,6 +19,15 @@ public class PickUp : MonoBehaviour
 
     private string playerTag = "Player";
     private string stateToWaitFor = "Idle";
+
+    private WeaponManager weaponManager;
+    private Vector2 originalScale;
+
+    private void Awake()
+    {
+        originalScale = weaponRoot.transform.localScale;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag(playerTag))
@@ -29,28 +38,23 @@ public class PickUp : MonoBehaviour
     {
         Animator anim = obj.GetComponentInParent<Animator>();
 
+        //wait for idle
         while (!anim.GetCurrentAnimatorStateInfo(0).IsName(stateToWaitFor))
         {
             yield return null;
         }
 
-        transform.localScale = obj.transform.root.GetComponentInChildren<CharacterFlip>().facingRight
-            ? transform.localScale
-            : new Vector3(-transform.localScale.x, weaponRoot.transform.localScale.y);
+        weaponManager = obj.transform.root.GetComponentInChildren<WeaponManager>(); // get weapon manager on the player
+        weaponManager.weapon = GetComponentInParent<Weapon>(); // set weapon manager's weapon to this
+        weaponRoot.root.SetParent(obj.transform.root.GetComponentInChildren<SpriteRenderer>().transform); // parent weapon
 
-        WeaponManager wp = obj.transform.root.GetComponentInChildren<WeaponManager>(); // get weapon manager on the player
-        wp.weapon = GetComponentInParent<Weapon>(); // set weapon manager's weapon to this
-        weaponRoot.root.SetParent(wp.transform); // parent weapon
         GetComponentInParent<Weapon>().characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
-        transform.position = wp.transform.position;
-        weaponRoot.eulerAngles = Vector3.zero;
 
- 
+        weaponRoot.position = weaponManager.transform.position;
+        weaponRoot.eulerAngles = Vector3.zero;
+        weaponRoot.localScale = originalScale;
 
         onPickup.Invoke();
-
-
-
     }
 
 }
