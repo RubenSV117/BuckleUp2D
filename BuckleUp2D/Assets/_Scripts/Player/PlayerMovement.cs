@@ -2,6 +2,7 @@
 
 /// <summary>
 /// Manages player movement
+/// sends direction to CharacterFlip and PlayerAnimation 
 /// 
 /// Ruben Sanchez
 /// 5/10/18
@@ -18,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAnimation playerAnim;
     private CharacterFlip characterFlip;
 
+    private bool isMovingAnim;
+
+
     private void Awake()
     {
         rigidB = GetComponent<Rigidbody2D>();
@@ -27,10 +31,20 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector2 direction)
     {
-        print(direction);
-        rigidB.velocity = direction * moveSpeed;
-        playerAnim.Play(direction);
         characterFlip.FlipCharacterToDirection(direction);
+        rigidB.velocity = direction * moveSpeed;
+
+        if (!isMovingAnim)
+        {
+            isMovingAnim = true;
+            playerAnim.PlayWalk(direction);
+        }
+    
+    }
+
+    public void SetMoving(bool isMoving)
+    {
+        isMovingAnim = isMoving;
     }
 
     public void SpeedBoost(float multiplier)

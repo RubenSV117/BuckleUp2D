@@ -371,7 +371,7 @@ namespace SaveDuringPlay
 
 
     /// <summary>
-    /// For all registered object types, record their state when exiting Play Mode,
+    /// For all registered object types, record their state when exiting PlayRoll Mode,
     /// and restore that state to the objects in the scene.  This is a very limited
     /// implementation which has not been rigorously tested with many objects types.
     /// It's quite possible that not everything will be saved.

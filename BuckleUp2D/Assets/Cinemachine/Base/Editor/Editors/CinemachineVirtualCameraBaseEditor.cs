@@ -189,13 +189,13 @@ namespace Cinemachine.Editor
             SaveDuringPlay.SaveDuringPlay.Enabled 
                 = EditorGUILayout.Toggle(
                     new GUIContent(
-                        "Save During Play", 
-                        "If checked, Virtual Camera settings changes made during Play Mode will be propagated back to the scene when Play Mode is exited."), 
+                        "Save During PlayRoll", 
+                        "If checked, Virtual Camera settings changes made during PlayRoll Mode will be propagated back to the scene when PlayRoll Mode is exited."), 
                     SaveDuringPlay.SaveDuringPlay.Enabled);
 
             if (Application.isPlaying && SaveDuringPlay.SaveDuringPlay.Enabled)
                 EditorGUILayout.HelpBox(
-                    " Virtual Camera settings changes made during Play Mode will be propagated back to the scene when Play Mode is exited.", 
+                    " Virtual Camera settings changes made during PlayRoll Mode will be propagated back to the scene when PlayRoll Mode is exited.", 
                     MessageType.Info);
         }
     }

@@ -9,64 +9,164 @@
 
 public class CharacterFlip : MonoBehaviour
 {
-    [SerializeField]
+    public SpriteRenderer weaponSprite;
 
+    [SerializeField]
     private GameObject player;
-
     [SerializeField]
-    private float verticalFlipThreshold = .8f;
+    private float flipThreshold = .05f;
 
     [SerializeField]
     private Sprite downSprite;
     [SerializeField]
     private Sprite upSprite;
     [SerializeField]
-    private Sprite sideSprite;
+    private Sprite rightSprite;
+    [SerializeField]
+    private Sprite upRightSprite;
+    [SerializeField]
+    private Sprite downRightSprite;
 
     private Vector2 originalScale;
     private SpriteRenderer playerRenderer;
+
+    private int playerOrderInLayer;
+    private float weaponVerticleRotation = 80;
+    private float weaponDiagonalRotation = 45;
+
 
     private void Awake()
     {
         originalScale = player.transform.localScale;
         playerRenderer = player.GetComponent<SpriteRenderer>();
+        playerOrderInLayer = playerRenderer.sortingOrder;
     }
 
     public void FaceRight()
     {
-        playerRenderer.sprite = sideSprite;
+        playerRenderer.sprite = rightSprite;
         player.transform.localScale = originalScale;
+
+        if (weaponSprite != null)
+        {
+            weaponSprite.sortingOrder = playerOrderInLayer + 1;
+            weaponSprite.transform.eulerAngles = Vector3.zero;
+        }
+           
     }
 
     public void FaceLeft()
     {
-        playerRenderer.sprite = sideSprite;
+        playerRenderer.sprite = rightSprite;
         player.transform.localScale = new Vector2(-originalScale.x, originalScale.y);
+
+        if (weaponSprite != null)
+        {
+            weaponSprite.sortingOrder = playerOrderInLayer - 1;
+            weaponSprite.transform.eulerAngles = Vector3.zero;
+        }
     }
 
     public void FaceUp()
     {
         playerRenderer.sprite = upSprite;
+
+        if (weaponSprite != null)
+        {
+            weaponSprite.transform.eulerAngles = new Vector3(0, weaponVerticleRotation, 0);
+            weaponSprite.sortingOrder = playerOrderInLayer - 1;
+        }
+
     }
 
     public void FaceDown()
     {
         playerRenderer.sprite = downSprite;
+
+        if (weaponSprite != null)
+        {
+            weaponSprite.transform.eulerAngles = new Vector3(0, weaponVerticleRotation, 0);
+            weaponSprite.sortingOrder = playerOrderInLayer + 1;
+        }
+           
     }
+
+    public void FaceUpRight()
+    {
+        playerRenderer.sprite = upRightSprite;
+        player.transform.localScale = originalScale;
+
+        if (weaponSprite != null)
+        {
+            weaponSprite.sortingOrder = playerOrderInLayer - 1;
+            weaponSprite.transform.eulerAngles = new Vector3(0, weaponDiagonalRotation, 0);
+        }
+         
+    }
+
+    public void FaceDownRight()
+    {
+        playerRenderer.sprite = downRightSprite;
+        player.transform.localScale = originalScale;
+
+        if (weaponSprite != null)
+        {
+            weaponSprite.sortingOrder = playerOrderInLayer + 1;
+            weaponSprite.transform.eulerAngles = new Vector3(0, weaponDiagonalRotation, 0);
+        }
+    }
+
+    public void FaceDownLeft()
+    {
+        playerRenderer.sprite = downRightSprite;
+        player.transform.localScale = new Vector2(-originalScale.x, originalScale.y);
+
+        if (weaponSprite != null)
+        {
+            weaponSprite.sortingOrder = playerOrderInLayer + 1;
+            weaponSprite.transform.eulerAngles = new Vector3(0, -weaponDiagonalRotation, 0);
+        }
+    }
+
+    public void FaceUpLeft()
+    {
+        playerRenderer.sprite = upRightSprite;
+        player.transform.localScale = new Vector2(-originalScale.x, originalScale.y);
+
+        if (weaponSprite != null)
+        {
+            weaponSprite.sortingOrder = playerOrderInLayer - 1;
+            weaponSprite.transform.eulerAngles = new Vector3(0, -weaponDiagonalRotation, 0);
+        }
+            
+    }
+
 
     public void FlipCharacterToDirection(Vector2 direction)
     {
-        if(direction.x > 0 && Mathf.Abs(direction.y) < verticalFlipThreshold)
+        if(Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(1, 0))) < flipThreshold)
             FaceRight();
 
-        else if(direction.x < 0 && Mathf.Abs(direction.y) < verticalFlipThreshold)
+        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(.7f, -.7f))) < flipThreshold)
+            FaceDownRight();
+
+        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(0, -1))) < flipThreshold)
+            FaceDown();
+
+        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(-.7f, -.7f))) < flipThreshold)
+            FaceDownLeft();
+
+        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(-1, 0))) < flipThreshold)
             FaceLeft();
 
-        else if(direction.y > verticalFlipThreshold)
+        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(-.7f, .7f))) < flipThreshold)
+            FaceUpLeft();
+
+        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(0, 1))) < flipThreshold)
             FaceUp();
 
-        else if(direction.y < -verticalFlipThreshold)
-            FaceDown();
+        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(.7f, .7f))) < flipThreshold)
+            FaceUpRight();
     }
 }
 

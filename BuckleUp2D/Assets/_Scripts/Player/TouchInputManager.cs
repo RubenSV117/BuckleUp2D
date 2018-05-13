@@ -27,11 +27,12 @@ public class TouchInputManager : MonoBehaviour
 
     private Vector2 initialMoveTouchPosition;
     private Vector2 initialShootTouchPosition;
-    private float minDeltaThreshold = .1f;
+    private float minDeltaThreshold = .75f;
 
     private PlayerMovement playerMove;
     private WeaponManager weapon;
     private DirectionalArrows directionalArrows;
+
 
     private void Awake()
     {
@@ -50,15 +51,21 @@ public class TouchInputManager : MonoBehaviour
 	            initialMoveTouchPosition = touch.position;
             }
 
-            // move touch changed position
-	        if (touch.phase == TouchPhase.Moved && Camera.main.ScreenToViewportPoint(touch.position).x < .5f)
+            // after move touch dragged past delta threshold
+	        if ((touch.phase == TouchPhase.Stationary  || touch.phase == TouchPhase.Moved) && Camera.main.ScreenToViewportPoint(touch.position).x < .5f)
 	        {
 	            Vector2 delta = touch.position - initialMoveTouchPosition;
 
-                if(delta.magnitude > minDeltaThreshold && !directionalArrows.moveArrow.activeInHierarchy)
-                    onMoveTouch.Invoke();
+	            if (delta.magnitude > minDeltaThreshold)
+	            {
+	                Vector2 direction = Vector3.Normalize(delta);
 
-	            directionalArrows.UpdateMoveArrow(delta);
+                    playerMove.Move(direction);
+	                directionalArrows.UpdateMoveArrow(delta);
+                    onMoveTouch.Invoke();
+                }
+                   
+	           
 	        }
 
 	        // release of move touch

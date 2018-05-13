@@ -36,19 +36,26 @@ public class PickUp : MonoBehaviour
 
     public IEnumerator Equip(GameObject obj)
     {
+        yield return new WaitForSeconds(.5f);
         Animator anim = obj.GetComponentInParent<Animator>();
+        
+        ////wait for idle
+        //if (anim.GetCurrentAnimatorStateInfo(0).IsName(stateToWaitFor))
+        //{
+        //    while (!anim.GetCurrentAnimatorStateInfo(0).IsName(stateToWaitFor))
+        //    {
+        //        yield return null;
+        //    }
+        //}
 
-        //wait for idle
-        while (!anim.GetCurrentAnimatorStateInfo(0).IsName(stateToWaitFor))
-        {
-            yield return null;
-        }
 
         weaponManager = obj.transform.root.GetComponentInChildren<WeaponManager>(); // get weapon manager on the player
         weaponManager.weapon = GetComponentInParent<Weapon>(); // set weapon manager's weapon to this
-        weaponRoot.root.SetParent(obj.transform.root.GetComponentInChildren<SpriteRenderer>().transform); // parent weapon
+        weaponRoot.root.SetParent(obj.transform.root.GetComponentInChildren<CharacterFlip>().transform); // parent weapon
 
-        GetComponentInParent<Weapon>().characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
+        CharacterFlip characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
+        GetComponentInParent<Weapon>().characterFlip = characterFlip;
+        characterFlip.weaponSprite = GetComponent<SpriteRenderer>();
 
         weaponRoot.position = weaponManager.transform.position;
         weaponRoot.eulerAngles = Vector3.zero;
