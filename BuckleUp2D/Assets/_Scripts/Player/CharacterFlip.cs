@@ -101,7 +101,6 @@ public class CharacterFlip : MonoBehaviour
             weaponSprite.sortingOrder = playerOrderInLayer - 1;
             weaponSprite.transform.eulerAngles = new Vector3(0, weaponDiagonalRotation, 0);
         }
-         
     }
 
     public void FaceDownRight()

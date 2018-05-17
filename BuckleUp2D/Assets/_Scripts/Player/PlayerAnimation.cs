@@ -10,6 +10,7 @@
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator anim;
+    private Rigidbody2D rigidB;
 
     private float verticalFlipThreshold = .8f;
 
@@ -22,6 +23,12 @@ public class PlayerAnimation : MonoBehaviour
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
+        rigidB = GetComponentInParent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        anim.SetFloat("Speed", rigidB.velocity.magnitude);
     }
 
     public void PlayRoll(Vector2 direction)
@@ -39,27 +46,4 @@ public class PlayerAnimation : MonoBehaviour
             anim.Play(rollDownAnimation);
     }
 
-    public void PlayWalk(Vector2 direction)
-    {
-        anim.SetBool("Moving", true);
-        anim.Play(moveAnimation);
-        // to be used for directional anims
-        //if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(1, 0))) < flipThreshold)
-
-        //else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(.7f, -.7f))) < flipThreshold)
-
-        //else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(0, -1))) < flipThreshold)
-
-        //else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(-.7f, -.7f))) < flipThreshold)
-
-        //else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(-1, 0))) < flipThreshold)
-
-        //else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(-.7f, .7f))) < flipThreshold)
-
-
-        //else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(0, 1))) < flipThreshold)
-
-
-        //else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(.7f, .7f))) < flipThreshold)
-    }
 }
