@@ -36,7 +36,7 @@ public class PickUp : MonoBehaviour
 
     public IEnumerator Equip(GameObject obj)
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.1f);
         Animator anim = obj.GetComponentInParent<Animator>();
         
         ////wait for idle
@@ -54,7 +54,6 @@ public class PickUp : MonoBehaviour
         weaponRoot.root.SetParent(obj.transform.root.GetComponentInChildren<CharacterFlip>().transform); // parent weapon
 
         CharacterFlip characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
-        GetComponentInParent<Weapon>().characterFlip = characterFlip;
         characterFlip.weaponSprite = GetComponent<SpriteRenderer>();
 
         weaponRoot.position = weaponManager.transform.position;

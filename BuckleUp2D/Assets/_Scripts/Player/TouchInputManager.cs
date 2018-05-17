@@ -64,8 +64,6 @@ public class TouchInputManager : MonoBehaviour
 	                directionalArrows.UpdateMoveArrow(delta);
                     onMoveTouch.Invoke();
                 }
-                   
-	           
 	        }
 
 	        // release of move touch

@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Manages controller input
-/// Sends info to PlayerAnimation
+/// Sends directions to PlayerMovement, WeaponManager, CharacterFlip
+/// Uses SlowdownManager for slow-mo
+/// 
 /// 
 /// Ruben Sanchez
 /// 5/16/18
@@ -10,47 +13,78 @@
 
 public class InputManager : MonoBehaviour
 {
-    private Rigidbody2D rigidB;
     private PlayerMovement playerMove;
     private WeaponManager weapon;
+    private SlowDownManager sloMo;
+    private CharacterFlip characterFlip;
 
     private Vector2 currentDirection;
 
     private void Awake()
     {
-        rigidB = GetComponent<Rigidbody2D>();
         playerMove = GetComponent<PlayerMovement>();
         weapon = GetComponentInChildren<WeaponManager>();
+        sloMo = GetComponent<SlowDownManager>();
+        characterFlip = GetComponentInChildren<CharacterFlip>();
     }
 
     void Update ()
     {
-        //movement
+  
+#region Move/Fire Directions
 
-        Vector2 direction = Vector2.zero;
+        Vector2 moveDirection = Vector2.zero;
+        moveDirection.x = Input.GetAxis("HorizontalMove");
+        moveDirection.y = Input.GetAxis("VerticalMove");
+        moveDirection = Vector3.Normalize(moveDirection);
 
-        direction.x = Input.GetAxis("Horizontal");
-        direction.y = Input.GetAxis("Vertical");
-        direction = Vector3.Normalize(direction);
-        currentDirection = direction;
+        Vector2 fireDirection = Vector2.zero;
+        fireDirection.x = Input.GetAxis("HorizontalAttack");
+        fireDirection.y = Input.GetAxis("VerticalAttack");
+        fireDirection = Vector3.Normalize(fireDirection);
 
-        if (!Input.GetButton("Jump"))                   
-            playerMove.Move(direction);
-           
+        #endregion
+
+        //update current direction, fire direction overrides movement for character flip
+        if (fireDirection.magnitude != 0)
+            currentDirection = fireDirection;
+
+        else if (moveDirection.magnitude != 0)
+            currentDirection = moveDirection;
+
+        //move
+        playerMove.Move(moveDirection);
+
         //roll
-
-        if (Input.GetButtonDown("Jump") && direction.magnitude > 0)
+        if (Input.GetButtonDown("Roll"))
         {
-            playerMove.Roll(direction);
-        }
+            if(moveDirection.magnitude != 0)
+                playerMove.Roll(moveDirection);
 
-        // fire
-        if (Input.GetAxis("Fire1") != 0)
-        {
-            weapon.Attack(currentDirection);
+            else
+                playerMove.Roll(currentDirection);
         }
-       
             
+        
+        // fire
+        if (Input.GetAxis("Fire") != 0)
+        {
+            if(fireDirection.magnitude != 0)
+                weapon.Attack(fireDirection);
 
+            else
+                weapon.Attack(currentDirection);
+        }
+           
+        //slowMo
+        if (Input.GetButtonDown("SlowMo"))
+            sloMo.SlowDown();
+
+        //renderers
+        if(fireDirection.magnitude != 0)
+            characterFlip.FlipCharacterToDirection(currentDirection);
+
+        else
+            characterFlip.FlipCharacterToDirection(moveDirection);
     }
 }

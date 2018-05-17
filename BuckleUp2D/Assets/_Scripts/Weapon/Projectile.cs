@@ -17,7 +17,6 @@ public class Projectile : MonoBehaviour
     private int damage;
  
     private Rigidbody2D rigidB;
-    private Coroutine disableCoroutine;
     private float timeToDisable = 3;
 
     private void Awake()
@@ -27,8 +26,10 @@ public class Projectile : MonoBehaviour
 
     private void OnEnable()
     {
-        if (disableCoroutine == null)
-            disableCoroutine = StartCoroutine(DisableObject());
+        if(GetComponent<TrailRenderer>())
+            GetComponent<TrailRenderer>().Clear();
+
+       StartCoroutine(DisableObject());
     }
 
     public void Shoot(Vector2 direction)
@@ -47,9 +48,8 @@ public class Projectile : MonoBehaviour
     public IEnumerator DisableObject()
     {
         yield return new WaitForSeconds(timeToDisable);
+
         if(gameObject.activeInHierarchy)
             gameObject.SetActive(false);
-
-        disableCoroutine = null;
     }
 }

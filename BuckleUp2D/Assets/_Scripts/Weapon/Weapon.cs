@@ -12,7 +12,5 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    public CharacterFlip characterFlip;
-
     public abstract void Attack(Vector2 direction);
 }

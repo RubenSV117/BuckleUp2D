@@ -99,7 +99,7 @@ public class CharacterFlip : MonoBehaviour
         if (weaponSprite != null)
         {
             weaponSprite.sortingOrder = playerOrderInLayer - 1;
-            weaponSprite.transform.eulerAngles = new Vector3(0, weaponDiagonalRotation, 0);
+            weaponSprite.transform.eulerAngles = new Vector3(weaponDiagonalRotation, weaponDiagonalRotation, 0);
         }
     }
 

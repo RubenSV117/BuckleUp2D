@@ -3,6 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// Projectile weapon, can single short or burst 
+/// 
 /// Ruben Sanchez
 /// 
 /// </summary>
@@ -14,23 +15,23 @@ public class Rifle : Weapon
     [SerializeField]
     private string basicBulletTag = "BasicBullet";
 
-    [Tooltip("Cooldown between single shots or bursts")]
     [SerializeField]
-    [Range(.2f, 2)]
-    private float cooldown = .2f;
+    private ParticleSystem muzzleFlash;
 
-    [Header("Burst Attack")]
-    [SerializeField]
+    [Header("Auto Mode")]
+    [Tooltip("Shot per second on auto")]
+    [SerializeField] [Range(1, 20)]
+    private float autoFireRate = 5f;
+
+    [Header("Burst Mode")] [SerializeField]
     private bool burst;
 
     [Tooltip("Number of shots in one burst")]
-    [SerializeField]
-    [Range(1, 5)]
+    [SerializeField] [Range(1, 5)]
     private int fireBurstCount = 3;
 
-    [Tooltip("Shots per second")]
-    [SerializeField]
-    [Range(1, 10)]
+    [Tooltip("Shots per second in a burst")]
+    [SerializeField] [Range(1, 20)]
     private float fireRate = 3;
 
     private float fireRateTimer;
@@ -44,8 +45,11 @@ public class Rifle : Weapon
         {
             cooldownTimer += Time.deltaTime;
 
-            if (cooldownTimer >= cooldown)
+            if (cooldownTimer >= 1f / autoFireRate)
+            {
+                cooldownTimer = 0;
                 onCooldown = false;
+            }
         }
     }
 
@@ -53,8 +57,6 @@ public class Rifle : Weapon
     {
         if (onCooldown)
             return;
-
-        if (characterFlip != null) characterFlip.FlipCharacterToDirection(direction);
 
         if (!burst)
         {
@@ -78,14 +80,19 @@ public class Rifle : Weapon
             yield return new WaitForSeconds(1 / fireRate);
         }
 
+
         burstFireCoroutine = null;
     }
 
     public void FireSingleShot(Vector2 direction)
     {
+        if (muzzleFlash)
+            muzzleFlash.Play();
+
+
         Projectile bullet = ObjectPooler.Instance.GetPooledObject(basicBulletTag).GetComponent<Projectile>();
         bullet.transform.position = shootPoint.position;
-        bullet.gameObject.SetActive(true);
+        bullet.transform.root.gameObject.SetActive(true);
         bullet.Shoot(direction);
     }
 
@@ -93,4 +100,13 @@ public class Rifle : Weapon
     {
         burst = canBurst;
     }
-}
+
+     private void OnDisable()
+     {
+         if (burstFireCoroutine != null)
+         {
+             StopCoroutine(burstFireCoroutine);
+             burstFireCoroutine = null;
+         }
+     }
+ }

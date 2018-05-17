@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -24,15 +25,24 @@ public class SlowDownManager : MonoBehaviour
     {
         Time.timeScale = slowScale;
         Time.fixedDeltaTime = 0.02F * Time.timeScale;
+
+        StartCoroutine(ReturnTimeCo());
     }
+
+    public void ReturnTime()
+    {
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.02F;
+    }
+
+    public IEnumerator ReturnTimeCo()
+    {
+        yield return new WaitForSecondsRealtime(2);
+        ReturnTime();
+    }
+
 
     private void Update()
     {
-        if (!DirectionalArrows.Instance.moveArrow.activeInHierarchy &&
-            !DirectionalArrows.Instance.shootArrow.activeInHierarchy)
-        {
-            Time.timeScale = 1;
-            Time.fixedDeltaTime = 0.02F;
-        }
     }
 }

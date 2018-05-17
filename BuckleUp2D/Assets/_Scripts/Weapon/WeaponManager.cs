@@ -11,9 +11,19 @@ public class WeaponManager : MonoBehaviour
 {
     public Weapon weapon;
 
+    private bool canAttack = true;
+
     public void Attack(Vector2 direction)
     {
-        if (weapon != null)
-            weapon.Attack(direction);
+        if (canAttack)
+        {
+            if (weapon != null)
+                weapon.Attack(direction);
+        }
+    }
+
+    public void SetCanAttack(bool attack)
+    {
+        canAttack = attack;
     }
 }
