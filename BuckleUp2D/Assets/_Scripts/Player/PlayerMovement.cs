@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 /// <summary>
 /// Manages player movement
-/// sends direction to CharacterFlip and PlayerAnimation 
+/// sends direction and PlayerAnimation 
 /// 
 /// Ruben Sanchez
 /// 5/10/18
@@ -14,36 +14,36 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10f;
 
-    [SerializeField] private float turnSpeed = 10f;
+    [SerializeField] private int speedMultiplier = 2;
 
+    //Roll
     [Header("Roll")]
     [SerializeField] private float rollSpeed = 20f;
     [SerializeField] private float rollDuration = 1f;
     [SerializeField] private float rollCooldown = .5f;
-
-    [SerializeField] UnityEvent onMove;
-
-    [SerializeField] private UnityEvent onStop;
-
     [SerializeField] private UnityEvent onRoll;
 
-    private PlayerAnimation playerAnim;
-
-    private Rigidbody rigidB;
-
-    private int speedMultiplier = 1;
+    [SerializeField] private UnityEvent onForward; 
+    [SerializeField] private UnityEvent onBack;
 
     private Coroutine rollCoroutine;
     private float rollCooldownTimer;
     private bool canRoll;
 
+    private Rigidbody rigidB;
 
     private bool canControlMove = true;
+
+    //sprint
+    private bool isSprinting;
+
+    private PlayerAnimation playerAnim;
+
 
     private void Awake()
     {
         rigidB = GetComponent<Rigidbody>();
-        playerAnim = GetComponentInChildren<PlayerAnimation>();
+        playerAnim = GetComponent<PlayerAnimation>();
     }
 
     private void Update()
@@ -70,7 +70,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canControlMove)
         {
-            rigidB.velocity = direction * moveSpeed;
+            Vector3 moveDirection = isSprinting ? direction * moveSpeed * speedMultiplier : direction * moveSpeed;
+            rigidB.velocity =  new Vector3(moveDirection.x, rigidB.velocity.y, moveDirection.z);
+
+            if(Vector3.Dot(Vector3.forward, direction) >= .5f)
+                onForward.Invoke();
+
+            else if (Vector3.Dot(Vector3.forward, direction) <= -.5f)
+                onBack.Invoke();
         }
     }
 
@@ -102,9 +109,12 @@ public class PlayerMovement : MonoBehaviour
         canRoll = false;
     }
 
-    public void SpeedBoost(float multiplier)
+    public void SetSprint(bool sprint)
     {
-        moveSpeed *= multiplier;
+        isSprinting = sprint;
+
+        playerAnim.SetSpeed(isSprinting ? speedMultiplier : 1);
+            
     }
 
     public void SetCanControlMove(bool control)

@@ -33,35 +33,33 @@ public class InputManager : MonoBehaviour
   
 #region Move/Fire Directions
 
-        Vector3 moveDirection = Vector2.zero;
+        Vector3 moveDirection = Vector3.zero;
         moveDirection.x = Input.GetAxis("HorizontalMove");
         moveDirection.z = Input.GetAxis("VerticalMove");
         moveDirection = Vector3.Normalize(moveDirection);
 
-        Vector3 AttackDirection = Vector2.zero;
-        AttackDirection.x = Input.GetAxis("HorizontalAttack");
-        AttackDirection.z = Input.GetAxis("VerticalAttack");
-        AttackDirection = Vector3.Normalize(AttackDirection);
+        Vector3 aimDirection = Vector3.zero;
+        aimDirection.x = Input.GetAxis("HorizontalAttack");
+        aimDirection.z = Input.GetAxis("VerticalAttack");
+        aimDirection = Vector3.Normalize(aimDirection);
 
         #endregion
 
         //update current direction, fire direction overrides movement for character flip
-        playerAnim.Aim(moveDirection, AttackDirection);
+        playerAnim.Aim(moveDirection, aimDirection);
 
-        if (AttackDirection.magnitude != 0)
+        if (aimDirection.magnitude != 0)
         {
-            playerMove.Turn(AttackDirection);
-            currentDirection = AttackDirection;
+            playerMove.Turn(aimDirection);
+            currentDirection = aimDirection;
         }
             
-        
         else if (moveDirection.magnitude != 0)
         {
             playerMove.Turn(moveDirection);
             currentDirection = moveDirection;
         }
        
-
         //move
         playerMove.Move(moveDirection);
 
@@ -75,18 +73,31 @@ public class InputManager : MonoBehaviour
                 playerMove.Roll(currentDirection);
         }
         
-        // fire
+        //fire
         if (Input.GetAxis("Fire") != 0)
         {
-            if(AttackDirection.magnitude != 0)
-                weapon.Attack(AttackDirection);
+            if (aimDirection.magnitude != 0)
+            {
+                weapon.Attack(aimDirection);
+
+                if(moveDirection.magnitude != 0)
+                    playerAnim.Aim(moveDirection, aimDirection);
+            }
 
             else
+            {
                 weapon.Attack(currentDirection);
+                if (moveDirection.magnitude != 0)
+                    playerAnim.Aim(moveDirection, moveDirection);
+            }
+               
         }
            
         //slowMo
         if (Input.GetButtonDown("SlowMo"))
             sloMo.SlowDown();
+
+        //sprint
+        playerMove.SetSprint(Input.GetButton("Sprint"));
     }
 }

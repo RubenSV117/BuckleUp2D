@@ -7,12 +7,12 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: M_NPC_Mech_B_LOD1
-  m_Shader: {fileID: 4800000, guid: 44b98ac01cba588439ce247bb52d048c, type: 3}
+  m_Shader: {fileID: 4800000, guid: 78ddbbb9f14911a41b19a0f5f9f530dc, type: 3}
   m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _SPECGLOSSMAP
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:

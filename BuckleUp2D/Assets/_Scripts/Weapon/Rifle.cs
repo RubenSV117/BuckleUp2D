@@ -58,7 +58,7 @@ public class Rifle : Weapon
         }
     }
 
-    public override void Attack(Vector2 direction)
+    public override void Attack(Vector3 direction)
     {
         if (onCooldown)
             return;
@@ -77,7 +77,7 @@ public class Rifle : Weapon
         }
     }
 
-    public IEnumerator BurstFire(Vector2 direction)
+    public IEnumerator BurstFire(Vector3 direction)
     {
         for (int i = 0; i < fireBurstCount; i++)
         {
@@ -89,7 +89,7 @@ public class Rifle : Weapon
         burstFireCoroutine = null;
     }
 
-    public void FireSingleShot(Vector2 direction)
+    public void FireSingleShot(Vector3 direction)
     {
         if (muzzleFlash)
             muzzleFlash.Play();
@@ -98,7 +98,7 @@ public class Rifle : Weapon
         Projectile bullet = ObjectPooler.Instance.GetPooledObject(basicBulletTag).GetComponent<Projectile>();
         bullet.transform.position = shootPoint.position;
         bullet.transform.root.gameObject.SetActive(true);
-        bullet.Shoot(direction);
+        bullet.Shoot(transform.root.forward);
     }
 
     public void SetBurst(bool canBurst)

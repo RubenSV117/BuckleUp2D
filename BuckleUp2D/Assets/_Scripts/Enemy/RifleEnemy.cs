@@ -7,7 +7,7 @@ using UnityEngine;
 /// 
 /// </summary>
 
-public class RifleEnemy : MonoBehaviour, Enemy
+public class RifleEnemy : Enemy
  {
      [SerializeField]
      private float fireCooldown = 2;
@@ -46,7 +46,7 @@ public class RifleEnemy : MonoBehaviour, Enemy
          }
      }
 
-     public void Attack(Vector3 direction)
+     public override void Attack(Vector3 direction)
      {
          rifle.FireSingleShot(direction);
      }

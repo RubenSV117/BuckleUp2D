@@ -23,7 +23,7 @@ public class PickUp : MonoBehaviour
     private string stateToWaitFor = "Idle";
 
     private WeaponManager weaponManager;
-    private Vector2 originalScale;
+    private Vector3 originalScale;
 
     private void Awake()
     {

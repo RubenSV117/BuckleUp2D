@@ -29,7 +29,8 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Update()
     {
-        anim.SetFloat("Speed", rigidB.velocity.magnitude);
+        Vector3 movement = new Vector3(rigidB.velocity.x, 0, rigidB.velocity.z);
+        anim.SetFloat("Speed", movement.magnitude);
     }
 
     public void Aim(Vector3 moveDirection, Vector3 aimDirection)
@@ -54,25 +55,33 @@ public class PlayerAnimation : MonoBehaviour
             // moving and aiming
             else
             {
-                anim.SetFloat("AimX", Input.GetAxis("HorizontalAttack"));
-                anim.SetFloat("AimZ", Input.GetAxis("VerticalAttack"));
-            }
+                // aiming in the direction of movement
+                if (Vector3.Dot(moveDirection, aimDirection) >= .5f)               
+                    SetAnimAim(0, 1);
 
-           
+                // aiming in opposite direction of movement
+                else if (Vector3.Dot(moveDirection, aimDirection) <= -.5f)                
+                    SetAnimAim(0, -1);
+               
+                // aiming in to the right of movement
+                else if (Vector3.Dot(transform.right, moveDirection) >= .5f)
+                    SetAnimAim(1, 0);
 
-            //// aiming while not moving
-            //if (Input.GetAxisRaw("HorizontalAttack") == 0 && Input.GetAxisRaw("VerticalAttack") != 0)
-            //{
-            //    anim.SetFloat("AimX", 0);
-            //    anim.SetFloat("AimZ", 1);
-            //}
-
-            //// aiming and movement direction are equal
-            //else if (Input.GetAxisRaw("HorizontalAttack") - Input.GetAxisRaw("VerticalAttack") == 0)
-            //{
-            //    anim.SetFloat("AimX", 0);
-            //    anim.SetFloat("AimZ", 1);
-            //}
+                // aiming in to the right of movement
+                else if (Vector3.Dot(transform.right, moveDirection) <= -.5f)
+                    SetAnimAim(-1, 0);
+            }         
         }
+    }
+
+    public void SetAnimAim(float x, float z)
+    {
+        anim.SetFloat("AimX", x);
+        anim.SetFloat("AimZ", z);
+    }
+
+    public void SetSpeed(float speed)
+    {
+        anim.speed = speed;
     }
 }

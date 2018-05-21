@@ -32,7 +32,7 @@ public class Projectile : MonoBehaviour
        StartCoroutine(DisableObject());
     }
 
-    public void Shoot(Vector2 direction)
+    public void Shoot(Vector3 direction)
     {
         rigidB.velocity = direction * speed;
     }

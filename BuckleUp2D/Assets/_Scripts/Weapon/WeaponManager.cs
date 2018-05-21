@@ -13,7 +13,7 @@ public class WeaponManager : MonoBehaviour
 
     private bool canAttack = true;
 
-    public void Attack(Vector2 direction)
+    public void Attack(Vector3 direction)
     {
         if (canAttack)
         {

@@ -8,7 +8,7 @@ using UnityEngine;
 /// 5/10/18
 /// </summary>
 
-public interface Enemy
+public abstract class Enemy : MonoBehaviour
 {
-   void Attack(Vector3 direction);
+   public abstract void Attack(Vector3 direction);
 }
