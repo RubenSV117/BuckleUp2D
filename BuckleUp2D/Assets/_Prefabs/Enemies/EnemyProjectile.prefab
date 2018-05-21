@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4381568772972234}
-  - component: {fileID: 50505081845657876}
   - component: {fileID: 114228026878661070}
+  - component: {fileID: 54174132713397170}
   m_Layer: 10
   m_Name: EnemyProjectile
   m_TagString: EnemyBullet
@@ -72,26 +72,21 @@ Transform:
   m_Father: {fileID: 4381568772972234}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50505081845657876
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!54 &54174132713397170
+Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1275263802002408}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
+  serializedVersion: 2
   m_Mass: 1
-  m_LinearDrag: 0
+  m_Drag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
   m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!58 &58665542123016080
 CircleCollider2D:
   m_ObjectHideFlags: 1

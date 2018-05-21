@@ -10,5 +10,5 @@ using UnityEngine;
 
 public interface Enemy
 {
-   void Attack(Vector2 direction);
+   void Attack(Vector3 direction);
 }

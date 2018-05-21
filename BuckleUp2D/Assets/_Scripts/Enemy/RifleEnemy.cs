@@ -31,7 +31,7 @@ public class RifleEnemy : MonoBehaviour, Enemy
 
      public IEnumerator ShootPlayer()
      {
-         Vector2 direction = Vector3.Normalize(player.transform.position - rifle.shootPoint.position);
+         Vector3 direction = Vector3.Normalize(player.transform.position - rifle.shootPoint.position);
          Attack(direction);
          yield return new WaitForSeconds(fireCooldown);
          shootCoroutine = null;
@@ -46,7 +46,7 @@ public class RifleEnemy : MonoBehaviour, Enemy
          }
      }
 
-     public void Attack(Vector2 direction)
+     public void Attack(Vector3 direction)
      {
          rifle.FireSingleShot(direction);
      }

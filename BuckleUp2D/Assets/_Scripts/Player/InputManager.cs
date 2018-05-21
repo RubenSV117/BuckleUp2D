@@ -16,16 +16,16 @@ public class InputManager : MonoBehaviour
     private PlayerMovement playerMove;
     private WeaponManager weapon;
     private SlowDownManager sloMo;
-    private CharacterFlip characterFlip;
+    private PlayerAnimation playerAnim;
 
-    private Vector2 currentDirection;
+    private Vector3 currentDirection;
 
     private void Awake()
     {
         playerMove = GetComponent<PlayerMovement>();
         weapon = GetComponentInChildren<WeaponManager>();
         sloMo = GetComponent<SlowDownManager>();
-        characterFlip = GetComponentInChildren<CharacterFlip>();
+        playerAnim = GetComponent<PlayerAnimation>();
     }
 
     void Update ()
@@ -33,24 +33,34 @@ public class InputManager : MonoBehaviour
   
 #region Move/Fire Directions
 
-        Vector2 moveDirection = Vector2.zero;
+        Vector3 moveDirection = Vector2.zero;
         moveDirection.x = Input.GetAxis("HorizontalMove");
-        moveDirection.y = Input.GetAxis("VerticalMove");
+        moveDirection.z = Input.GetAxis("VerticalMove");
         moveDirection = Vector3.Normalize(moveDirection);
 
-        Vector2 fireDirection = Vector2.zero;
-        fireDirection.x = Input.GetAxis("HorizontalAttack");
-        fireDirection.y = Input.GetAxis("VerticalAttack");
-        fireDirection = Vector3.Normalize(fireDirection);
+        Vector3 AttackDirection = Vector2.zero;
+        AttackDirection.x = Input.GetAxis("HorizontalAttack");
+        AttackDirection.z = Input.GetAxis("VerticalAttack");
+        AttackDirection = Vector3.Normalize(AttackDirection);
 
         #endregion
 
         //update current direction, fire direction overrides movement for character flip
-        if (fireDirection.magnitude != 0)
-            currentDirection = fireDirection;
+        playerAnim.Aim(moveDirection, AttackDirection);
 
+        if (AttackDirection.magnitude != 0)
+        {
+            playerMove.Turn(AttackDirection);
+            currentDirection = AttackDirection;
+        }
+            
+        
         else if (moveDirection.magnitude != 0)
+        {
+            playerMove.Turn(moveDirection);
             currentDirection = moveDirection;
+        }
+       
 
         //move
         playerMove.Move(moveDirection);
@@ -64,13 +74,12 @@ public class InputManager : MonoBehaviour
             else
                 playerMove.Roll(currentDirection);
         }
-            
         
         // fire
         if (Input.GetAxis("Fire") != 0)
         {
-            if(fireDirection.magnitude != 0)
-                weapon.Attack(fireDirection);
+            if(AttackDirection.magnitude != 0)
+                weapon.Attack(AttackDirection);
 
             else
                 weapon.Attack(currentDirection);
@@ -79,12 +88,5 @@ public class InputManager : MonoBehaviour
         //slowMo
         if (Input.GetButtonDown("SlowMo"))
             sloMo.SlowDown();
-
-        //renderers
-        if(fireDirection.magnitude != 0)
-            characterFlip.FlipCharacterToDirection(currentDirection);
-
-        else
-            characterFlip.FlipCharacterToDirection(moveDirection);
     }
 }

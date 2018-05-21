@@ -34,6 +34,11 @@ public class Rifle : Weapon
     [SerializeField] [Range(1, 20)]
     private float fireRate = 3;
 
+     [Tooltip("Delay in between bursts")]
+     [SerializeField]
+     [Range(0, 3)]
+     private float burstCooldown = .5f;
+
     private float fireRateTimer;
     private float cooldownTimer;
     private bool onCooldown;
@@ -80,7 +85,7 @@ public class Rifle : Weapon
             yield return new WaitForSeconds(1 / fireRate);
         }
 
-
+        yield return new WaitForSeconds(burstCooldown);
         burstFireCoroutine = null;
     }
 

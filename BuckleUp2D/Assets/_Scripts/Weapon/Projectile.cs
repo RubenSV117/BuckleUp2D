@@ -16,12 +16,12 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private int damage;
  
-    private Rigidbody2D rigidB;
+    private Rigidbody rigidB;
     private float timeToDisable = 3;
 
     private void Awake()
     {
-        rigidB = GetComponent<Rigidbody2D>();
+        rigidB = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour
         rigidB.velocity = direction * speed;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter(Collision other)
     {
         if (other.transform.root.gameObject.GetComponent<Health>() != null)
             other.transform.root.gameObject.GetComponent<Health>().TakeDamage(damage);

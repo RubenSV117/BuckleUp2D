@@ -14,10 +14,11 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10f;
 
+    [SerializeField] private float turnSpeed = 10f;
+
+    [Header("Roll")]
     [SerializeField] private float rollSpeed = 20f;
-
     [SerializeField] private float rollDuration = 1f;
-
     [SerializeField] private float rollCooldown = .5f;
 
     [SerializeField] UnityEvent onMove;
@@ -28,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerAnimation playerAnim;
 
-    private Rigidbody2D rigidB;
+    private Rigidbody rigidB;
 
     private int speedMultiplier = 1;
 
@@ -41,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        rigidB = GetComponent<Rigidbody2D>();
+        rigidB = GetComponent<Rigidbody>();
         playerAnim = GetComponentInChildren<PlayerAnimation>();
     }
 
@@ -59,7 +60,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Move(Vector2 direction)
+    public void Turn(Vector3 direction)
+    {
+        if(canControlMove)
+            transform.forward = direction;
+    }
+
+    public void Move(Vector3 direction)
     {
         if (canControlMove)
         {
@@ -69,10 +76,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void Stop()
     {
-        rigidB.velocity = Vector2.zero;
+        rigidB.velocity = Vector3.zero;
     }
 
-    public void Roll(Vector2 direction)
+    public void Roll(Vector3 direction)
     {
         if (canRoll)
         {
@@ -80,17 +87,15 @@ public class PlayerMovement : MonoBehaviour
             rigidB.velocity = direction * rollSpeed;
 
             if (rollCoroutine == null)
-                rollCoroutine = StartCoroutine(RollCo(direction));
-
+                rollCoroutine = StartCoroutine(RollCo());
 
             onRoll.Invoke();
         }
     }
 
     //restrict control for duration of roll
-    public IEnumerator RollCo(Vector2 direction)
+    public IEnumerator RollCo()
     {
-        playerAnim.PlayRoll(direction);
         yield return new WaitForSeconds(rollDuration);
         canControlMove = true;
         rollCoroutine = null;

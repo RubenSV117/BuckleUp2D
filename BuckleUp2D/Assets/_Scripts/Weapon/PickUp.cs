@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,8 +30,9 @@ public class PickUp : MonoBehaviour
         originalScale = weaponRoot.transform.localScale;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
+        if (other == null) throw new ArgumentNullException("other");
         if (other.CompareTag(playerTag))
             StartCoroutine(Equip(other.gameObject));
     }
@@ -51,10 +54,10 @@ public class PickUp : MonoBehaviour
 
         weaponManager = obj.transform.root.GetComponentInChildren<WeaponManager>(); // get weapon manager on the player
         weaponManager.weapon = GetComponentInParent<Weapon>(); // set weapon manager's weapon to this
-        weaponRoot.root.SetParent(obj.transform.root.GetComponentInChildren<CharacterFlip>().transform); // parent weapon
+        weaponRoot.root.SetParent(obj.transform.root.GetComponentInChildren<WeaponManager>().transform); // parent weapon
 
-        CharacterFlip characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
-        characterFlip.weaponSprite = GetComponent<SpriteRenderer>();
+        //CharacterFlip characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
+        //characterFlip.weaponSprite = GetComponent<SpriteRenderer>();
 
         weaponRoot.position = weaponManager.transform.position;
         weaponRoot.eulerAngles = Vector3.zero;

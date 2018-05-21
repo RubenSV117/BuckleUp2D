@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Manages player animations
@@ -10,7 +11,7 @@
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator anim;
-    private Rigidbody2D rigidB;
+    private Rigidbody rigidB;
 
     private float verticalFlipThreshold = .8f;
 
@@ -23,7 +24,7 @@ public class PlayerAnimation : MonoBehaviour
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
-        rigidB = GetComponentInParent<Rigidbody2D>();
+        rigidB = GetComponentInParent<Rigidbody>();
     }
 
     private void Update()
@@ -31,19 +32,47 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetFloat("Speed", rigidB.velocity.magnitude);
     }
 
-    public void PlayRoll(Vector2 direction)
+    public void Aim(Vector3 moveDirection, Vector3 aimDirection)
     {
-        if (direction.x > 0 && Mathf.Abs(direction.y) < verticalFlipThreshold)
-            anim.Play(rollRightAnimation);
+        //not aiming
+        if (aimDirection.magnitude == 0)
+        {
+            anim.SetBool("Aiming", false);
+        }
 
-        else if (direction.x < 0 && Mathf.Abs(direction.y) < verticalFlipThreshold)
-            anim.Play(rollLeftAnimation);
+        else
+        {
+            anim.SetBool("Aiming", true);
 
-        else if (direction.y > verticalFlipThreshold)
-            anim.Play(rollUpAnimation);
+            // aiming without moving
+            if (Input.GetAxis("HorizontalMove") == 0 && Input.GetAxis("VerticalMove") == 0)
+            {
+                anim.SetFloat("AimX", 0);
+                anim.SetFloat("AimZ", 0);
+            }
 
-        else if (direction.y < -verticalFlipThreshold)
-            anim.Play(rollDownAnimation);
+            // moving and aiming
+            else
+            {
+                anim.SetFloat("AimX", Input.GetAxis("HorizontalAttack"));
+                anim.SetFloat("AimZ", Input.GetAxis("VerticalAttack"));
+            }
+
+           
+
+            //// aiming while not moving
+            //if (Input.GetAxisRaw("HorizontalAttack") == 0 && Input.GetAxisRaw("VerticalAttack") != 0)
+            //{
+            //    anim.SetFloat("AimX", 0);
+            //    anim.SetFloat("AimZ", 1);
+            //}
+
+            //// aiming and movement direction are equal
+            //else if (Input.GetAxisRaw("HorizontalAttack") - Input.GetAxisRaw("VerticalAttack") == 0)
+            //{
+            //    anim.SetFloat("AimX", 0);
+            //    anim.SetFloat("AimZ", 1);
+            //}
+        }
     }
-
 }

@@ -27,7 +27,7 @@ public class CharacterFlip : MonoBehaviour
     [SerializeField]
     private Sprite downRightSprite;
 
-    private Vector2 originalScale;
+    private Vector3 originalScale;
     private SpriteRenderer playerRenderer;
 
     private int playerOrderInLayer;
@@ -58,7 +58,7 @@ public class CharacterFlip : MonoBehaviour
     public void FaceLeft()
     {
         playerRenderer.sprite = rightSprite;
-        player.transform.localScale = new Vector2(-originalScale.x, originalScale.y);
+        player.transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
 
         if (weaponSprite != null)
         {
@@ -118,7 +118,7 @@ public class CharacterFlip : MonoBehaviour
     public void FaceDownLeft()
     {
         playerRenderer.sprite = downRightSprite;
-        player.transform.localScale = new Vector2(-originalScale.x, originalScale.y);
+        player.transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
 
         if (weaponSprite != null)
         {
@@ -130,7 +130,7 @@ public class CharacterFlip : MonoBehaviour
     public void FaceUpLeft()
     {
         playerRenderer.sprite = upRightSprite;
-        player.transform.localScale = new Vector2(-originalScale.x, originalScale.y);
+        player.transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
 
         if (weaponSprite != null)
         {
@@ -141,30 +141,30 @@ public class CharacterFlip : MonoBehaviour
     }
 
 
-    public void FlipCharacterToDirection(Vector2 direction)
+    public void FlipCharacterToDirection(Vector3 direction)
     {
-        if(Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(1, 0))) < flipThreshold)
+        if(Mathf.Abs(1 - Vector3.Dot(direction, new Vector3(1, 0))) < flipThreshold)
             FaceRight();
 
-        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(.7f, -.7f))) < flipThreshold)
+        else if (Mathf.Abs(1 - Vector3.Dot(direction, new Vector3(.7f, -.7f))) < flipThreshold)
             FaceDownRight();
 
-        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(0, -1))) < flipThreshold)
+        else if (Mathf.Abs(1 - Vector3.Dot(direction, new Vector3(0, -1))) < flipThreshold)
             FaceDown();
 
-        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(-.7f, -.7f))) < flipThreshold)
+        else if (Mathf.Abs(1 - Vector3.Dot(direction, new Vector3(-.7f, -.7f))) < flipThreshold)
             FaceDownLeft();
 
-        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(-1, 0))) < flipThreshold)
+        else if (Mathf.Abs(1 - Vector3.Dot(direction, new Vector3(-1, 0))) < flipThreshold)
             FaceLeft();
 
-        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(-.7f, .7f))) < flipThreshold)
+        else if (Mathf.Abs(1 - Vector3.Dot(direction, new Vector3(-.7f, .7f))) < flipThreshold)
             FaceUpLeft();
 
-        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(0, 1))) < flipThreshold)
+        else if (Mathf.Abs(1 - Vector3.Dot(direction, new Vector3(0, 1))) < flipThreshold)
             FaceUp();
 
-        else if (Mathf.Abs(1 - Vector2.Dot(direction, new Vector2(.7f, .7f))) < flipThreshold)
+        else if (Mathf.Abs(1 - Vector3.Dot(direction, new Vector3(.7f, .7f))) < flipThreshold)
             FaceUpRight();
     }
 }

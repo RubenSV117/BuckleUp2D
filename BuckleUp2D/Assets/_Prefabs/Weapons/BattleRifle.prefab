@@ -72,7 +72,6 @@ GameObject:
   - component: {fileID: 4949443723797466}
   - component: {fileID: 198119712131352012}
   - component: {fileID: 199911291116425504}
-  - component: {fileID: 114618961265504588}
   m_Layer: 0
   m_Name: EnergyNovaMuzzleSmallFire
   m_TagString: Untagged
@@ -340,23 +339,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 4516456173988486}
   basicBulletTag: BasicBullet
-  muzzleFlash: {fileID: 1825585939555474, guid: 0172933c99858cd4cb04b98d0cb647d5,
-    type: 2}
-  cooldown: 0.2
+  muzzleFlash: {fileID: 198119712131352012}
+  autoFireRate: 5
   burst: 1
   fireBurstCount: 3
-  fireRate: 10
---- !u!114 &114618961265504588
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1495450248529592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3769fbb8b7681ab4982ccd864f53f3c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  fireRate: 20
+  burstCooldown: 0.5
 --- !u!198 &198119712131352012
 ParticleSystem:
   m_ObjectHideFlags: 1
