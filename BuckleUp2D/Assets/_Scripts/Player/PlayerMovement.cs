@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10f;
 
-    [SerializeField] private int speedMultiplier = 2;
+    [SerializeField] private float speedMultiplier = 2f;
 
     //Roll
     [Header("Roll")]
@@ -58,6 +58,9 @@ public class PlayerMovement : MonoBehaviour
                 canRoll = true;
             }
         }
+
+        if(!GroundDetector.isGrounded)
+            rigidB.velocity += Vector3.down * moveSpeed;
     }
 
     public void Turn(Vector3 direction)
