@@ -2,7 +2,8 @@
 using UnityEngine;
 
 /// <summary>
-///
+/// Manages Rifle enemy weapon behavior
+/// 
 /// Ruben Sanchez
 /// 
 /// </summary>

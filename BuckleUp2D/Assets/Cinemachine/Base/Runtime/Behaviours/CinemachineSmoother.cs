@@ -56,7 +56,7 @@ namespace Cinemachine
                     state.ReferenceLookAt = ApplySmoothingLookAt(vcam, state.ReferenceLookAt, extra);
                 }
             }
-            if (stage == CinemachineCore.Stage.Aim)
+            if (stage == CinemachineCore.Stage.FreeRunAim)
             {
                 if (m_RotationSmoothing > 0)
                 {

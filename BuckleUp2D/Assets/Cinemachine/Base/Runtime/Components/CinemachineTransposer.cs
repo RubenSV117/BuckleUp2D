@@ -10,7 +10,7 @@ namespace Cinemachine
     /// 
     /// The Tansposer will only change the camera's position in space.  It will not 
     /// re-orient or otherwise aim the camera.  To to that, you need to instruct 
-    /// the vcam in the Aim section of its pipeline.
+    /// the vcam in the FreeRunAim section of its pipeline.
     /// </summary>
     [DocumentationSorting(5, DocumentationSortingAttribute.Level.UserRef)]
     [AddComponentMenu("")] // Don't display in add component menu

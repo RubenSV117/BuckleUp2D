@@ -4,7 +4,7 @@ using Cinemachine.Utility;
 namespace Cinemachine
 {
     /// <summary>
-    /// This is a CinemachineComponent in the Aim section of the component pipeline.
+    /// This is a CinemachineComponent in the FreeRunAim section of the component pipeline.
     /// Its job is to aim the camera at a target object, with configurable offsets, damping, 
     /// and composition rules.
     /// 

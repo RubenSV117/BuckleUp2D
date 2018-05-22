@@ -79,7 +79,7 @@ namespace Cinemachine
         };
 
         /// <summary>How to set the virtual camera's Up vector.  This will affect the screen composition.</summary>
-        [Tooltip("How to set the virtual camera's Up vector.  This will affect the screen composition, because the camera Aim behaviours will always try to respect the Up direction.")]
+        [Tooltip("How to set the virtual camera's Up vector.  This will affect the screen composition, because the camera FreeRunAim behaviours will always try to respect the Up direction.")]
         public CameraUpMode m_CameraUp = CameraUpMode.Default;
 
         /// <summary>"How aggressively the camera tries to track the target rotation's X angle.  

@@ -29,14 +29,14 @@ public class TouchInputManager : MonoBehaviour
     private Vector2 initialShootTouchPosition;
     private float minDeltaThreshold = .75f;
 
-    private PlayerMovement playerMove;
+    private PlayerMovement _playerMove;
     private WeaponManager weapon;
     private DirectionalArrows directionalArrows;
 
 
     private void Awake()
     {
-        playerMove = GetComponent<PlayerMovement>();
+        _playerMove = GetComponent<PlayerMovement>();
         weapon = GetComponentInChildren<WeaponManager>();
         directionalArrows = GetComponent<DirectionalArrows>();
     }
@@ -60,7 +60,7 @@ public class TouchInputManager : MonoBehaviour
 	            {
 	                Vector2 direction = Vector3.Normalize(delta);
 
-                    playerMove.Move(direction);
+                    _playerMove.Move(direction);
 	                directionalArrows.UpdateMoveArrow(delta);
                     onMoveTouch.Invoke();
                 }
@@ -74,7 +74,7 @@ public class TouchInputManager : MonoBehaviour
 	            if (delta.magnitude > minDeltaThreshold)
 	            {
 	                Vector2 direction = Vector3.Normalize(delta);
-	                playerMove.Move(direction);
+	                _playerMove.Move(direction);
 	            }
 
 	            onMoveRelease.Invoke();

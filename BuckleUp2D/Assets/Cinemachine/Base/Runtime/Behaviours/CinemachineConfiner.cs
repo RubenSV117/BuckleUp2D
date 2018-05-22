@@ -80,7 +80,7 @@ namespace Cinemachine
         {
             if (IsValid)
             {
-                // Move the body before the Aim is calculated
+                // Move the body before the FreeRunAim is calculated
                 if (stage == CinemachineCore.Stage.Body)
                 {
                     Vector3 displacement;

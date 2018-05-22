@@ -12,8 +12,9 @@ using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] protected Transform player;
     [SerializeField] private float runSpeed = 10f;
-    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] protected float walkSpeed = 5f;
     [SerializeField] private UnityEvent onMove;
 
     [SerializeField] private float speedMultiplier = 2f;
@@ -32,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private float rollCooldownTimer;
     private bool canRoll;
 
-    private Rigidbody rigidB;
+    protected Rigidbody rigidB;
 
     private bool canControlMove = true;
 
@@ -65,13 +66,13 @@ public class PlayerMovement : MonoBehaviour
             rigidB.velocity += Vector3.down * runSpeed;
     }
 
-    public void Turn(Vector3 direction)
+    public virtual void Turn(Vector3 direction)
     {
         if(canControlMove)
-            transform.forward = direction;
+            player.forward = direction;
     }
 
-    public void Move(Vector3 direction)
+    public virtual void Move(Vector3 direction)
     {
         if (canControlMove)
         {

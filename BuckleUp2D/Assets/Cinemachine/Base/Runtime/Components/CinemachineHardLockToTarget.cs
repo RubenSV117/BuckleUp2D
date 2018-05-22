@@ -3,7 +3,7 @@
 namespace Cinemachine
 {
     /// <summary>
-    /// This is a CinemachineComponent in the Aim section of the component pipeline.
+    /// This is a CinemachineComponent in the FreeRunAim section of the component pipeline.
     /// Its job is to place the camera on the Follow Target.
     /// </summary>
     [DocumentationSorting(23, DocumentationSortingAttribute.Level.UserRef)]
@@ -16,7 +16,7 @@ namespace Cinemachine
         public override bool IsValid { get { return enabled && FollowTarget != null; } }
 
         /// <summary>Get the Cinemachine Pipeline stage that this component implements.
-        /// Always returns the Aim stage</summary>
+        /// Always returns the FreeRunAim stage</summary>
         public override CinemachineCore.Stage Stage { get { return CinemachineCore.Stage.Body; } }
 
         /// <summary>Applies the composer rules and orients the camera accordingly</summary>

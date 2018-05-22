@@ -34,7 +34,7 @@ namespace Cinemachine.Editor
             BeginInspector();
             if (Target.LookAtTarget == null)
                 EditorGUILayout.HelpBox(
-                    "A LookAt target is required.  Change Aim to Do Nothing if you don't want a LookAt target.", 
+                    "A LookAt target is required.  Change FreeRunAim to Do Nothing if you don't want a LookAt target.", 
                     MessageType.Warning);
 
             // First snapshot some settings

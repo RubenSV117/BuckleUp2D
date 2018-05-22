@@ -28,7 +28,7 @@ namespace Cinemachine
         public override bool IsValid { get { return enabled; } }
 
         /// <summary>Get the Cinemachine Pipeline stage that this component implements.
-        /// Always returns the Aim stage</summary>
+        /// Always returns the FreeRunAim stage</summary>
         public override CinemachineCore.Stage Stage { get { return CinemachineCore.Stage.Aim; } }
 
         private void OnValidate()

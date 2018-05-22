@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Manages player animations
@@ -10,34 +11,26 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
+    [SerializeField] private UnityEvent onAim;
+
     private Animator anim;
-    private Rigidbody rigidB;
-
-    private float verticalFlipThreshold = .8f;
-
-    private string rollRightAnimation = "Roll_Right";
-    private string rollLeftAnimation = "Roll_Left";
-    private string rollUpAnimation = "Roll_Up";
-    private string rollDownAnimation = "Roll_Down";
-    private string moveAnimation = "Move"; // temp bobbing anim for movement
 
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
-        rigidB = GetComponentInParent<Rigidbody>();
     }
 
-    public void Aim(Vector3 moveDirection, Vector3 aimDirection)
+    public void FreeRunAim(Vector3 moveDirection, Vector3 aimDirection)
     {
         //not aiming
         if (aimDirection.magnitude == 0)
         {
-            anim.SetBool("Aiming", false);
+            anim.SetBool("FreeRunAiming", false);
         }
 
         else
         {
-            anim.SetBool("Aiming", true);
+            anim.SetBool("FreeRunAiming", true);
 
             // aiming without moving
             if (Input.GetAxis("HorizontalMove") == 0 && Input.GetAxis("VerticalMove") == 0)
@@ -50,29 +43,39 @@ public class PlayerAnimation : MonoBehaviour
             else
             {
                 // aiming in the direction of movement
-                if (Vector3.Dot(moveDirection, aimDirection) >= .5f)               
+                if (Vector3.Dot(moveDirection, aimDirection) >= .2f)               
                     SetAnimAim(0, 1);
 
                 // aiming in opposite direction of movement
-                else if (Vector3.Dot(moveDirection, aimDirection) <= -.5f)                
+                else if (Vector3.Dot(moveDirection, aimDirection) <= -.2f)                
                     SetAnimAim(0, -1);
                
                 // aiming in to the right of movement
-                else if (Vector3.Dot(transform.right, moveDirection) >= .5f)
+                else if (Vector3.Dot(transform.right, moveDirection) >= .2f)
                     SetAnimAim(1, 0);
 
                 // aiming in to the right of movement
-                else if (Vector3.Dot(transform.right, moveDirection) <= -.5f)
+                else if (Vector3.Dot(transform.right, moveDirection) <= -.2f)
                     SetAnimAim(-1, 0);
             }         
         }
     }
 
+   
     public void SetAnimAim(float x, float z)
     {
         anim.SetFloat("AimX", x);
         anim.SetFloat("AimZ", z);
     }
+
+    public void OverTheShoulderAim(bool otsAiming)
+    {
+        anim.SetBool("OverTheShoulderAiming", otsAiming);
+
+        if(otsAiming)
+            onAim.Invoke();
+    }
+
 
     public void SetSpeed(float speed)
     {

@@ -183,7 +183,7 @@ namespace Cinemachine
                 extra.debugResolutionPath = null;
             }
 
-            // Move the body before the Aim is calculated
+            // Move the body before the FreeRunAim is calculated
             if (stage == CinemachineCore.Stage.Body)
             {
                 if (m_AvoidObstacles)

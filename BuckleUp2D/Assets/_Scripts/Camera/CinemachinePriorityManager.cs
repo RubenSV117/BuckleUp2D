@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Manages cinemachine priorities for blending
+/// Manages cinemachine vcam for blending
 /// 
 /// Ruben Sanchez
 /// 5/21/18
@@ -13,30 +13,37 @@ public class CinemachinePriorityManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera idleCam;
     [SerializeField] private CinemachineVirtualCamera runCam;
     [SerializeField] private CinemachineVirtualCamera sprintCam;
+    [SerializeField] private CinemachineVirtualCamera aimCam;
 
 
     public void Sprint()
     {
         ResetCams();
-        sprintCam.Priority = 1;
+        sprintCam.gameObject.SetActive(true);
     }
 
     public void Run()
     {
         ResetCams();
-        runCam.Priority = 1;
+        runCam.gameObject.SetActive(true);
     }
 
     public void Idle()
     {
         ResetCams();
-        idleCam.Priority = 1;
+        idleCam.gameObject.SetActive(true);
+    }
+
+    public void Aim()
+    {
+        ResetCams();
+        aimCam.gameObject.SetActive(true);
     }
 
     public void ResetCams()
     {
-        idleCam.Priority = 0;
-        runCam.Priority = 0;
-        sprintCam.Priority = 0;
+        idleCam.gameObject.SetActive(false);
+        runCam.gameObject.SetActive(false);
+        sprintCam.gameObject.SetActive(false);
     }
 }

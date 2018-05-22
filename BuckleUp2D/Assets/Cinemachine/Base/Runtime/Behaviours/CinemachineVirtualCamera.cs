@@ -11,7 +11,7 @@ namespace Cinemachine
     /// and it represents a Virtual Camera within the Unity scene.
     /// 
     /// The Virtual Camera will animate its Transform according to the rules contained
-    /// in its CinemachineComponent pipeline (Aim, Body, and Noise).  When the virtual
+    /// in its CinemachineComponent pipeline (FreeRunAim, Body, and Noise).  When the virtual
     /// camera is Live, the Unity camera will assume the position and orientation
     /// of the virtual camera.
     /// 
@@ -56,12 +56,12 @@ namespace Cinemachine
     [AddComponentMenu("Cinemachine/CinemachineVirtualCamera")]
     public class CinemachineVirtualCamera : CinemachineVirtualCameraBase
     {
-        /// <summary>The object that the camera wants to look at (the Aim target).
-        /// The Aim component of the CinemachineComponent pipeline
+        /// <summary>The object that the camera wants to look at (the FreeRunAim target).
+        /// The FreeRunAim component of the CinemachineComponent pipeline
         /// will refer to this target and orient the vcam in accordance with rules and
         /// settings that are provided to it.
         /// If this is null, then the vcam's Transform orientation will be used.</summary>
-        [Tooltip("The object that the camera wants to look at (the Aim target).  If this is null, then the vcam's Transform orientation will define the camera's orientation.")]
+        [Tooltip("The object that the camera wants to look at (the FreeRunAim target).  If this is null, then the vcam's Transform orientation will define the camera's orientation.")]
         [NoSaveDuringPlay]
         public Transform m_LookAt = null;
 
@@ -93,7 +93,7 @@ namespace Cinemachine
         /// necessary to position the Unity camera.  It is the output of this class.</summary>
         override public CameraState State { get { return m_State; } }
 
-        /// <summary>Get the LookAt target for the Aim component in the CinemachinePipeline.
+        /// <summary>Get the LookAt target for the FreeRunAim component in the CinemachinePipeline.
         /// If this vcam is a part of a meta-camera collection, then the owner's target
         /// will be used if the local target is null.</summary>
         override public Transform LookAt

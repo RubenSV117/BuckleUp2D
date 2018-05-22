@@ -5,7 +5,7 @@ using Cinemachine.Utility;
 namespace Cinemachine
 {
     /// <summary>
-    /// This is a CinemachineComponent in the Aim section of the component pipeline.
+    /// This is a CinemachineComponent in the FreeRunAim section of the component pipeline.
     /// Its job is to aim the camera at the vcam's LookAt target object, with 
     /// configurable offsets, damping, and composition rules.
     /// 
@@ -110,7 +110,7 @@ namespace Cinemachine
         public override bool IsValid { get { return enabled && LookAtTarget != null; } }
 
         /// <summary>Get the Cinemachine Pipeline stage that this component implements.
-        /// Always returns the Aim stage</summary>
+        /// Always returns the FreeRunAim stage</summary>
         public override CinemachineCore.Stage Stage { get { return CinemachineCore.Stage.Aim; } }
 
         /// <summary>Internal API for inspector</summary>

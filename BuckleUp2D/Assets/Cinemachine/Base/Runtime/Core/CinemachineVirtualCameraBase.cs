@@ -166,7 +166,7 @@ namespace Cinemachine
         /// <returns>True if the vcam is currently actively influencing the state of this vcam</returns>
         public virtual bool IsLiveChild(ICinemachineCamera vcam) { return false; }
 
-        /// <summary>Get the LookAt target for the Aim component in the CinemachinePipeline.</summary>
+        /// <summary>Get the LookAt target for the FreeRunAim component in the CinemachinePipeline.</summary>
         public abstract Transform LookAt { get; set; }
 
         /// <summary>Get the Follow target for the Body component in the CinemachinePipeline.</summary>

@@ -88,7 +88,7 @@ namespace Cinemachine.PostFX
             //UnityEngine.Profiling.Profiler.BeginSample("CinemachinePostProcessing.PostPipelineStageCallback");
             // Set the focus after the camera has been fully positioned.
             // GML todo: what about collider?
-            if (stage == CinemachineCore.Stage.Aim)
+            if (stage == CinemachineCore.Stage.FreeRunAim)
             {
                 if (!IsValid)
                     DestroyProfileCopy();

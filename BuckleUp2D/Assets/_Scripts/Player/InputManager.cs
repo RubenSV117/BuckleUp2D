@@ -13,27 +13,32 @@ using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
-    private PlayerMovement playerMove;
+    [SerializeField] private PlayerMovement freeRunMovement;
+    [SerializeField] private PlayerMovement aimMovement;
+
     private WeaponManager weapon;
     private SlowDownManager sloMo;
     private PlayerAnimation playerAnim;
     private WeaponManager weaponManager;
 
     private Vector3 currentDirection;
+    private PlayerMovement currentMovement;
+
 
     private void Awake()
     {
-        playerMove = GetComponent<PlayerMovement>();
+        freeRunMovement = GetComponent<PlayerMovement>();
+        currentMovement = freeRunMovement;
         weapon = GetComponentInChildren<WeaponManager>();
         sloMo = GetComponent<SlowDownManager>();
         playerAnim = GetComponent<PlayerAnimation>();
         weaponManager = GetComponentInChildren<WeaponManager>();
     }
 
-    void Update ()
+    void Update()
     {
-  
-#region Move/Fire Directions
+
+        #region Move/Fire Directions
 
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = Input.GetAxis("HorizontalMove");
@@ -47,33 +52,33 @@ public class InputManager : MonoBehaviour
         #endregion
 
         //update current direction, fire direction overrides movement for character flip
-        playerAnim.Aim(moveDirection, aimDirection);
-      
+        playerAnim.FreeRunAim(moveDirection, aimDirection);
+
         if (aimDirection.magnitude != 0)
         {
-            playerMove.Turn(aimDirection);
+            currentMovement.Turn(aimDirection);
             currentDirection = aimDirection;
         }
-            
+
         else if (moveDirection.magnitude != 0)
         {
-            playerMove.Turn(moveDirection);
+            currentMovement.Turn(moveDirection);
             currentDirection = moveDirection;
         }
-       
+
         //move
-        playerMove.Move(moveDirection);
+        currentMovement.Move(moveDirection);
 
         //roll
         if (Input.GetButtonDown("Roll"))
         {
-            if(moveDirection.magnitude != 0)
-                playerMove.Roll(moveDirection);
+            if (moveDirection.magnitude != 0)
+                freeRunMovement.Roll(moveDirection);
 
             else
-                playerMove.Roll(currentDirection);
+                freeRunMovement.Roll(currentDirection);
         }
-        
+
         //fire
         if (Input.GetAxis("Fire") != 0)
         {
@@ -81,19 +86,19 @@ public class InputManager : MonoBehaviour
             {
                 weapon.Attack(aimDirection);
 
-                if(moveDirection.magnitude != 0)
-                    playerAnim.Aim(moveDirection, aimDirection);
+                if (moveDirection.magnitude != 0)
+                    playerAnim.FreeRunAim(moveDirection, aimDirection);
             }
 
             else
             {
                 weapon.Attack(currentDirection);
                 if (moveDirection.magnitude != 0)
-                    playerAnim.Aim(moveDirection, moveDirection);
+                    playerAnim.FreeRunAim(moveDirection, moveDirection);
             }
-               
+
         }
-           
+
         //slowMo
         if (Input.GetButtonDown("SlowMo"))
             sloMo.SlowDown();
@@ -105,9 +110,14 @@ public class InputManager : MonoBehaviour
 
         //sprint
         if (Input.GetButtonDown("Sprint"))
-            playerMove.SetSprint(true);
+            freeRunMovement.SetSprint(true);
 
         if (Input.GetButtonUp("Sprint"))
-            playerMove.SetSprint(false);
+            freeRunMovement.SetSprint(false);
+
+        //aim
+        currentMovement = Input.GetAxis("OTSAim") != 0 ? aimMovement : freeRunMovement;
+
+        playerAnim.OverTheShoulderAim(Input.GetAxis("OTSAim") != 0);
     }
 }
