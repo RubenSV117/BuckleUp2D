@@ -29,8 +29,8 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Update()
     {
-        Vector3 movement = new Vector3(rigidB.velocity.x, 0, rigidB.velocity.z);
-        anim.SetFloat("Speed", movement.magnitude);
+        //Vector3 movement = new Vector3(rigidB.velocity.x, 0, rigidB.velocity.z);
+        //anim.SetFloat("Speed", movement.magnitude);
     }
 
     public void Aim(Vector3 moveDirection, Vector3 aimDirection)
@@ -82,7 +82,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetSpeed(float speed)
     {
-        anim.speed = speed;
+        anim.SetFloat("Speed", speed);
     }
 
     public void SetSprint(bool sprinting)

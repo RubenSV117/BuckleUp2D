@@ -32,37 +32,25 @@ public class PickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other == null) throw new ArgumentNullException("other");
         if (other.CompareTag(playerTag))
             StartCoroutine(Equip(other.gameObject));
     }
 
     public IEnumerator Equip(GameObject obj)
     {
-        yield return new WaitForSeconds(.1f);
-        Animator anim = obj.GetComponentInParent<Animator>();
-        
-        ////wait for idle
-        //if (anim.GetCurrentAnimatorStateInfo(0).IsName(stateToWaitFor))
-        //{
-        //    while (!anim.GetCurrentAnimatorStateInfo(0).IsName(stateToWaitFor))
-        //    {
-        //        yield return null;
-        //    }
-        //}
-
+        yield return new WaitForSeconds(.1f);      
 
         weaponManager = obj.transform.root.GetComponentInChildren<WeaponManager>(); // get weapon manager on the player
         weaponManager.weapon = GetComponentInParent<Weapon>(); // set weapon manager's weapon to this
         weaponRoot.root.SetParent(obj.transform.root.GetComponentInChildren<WeaponManager>().transform); // parent weapon
 
-        //CharacterFlip characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
-        //characterFlip.weaponSprite = GetComponent<SpriteRenderer>();
+        ////CharacterFlip characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
+        ////characterFlip.weaponSprite = GetComponent<SpriteRenderer>();
 
-        weaponRoot.position = weaponManager.transform.position;
-        weaponRoot.eulerAngles = Vector3.zero;
-        weaponRoot.localScale = originalScale;
-
+        //weaponRoot.position = weaponManager.transform.position;
+        //weaponRoot.eulerAngles = Vector3.zero;
+        //weaponRoot.localScale = originalScale;
+        print("ree");
         onPickup.Invoke();
     }
 

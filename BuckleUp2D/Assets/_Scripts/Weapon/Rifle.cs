@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Projectile weapon, can single short or burst 
@@ -34,10 +35,13 @@ public class Rifle : Weapon
     [SerializeField] [Range(1, 20)]
     private float fireRate = 3;
 
-     [Tooltip("Delay in between bursts")]
-     [SerializeField]
-     [Range(0, 3)]
-     private float burstCooldown = .5f;
+    [Tooltip("Delay in between bursts")]
+    [SerializeField]
+    [Range(0, 3)]
+    private float burstCooldown = .5f;
+
+     [SerializeField] private UnityEvent onShoot;
+
 
     private float fireRateTimer;
     private float cooldownTimer;
@@ -62,6 +66,8 @@ public class Rifle : Weapon
     {
         if (onCooldown)
             return;
+
+        onShoot.Invoke();
 
         if (!burst)
         {

@@ -36,7 +36,6 @@ public class InputManager : MonoBehaviour
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = Input.GetAxis("HorizontalMove");
         moveDirection.z = Input.GetAxis("VerticalMove");
-        moveDirection = Vector3.Normalize(moveDirection);
 
         Vector3 aimDirection = Vector3.zero;
         aimDirection.x = Input.GetAxis("HorizontalAim");
@@ -47,7 +46,7 @@ public class InputManager : MonoBehaviour
 
         //update current direction, fire direction overrides movement for character flip
         playerAnim.Aim(moveDirection, aimDirection);
-
+      
         if (aimDirection.magnitude != 0)
         {
             playerMove.Turn(aimDirection);

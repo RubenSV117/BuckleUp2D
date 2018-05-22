@@ -12,7 +12,8 @@ using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float runSpeed = 10f;
+    [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private UnityEvent onMove;
 
     [SerializeField] private float speedMultiplier = 2f;
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if(!GroundDetector.isGrounded)
-            rigidB.velocity += Vector3.down * moveSpeed;
+            rigidB.velocity += Vector3.down * runSpeed;
     }
 
     public void Turn(Vector3 direction)
@@ -79,9 +80,13 @@ public class PlayerMovement : MonoBehaviour
 
             else
                 onIdle.Invoke();
+
+            float speed = direction.magnitude > .5f ? runSpeed : walkSpeed;
             
-            Vector3 moveDirection = isSprinting ? direction * moveSpeed * speedMultiplier : direction * moveSpeed;
-            rigidB.velocity =  new Vector3(moveDirection.x, rigidB.velocity.y, moveDirection.z);
+            Vector3 moveVelocity = isSprinting ? direction * speed * speedMultiplier : direction * speed;
+            rigidB.velocity =  new Vector3(moveVelocity.x, rigidB.velocity.y, moveVelocity.z);
+
+            playerAnim.SetSpeed(direction.magnitude);
         }
     }
 
