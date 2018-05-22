@@ -27,12 +27,6 @@ public class PlayerAnimation : MonoBehaviour
         rigidB = GetComponentInParent<Rigidbody>();
     }
 
-    private void Update()
-    {
-        //Vector3 movement = new Vector3(rigidB.velocity.x, 0, rigidB.velocity.z);
-        //anim.SetFloat("Speed", movement.magnitude);
-    }
-
     public void Aim(Vector3 moveDirection, Vector3 aimDirection)
     {
         //not aiming

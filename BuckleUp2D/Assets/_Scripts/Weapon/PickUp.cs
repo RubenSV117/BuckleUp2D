@@ -41,8 +41,8 @@ public class PickUp : MonoBehaviour
         yield return new WaitForSeconds(.1f);      
 
         weaponManager = obj.transform.root.GetComponentInChildren<WeaponManager>(); // get weapon manager on the player
-        weaponManager.weapon = GetComponentInParent<Weapon>(); // set weapon manager's weapon to this
-        weaponRoot.root.SetParent(obj.transform.root.GetComponentInChildren<WeaponManager>().transform); // parent weapon
+        weaponManager.weapons.Add(GetComponentInParent<Weapon>()); // set weapon manager's weapon to this
+        //weaponRoot.root.SetParent(obj.transform.root.GetComponentInChildren<WeaponManager>().transform); // parent weapon
 
         ////CharacterFlip characterFlip = obj.transform.root.GetComponentInChildren<CharacterFlip>();
         ////characterFlip.weaponSprite = GetComponent<SpriteRenderer>();
