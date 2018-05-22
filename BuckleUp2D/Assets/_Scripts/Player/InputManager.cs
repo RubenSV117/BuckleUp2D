@@ -39,8 +39,8 @@ public class InputManager : MonoBehaviour
         moveDirection = Vector3.Normalize(moveDirection);
 
         Vector3 aimDirection = Vector3.zero;
-        aimDirection.x = Input.GetAxis("HorizontalAttack");
-        aimDirection.z = Input.GetAxis("VerticalAttack");
+        aimDirection.x = Input.GetAxis("HorizontalAim");
+        aimDirection.z = Input.GetAxis("VerticalAim");
         aimDirection = Vector3.Normalize(aimDirection);
 
         #endregion
@@ -98,6 +98,10 @@ public class InputManager : MonoBehaviour
             sloMo.SlowDown();
 
         //sprint
-        playerMove.SetSprint(Input.GetButton("Sprint"));
+        if(Input.GetButtonDown("Sprint"))
+            playerMove.SetSprint(true);
+
+        if (Input.GetButtonUp("Sprint"))
+            playerMove.SetSprint(false);
     }
 }

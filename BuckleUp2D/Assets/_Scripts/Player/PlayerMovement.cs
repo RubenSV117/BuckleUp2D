@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 10f;
 
     [SerializeField] private float speedMultiplier = 2f;
+    [SerializeField] private UnityEvent onSprint;
 
     //Roll
     [Header("Roll")]
@@ -22,9 +23,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rollDuration = 1f;
     [SerializeField] private float rollCooldown = .5f;
     [SerializeField] private UnityEvent onRoll;
-
-    [SerializeField] private UnityEvent onForward; 
-    [SerializeField] private UnityEvent onBack;
 
     private Coroutine rollCoroutine;
     private float rollCooldownTimer;
@@ -75,12 +73,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 moveDirection = isSprinting ? direction * moveSpeed * speedMultiplier : direction * moveSpeed;
             rigidB.velocity =  new Vector3(moveDirection.x, rigidB.velocity.y, moveDirection.z);
-
-            if(Vector3.Dot(Vector3.forward, direction) >= .5f)
-                onForward.Invoke();
-
-            else if (Vector3.Dot(Vector3.forward, direction) <= -.5f)
-                onBack.Invoke();
         }
     }
 
@@ -115,6 +107,9 @@ public class PlayerMovement : MonoBehaviour
     public void SetSprint(bool sprint)
     {
         isSprinting = sprint;
+
+        if(sprint)
+            onSprint.Invoke();
 
         playerAnim.SetSpeed(isSprinting ? speedMultiplier : 1);
             

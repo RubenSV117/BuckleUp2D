@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Name: Main Camera Blends
   m_EditorClassIdentifier: 
   m_CustomBlends:
-  - m_From: VCamForward
-    m_To: VCamBack
+  - m_From: VCamMain
+    m_To: VCamAiming
     m_Blend:
       m_Style: 1
-      m_Time: 2
-  - m_From: VCamBack
-    m_To: VCamForward
+      m_Time: 1
+  - m_From: VCamAiming
+    m_To: VCamMain
     m_Blend:
       m_Style: 1
-      m_Time: 2
+      m_Time: 1
