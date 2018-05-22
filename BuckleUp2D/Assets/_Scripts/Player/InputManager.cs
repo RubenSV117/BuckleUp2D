@@ -17,6 +17,7 @@ public class InputManager : MonoBehaviour
     private WeaponManager weapon;
     private SlowDownManager sloMo;
     private PlayerAnimation playerAnim;
+    private WeaponManager weaponManager;
 
     private Vector3 currentDirection;
 
@@ -26,6 +27,7 @@ public class InputManager : MonoBehaviour
         weapon = GetComponentInChildren<WeaponManager>();
         sloMo = GetComponent<SlowDownManager>();
         playerAnim = GetComponent<PlayerAnimation>();
+        weaponManager = GetComponentInChildren<WeaponManager>();
     }
 
     void Update ()
@@ -96,8 +98,13 @@ public class InputManager : MonoBehaviour
         if (Input.GetButtonDown("SlowMo"))
             sloMo.SlowDown();
 
+        //cycle weapon
+        if (Input.GetButtonDown("CycleWeapon"))
+            weaponManager.CycleWeapons();
+
+
         //sprint
-        if(Input.GetButtonDown("Sprint"))
+        if (Input.GetButtonDown("Sprint"))
             playerMove.SetSprint(true);
 
         if (Input.GetButtonUp("Sprint"))

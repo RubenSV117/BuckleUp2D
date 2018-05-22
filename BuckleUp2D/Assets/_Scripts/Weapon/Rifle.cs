@@ -83,7 +83,14 @@ public class Rifle : Weapon
         }
     }
 
-    public IEnumerator BurstFire(Vector3 direction)
+     public override void Equip(WeaponManager wp)
+     {
+         shootPoint = wp.gunShootPoint;
+         muzzleFlash = wp.gunMuzzleFlash;
+         transform.root.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+     }
+
+     public IEnumerator BurstFire(Vector3 direction)
     {
         for (int i = 0; i < fireBurstCount; i++)
         {
@@ -104,7 +111,7 @@ public class Rifle : Weapon
         Projectile bullet = ObjectPooler.Instance.GetPooledObject(basicBulletTag).GetComponent<Projectile>();
         bullet.transform.position = shootPoint.position;
         bullet.transform.root.gameObject.SetActive(true);
-        bullet.Shoot(transform.root.forward);
+        bullet.Shoot(shootPoint.forward);
     }
 
     public void SetBurst(bool canBurst)

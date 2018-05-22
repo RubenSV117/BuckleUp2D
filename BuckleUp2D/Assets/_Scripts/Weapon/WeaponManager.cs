@@ -11,15 +11,22 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     public List<Weapon> weapons;
+    public Transform gunShootPoint;
+    public ParticleSystem gunMuzzleFlash;
 
     [SerializeField] private int maxWeapons;
+    [SerializeField] private SkinnedMeshRenderer meshRenderer;
 
     private bool canAttack = true;
     private Weapon equippedWeapon;
 
+    
+
+
     private void Awake()
     {
         equippedWeapon = weapons[0];
+        meshRenderer.sharedMesh = equippedWeapon.meshRenderer.sharedMesh;
     }
 
     public void Attack(Vector3 direction)
@@ -29,6 +36,12 @@ public class WeaponManager : MonoBehaviour
             if (equippedWeapon != null)
                 equippedWeapon.Attack(direction);
         }
+    }
+
+    public void CycleWeapons()
+    {
+        equippedWeapon = weapons[(weapons.IndexOf(equippedWeapon) + 1) % weapons.Count];
+        meshRenderer.sharedMesh = equippedWeapon.meshRenderer.sharedMesh;
     }
 
     public void SetCanAttack(bool attack)
