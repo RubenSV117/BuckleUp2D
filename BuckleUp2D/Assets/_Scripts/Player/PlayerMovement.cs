@@ -13,9 +13,12 @@ using UnityEngine.Events;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private UnityEvent onMove;
 
     [SerializeField] private float speedMultiplier = 2f;
     [SerializeField] private UnityEvent onSprint;
+
+    [SerializeField] private UnityEvent onIdle;
 
     //Roll
     [Header("Roll")]
@@ -71,6 +74,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canControlMove)
         {
+            if(direction.magnitude > 0)
+                onMove.Invoke();
+
+            else
+                onIdle.Invoke();
+            
             Vector3 moveDirection = isSprinting ? direction * moveSpeed * speedMultiplier : direction * moveSpeed;
             rigidB.velocity =  new Vector3(moveDirection.x, rigidB.velocity.y, moveDirection.z);
         }
@@ -107,12 +116,10 @@ public class PlayerMovement : MonoBehaviour
     public void SetSprint(bool sprint)
     {
         isSprinting = sprint;
+        playerAnim.SetSprint(sprint);
 
         if(sprint)
             onSprint.Invoke();
-
-        playerAnim.SetSpeed(isSprinting ? speedMultiplier : 1);
-            
     }
 
     public void SetCanControlMove(bool control)

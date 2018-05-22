@@ -84,4 +84,9 @@ public class PlayerAnimation : MonoBehaviour
     {
         anim.speed = speed;
     }
+
+    public void SetSprint(bool sprinting)
+    {
+        anim.SetBool("Sprinting", sprinting);
+    }
 }
