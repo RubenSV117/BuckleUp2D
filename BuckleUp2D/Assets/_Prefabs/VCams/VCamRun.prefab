@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NoiseProfile: {fileID: 11400000, guid: 20e46be82478fa24b90f748044c06b4b, type: 2}
-  m_AmplitudeGain: 0.02
+  m_AmplitudeGain: 0.1
   m_FrequencyGain: 10
 --- !u!114 &114134328517367760
 MonoBehaviour:
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 60
+    FieldOfView: 30
     OrthographicSize: 12.6
     NearClipPlane: 0.1
     FarClipPlane: 5000

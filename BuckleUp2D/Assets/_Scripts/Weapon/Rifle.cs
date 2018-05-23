@@ -10,43 +10,37 @@ using UnityEngine.Events;
 /// </summary>
 
 public class Rifle : Weapon
- {
+{
     public Transform shootPoint;
 
-    [SerializeField]
-    private string basicBulletTag = "BasicBullet";
+    [SerializeField] private string basicBulletTag = "BasicBullet";
 
-    [SerializeField]
-    private ParticleSystem muzzleFlash;
+    [SerializeField] private ParticleSystem muzzleFlash;
 
-    [Header("Auto Mode")]
-    [Tooltip("Shot per second on auto")]
-    [SerializeField] [Range(1, 20)]
+    [Header("Auto Mode")] [Tooltip("Shot per second on auto")] [SerializeField] [Range(1, 20)]
     private float autoFireRate = 5f;
 
     [Header("Burst Mode")] [SerializeField]
     private bool burst;
 
-    [Tooltip("Number of shots in one burst")]
-    [SerializeField] [Range(1, 5)]
+    [Tooltip("Number of shots in one burst")] [SerializeField] [Range(1, 5)]
     private int fireBurstCount = 3;
 
-    [Tooltip("Shots per second in a burst")]
-    [SerializeField] [Range(1, 20)]
+    [Tooltip("Shots per second in a burst")] [SerializeField] [Range(1, 20)]
     private float fireRate = 3;
 
-    [Tooltip("Delay in between bursts")]
-    [SerializeField]
-    [Range(0, 3)]
+    [Tooltip("Delay in between bursts")] [SerializeField] [Range(0, 3)]
     private float burstCooldown = .5f;
 
-     [SerializeField] private UnityEvent onShoot;
+    [SerializeField] private UnityEvent onShoot;
 
 
+    [SerializeField] private Transform aimPoint;
     private float fireRateTimer;
     private float cooldownTimer;
     private bool onCooldown;
     private Coroutine burstFireCoroutine;
+    private WeaponManager weaponManager;
 
     private void Update()
     {
@@ -83,14 +77,16 @@ public class Rifle : Weapon
         }
     }
 
-     public override void Equip(WeaponManager wp)
-     {
-         shootPoint = wp.gunShootPoint;
-         muzzleFlash = wp.gunMuzzleFlash;
-         transform.root.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-     }
+    public override void Equip(WeaponManager wp)
+    {
+        shootPoint = wp.gunShootPoint;
+        muzzleFlash = wp.gunMuzzleFlash;
+        transform.root.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+        aimPoint = wp.aimPoint;
+        weaponManager = wp;
+    }
 
-     public IEnumerator BurstFire(Vector3 direction)
+    public IEnumerator BurstFire(Vector3 direction)
     {
         for (int i = 0; i < fireBurstCount; i++)
         {
@@ -111,7 +107,7 @@ public class Rifle : Weapon
         Projectile bullet = ObjectPooler.Instance.GetPooledObject(basicBulletTag).GetComponent<Projectile>();
         bullet.transform.position = shootPoint.position;
         bullet.transform.root.gameObject.SetActive(true);
-        bullet.Shoot(shootPoint.forward);
+        bullet.Shoot(aimPoint.position - shootPoint.position);
     }
 
     public void SetBurst(bool canBurst)
@@ -119,12 +115,12 @@ public class Rifle : Weapon
         burst = canBurst;
     }
 
-     private void OnDisable()
-     {
-         if (burstFireCoroutine != null)
-         {
-             StopCoroutine(burstFireCoroutine);
-             burstFireCoroutine = null;
-         }
-     }
- }
+    private void OnDisable()
+    {
+        if (burstFireCoroutine != null)
+        {
+            StopCoroutine(burstFireCoroutine);
+            burstFireCoroutine = null;
+        }
+    }
+}

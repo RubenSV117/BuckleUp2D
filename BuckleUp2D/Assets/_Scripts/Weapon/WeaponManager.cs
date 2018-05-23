@@ -13,6 +13,7 @@ public class WeaponManager : MonoBehaviour
     public List<Weapon> weapons;
     public Transform gunShootPoint;
     public ParticleSystem gunMuzzleFlash;
+    public Transform aimPoint;
 
     [SerializeField] private int maxWeapons;
     [SerializeField] private SkinnedMeshRenderer meshRenderer;

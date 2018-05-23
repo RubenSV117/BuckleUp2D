@@ -10,9 +10,17 @@ using UnityEngine.EventSystems;
 
 public class PlayerAimMovement : PlayerMovement
 {
-    [SerializeField] private float sensitivity = 2;
+    [SerializeField] private float xSensitivity = 4;
+    [SerializeField] private float ySensitivity = 3;
     [SerializeField] private bool invertHorizontalAim;
     [SerializeField] private bool invertVerticalAim;
+    [SerializeField] private float maxVerticle = 10;
+    [SerializeField] private float minVerticle = -35;
+
+    private void Update()
+    {
+        playerAnim.OverTheShoulderAim();
+    }
 
     public override void Move(Vector3 direction)
      {
@@ -26,11 +34,13 @@ public class PlayerAimMovement : PlayerMovement
          rigidB.velocity = moveDirection * walkSpeed;
      }
 
-     public override void Turn(Vector3 direction)
-     {
-         player.Rotate(Vector3.up, Input.GetAxis("HorizontalAim") * (invertHorizontalAim ? -sensitivity : sensitivity));
-         player.Rotate(Vector3.right, Input.GetAxis("VerticalAim") * (invertVerticalAim ? sensitivity : -sensitivity));
-     }
+    public override void Turn(Vector3 direction)
+    {
+        player.Rotate(Vector3.up, Input.GetAxis("HorizontalAim") * Time.deltaTime * xSensitivity);
+        player.Rotate(Vector3.right, Input.GetAxis("VerticalAim") * Time.deltaTime * -ySensitivity);
+
+        player.eulerAngles = new Vector3(player.eulerAngles.x, player.eulerAngles.y, 0);
+    }
 
     public void ResetAim()
     {

@@ -21,14 +21,19 @@ MonoBehaviour:
     m_To: VCamRun
     m_Blend:
       m_Style: 1
-      m_Time: 1
+      m_Time: 0.5
   - m_From: '**ANY CAMERA**'
     m_To: VCamIdle
     m_Blend:
       m_Style: 1
-      m_Time: 2
+      m_Time: 0.5
   - m_From: '**ANY CAMERA**'
     m_To: VCamSprint
     m_Blend:
       m_Style: 1
       m_Time: 0.5
+  - m_From: VCamAim
+    m_To: '**ANY CAMERA**'
+    m_Blend:
+      m_Style: 1
+      m_Time: 0.25

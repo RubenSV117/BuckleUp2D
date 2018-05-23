@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     //sprint
     private bool isSprinting;
 
-    private PlayerAnimation playerAnim;
+    protected PlayerAnimation playerAnim;
 
 
     private void Awake()

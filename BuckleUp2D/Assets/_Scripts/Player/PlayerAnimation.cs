@@ -61,7 +61,31 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
 
-   
+    public void OverTheShoulderAim()
+    {
+        if (Input.GetAxis("HorizontalMove") == 0 && Input.GetAxis("VerticalMove") == 0)
+            SetAnimAim(0, 0);
+
+        // forward Movement
+        else if (Input.GetAxis("VerticalMove") > 0)
+            SetAnimAim(0, 1);
+
+        // back movement
+        else if (Input.GetAxis("VerticalMove") < 0)
+            SetAnimAim(0, -1);
+
+        // right movement
+        else if (Input.GetAxis("HorizontalMove") > 0)
+            SetAnimAim(1, 0);
+        
+        //left movment    
+        else if (Input.GetAxis("HorizontalMove") < 0)
+            SetAnimAim(-1, 0);
+
+     
+    }
+
+
     public void SetAnimAim(float x, float z)
     {
         anim.SetFloat("AimX", x);
