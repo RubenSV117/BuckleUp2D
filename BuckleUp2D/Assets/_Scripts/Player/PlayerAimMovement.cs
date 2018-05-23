@@ -12,6 +12,7 @@ public class PlayerAimMovement : PlayerMovement
 {
     [SerializeField] private float xSensitivity = 4;
     [SerializeField] private float ySensitivity = 3;
+
     [SerializeField] private bool invertHorizontalAim;
     [SerializeField] private bool invertVerticalAim;
     [SerializeField] private float maxVerticle = 10;

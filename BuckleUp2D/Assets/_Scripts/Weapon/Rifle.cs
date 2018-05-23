@@ -107,7 +107,7 @@ public class Rifle : Weapon
         Projectile bullet = ObjectPooler.Instance.GetPooledObject(basicBulletTag).GetComponent<Projectile>();
         bullet.transform.position = shootPoint.position;
         bullet.transform.root.gameObject.SetActive(true);
-        bullet.Shoot(aimPoint.position - shootPoint.position);
+        bullet.Shoot(shootPoint.forward); //aimPoint.position - shootPoint.position);
     }
 
     public void SetBurst(bool canBurst)
