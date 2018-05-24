@@ -3,9 +3,6 @@ using UnityEngine.Events;
 
 /// <summary>
 /// Manages controller input
-/// Sends directions to PlayerMovement, WeaponManager
-/// Uses SlowdownManager for slow-mo
-/// 
 /// 
 /// Ruben Sanchez
 /// 5/16/18
@@ -13,115 +10,62 @@ using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement freeRunMovement;
-    [SerializeField] private PlayerMovement aimMovement;
+    [HideInInspector] public Vector3 MoveDirection;
+    [HideInInspector] public Vector3 AimDirection;
 
-    private WeaponManager weapon;
-    private SlowDownManager sloMo;
-    private PlayerAnimation playerAnim;
-    private WeaponManager weaponManager;
+    public delegate void Attack();
+    public event Attack OnAttack;
 
-    private Vector3 currentDirection;
-    private PlayerMovement currentMovement;
+    public delegate void Roll();
+    public event Roll OnRoll;
 
+    public delegate void SlowMo();
+    public event SlowMo OnSlowMo;
 
-    private void Awake()
-    {
-        freeRunMovement = GetComponent<PlayerMovement>();
-        currentMovement = freeRunMovement;
-        weapon = GetComponentInChildren<WeaponManager>();
-        playerAnim = GetComponent<PlayerAnimation>();
-        weaponManager = GetComponentInChildren<WeaponManager>();
-    }
+    public delegate void Aim();
+    public event Aim OnAim;
 
-    private void Start()
-    {
-        sloMo = GameManager.Instance.SlowManager;
-    }
+    public delegate void WeaponCycle();
+    public event WeaponCycle OnWeaponCycle;
+
+    public delegate void SprintStateChange(bool isSprinting);
+    public event SprintStateChange OnSprintChange;
 
     void Update()
     {
+        //normalized move direction
+        MoveDirection = new Vector3(Input.GetAxis("HorizontalMove"), 0, MoveDirection.z = Input.GetAxis("VerticalMove"));
+        MoveDirection = Vector3.Normalize(MoveDirection);
 
-        #region Move/Fire Directions
+        //normalized aim direction
+        AimDirection = new Vector3(Input.GetAxis("HorizontalAim"), 0, Input.GetAxis("VerticalAim"));
+        AimDirection = Vector3.Normalize(AimDirection);
 
-        Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = Input.GetAxis("HorizontalMove");
-        moveDirection.z = Input.GetAxis("VerticalMove");
-
-        Vector3 aimDirection = Vector3.zero;
-        aimDirection.x = Input.GetAxis("HorizontalAim");
-        aimDirection.z = Input.GetAxis("VerticalAim");
-        aimDirection = Vector3.Normalize(aimDirection);
-
-        #endregion
-
-        //update current direction, fire direction overrides movement for character flip
-        playerAnim.FreeRunAim(moveDirection, aimDirection);
-
-        if (aimDirection.magnitude != 0)
-        {
-            currentMovement.Turn(aimDirection);
-            currentDirection = aimDirection;
-        }
-
-        else if (moveDirection.magnitude != 0)
-        {
-            currentMovement.Turn(moveDirection);
-            currentDirection = moveDirection;
-        }
-
-        //move
-        currentMovement.Move(moveDirection);
-
-        //roll
-        if (Input.GetButtonDown("Roll"))
-        {
-            if (moveDirection.magnitude != 0)
-                freeRunMovement.Roll(moveDirection);
-
-            else
-                freeRunMovement.Roll(currentDirection);
-        }
-
-        //fire
-        if (Input.GetAxis("Fire") != 0)
-        {
-            if (aimDirection.magnitude != 0)
-            {
-                weapon.Attack(aimDirection);
-
-                if (moveDirection.magnitude != 0)
-                    playerAnim.FreeRunAim(moveDirection, aimDirection);
-            }
-
-            else
-            {
-                weapon.Attack(currentDirection);
-                if (moveDirection.magnitude != 0)
-                    playerAnim.FreeRunAim(moveDirection, moveDirection);
-            }
-
-        }
-
-        //slowMo
-        if (Input.GetButtonDown("SlowMo"))
-            sloMo.SlowDown();
-
-        //cycle weapon
-        if (Input.GetButtonDown("CycleWeapon"))
-            weaponManager.CycleWeapons();
-
-
-        //sprint
-        if (Input.GetButtonDown("Sprint"))
-            freeRunMovement.SetSprint(true);
-
-        if (Input.GetButtonUp("Sprint"))
-            freeRunMovement.SetSprint(false);
+        //attack
+        if (Input.GetAxis("Attack") != 0)
+            OnAttack.Invoke();
 
         //aim
-        currentMovement = Input.GetAxis("OTSAim") != 0 ? aimMovement : freeRunMovement;
+        if(Input.GetAxis("Aim") != 0 && OnAim != null)
+            OnAim.Invoke();
 
-        playerAnim.OverTheShoulderAim(Input.GetAxis("OTSAim") != 0);
+        //roll
+        if (Input.GetButtonDown("Roll") && OnRoll != null)
+            OnRoll.Invoke();
+
+        //slowMo
+        if (Input.GetButtonDown("SlowMo") && OnSlowMo != null)
+            OnSlowMo.Invoke();
+
+        //cycle weapon
+        if (Input.GetButtonDown("CycleWeapon") && OnWeaponCycle != null)
+            OnWeaponCycle.Invoke();
+
+        //sprint state change
+        if (Input.GetButtonDown("Sprint") && OnSprintChange != null)
+            OnSprintChange.Invoke(true);
+
+        if (Input.GetButtonUp("Sprint") && OnSprintChange != null)
+            OnSprintChange.Invoke(false);
     }
 }

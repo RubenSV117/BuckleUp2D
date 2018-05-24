@@ -11,14 +11,12 @@ using UnityEngine;
 
 public class SlowDownManager : MonoBehaviour
 {
-    public static SlowDownManager Instance;
-
     [SerializeField]
     private float slowScale = .2f;
 
-    private void Awake()
+    private void Start()
     {
-        Instance = this;
+        GameManager.Instance.InputManager.OnSlowMo += SlowDown;
     }
 
     public void SlowDown()
@@ -41,8 +39,4 @@ public class SlowDownManager : MonoBehaviour
         ReturnTime();
     }
 
-
-    private void Update()
-    {
-    }
 }

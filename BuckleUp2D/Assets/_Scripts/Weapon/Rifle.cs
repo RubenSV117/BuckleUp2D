@@ -56,7 +56,7 @@ public class Rifle : Weapon
         }
     }
 
-    public override void Attack(Vector3 direction)
+    public override void Attack()
     {
         if (onCooldown)
             return;
@@ -66,14 +66,14 @@ public class Rifle : Weapon
         if (!burst)
         {
             onCooldown = true;
-            FireSingleShot(direction);
+            FireSingleShot(GameManager.Instance.InputManager.AimDirection);
         }
 
         else
         {
             onCooldown = true;
             if (burstFireCoroutine == null)
-                burstFireCoroutine = StartCoroutine(BurstFire(direction));
+                burstFireCoroutine = StartCoroutine(BurstFire(GameManager.Instance.InputManager.AimDirection));
         }
     }
 

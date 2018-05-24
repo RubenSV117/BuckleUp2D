@@ -21,21 +21,21 @@ public class WeaponManager : MonoBehaviour
     private bool canAttack = true;
     private Weapon equippedWeapon;
 
-    
-
-
     private void Awake()
     {
+        GameManager.Instance.InputManager.OnAttack += Attack;
+        GameManager.Instance.InputManager.OnWeaponCycle += CycleWeapons;
+
         equippedWeapon = weapons[0];
         meshRenderer.sharedMesh = equippedWeapon.meshRenderer.sharedMesh;
     }
 
-    public void Attack(Vector3 direction)
+    public void Attack()
     {
         if (canAttack)
         {
             if (equippedWeapon != null)
-                equippedWeapon.Attack(direction);
+                equippedWeapon.Attack();
         }
     }
 

@@ -47,10 +47,15 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidB = GetComponent<Rigidbody>();
         playerAnim = GetComponent<PlayerAnimation>();
+        GameManager.Instance.InputManager.OnRoll += Roll;
+        GameManager.Instance.InputManager.OnSprintChange += SetSprint;
     }
 
     private void Update()
     {
+        Move(GameManager.Instance.InputManager.MoveDirection);
+        Turn(GameManager.Instance.InputManager.AimDirection);
+
         if (!canRoll)
         {
             rollCooldownTimer += Time.deltaTime;
@@ -96,12 +101,12 @@ public class PlayerMovement : MonoBehaviour
         rigidB.velocity = Vector3.zero;
     }
 
-    public void Roll(Vector3 direction)
+    public void Roll()
     {
         if (canRoll)
         {
             canControlMove = false;
-            rigidB.velocity = direction * rollSpeed;
+            rigidB.velocity = GameManager.Instance.InputManager.MoveDirection * rollSpeed;
 
             if (rollCoroutine == null)
                 rollCoroutine = StartCoroutine(RollCo());

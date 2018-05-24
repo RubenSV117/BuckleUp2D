@@ -13,7 +13,7 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     public SkinnedMeshRenderer meshRenderer;
-    public abstract void Attack(Vector3 direction);
+    public abstract void Attack();
     public abstract void Equip(WeaponManager wp);
 
 }

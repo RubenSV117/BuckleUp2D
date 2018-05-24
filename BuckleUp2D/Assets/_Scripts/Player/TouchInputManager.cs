@@ -105,7 +105,7 @@ public class TouchInputManager : MonoBehaviour
                 if (delta.magnitude > minDeltaThreshold)
                 {
                     Vector2 direction = Vector3.Normalize(delta);
-                    weapon.Attack(direction);
+                    weapon.Attack();
                 }
 
                 onShootRelease.Invoke();

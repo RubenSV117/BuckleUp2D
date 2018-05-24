@@ -10597,6 +10597,7 @@ GameObject:
   - component: {fileID: 655119808}
   - component: {fileID: 655119807}
   - component: {fileID: 655119805}
+  - component: {fileID: 655119806}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -10679,6 +10680,19 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &655119806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 655119803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a718d311011ff47a4a1dd70a7c0e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveDirection: {x: 0, y: 0, z: 0}
+  AimDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &655119807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10704,6 +10718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SlowManager: {fileID: 0}
   RespawnManager: {fileID: 0}
+  InputManager: {fileID: 0}
 --- !u!4 &658823494 stripped
 Transform:
   m_PrefabParentObject: {fileID: 472700, guid: d638ef2ca2fe20c4c9c08e125692d3f4, type: 2}
@@ -16310,13 +16325,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 804430062}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0a718d311011ff47a4a1dd70a7c0e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freeRunMovement: {fileID: 804430072}
-  aimMovement: {fileID: 804430064}
+  MoveDirection: {x: 0, y: 0, z: 0}
+  AimDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &804430067
 MonoBehaviour:
   m_ObjectHideFlags: 0
