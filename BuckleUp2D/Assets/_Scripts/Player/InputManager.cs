@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 /// <summary>
 /// Manages controller input
-/// Sends directions to PlayerMovement, WeaponManager, CharacterFlip
+/// Sends directions to PlayerMovement, WeaponManager
 /// Uses SlowdownManager for slow-mo
 /// 
 /// 
@@ -30,9 +30,13 @@ public class InputManager : MonoBehaviour
         freeRunMovement = GetComponent<PlayerMovement>();
         currentMovement = freeRunMovement;
         weapon = GetComponentInChildren<WeaponManager>();
-        sloMo = GetComponent<SlowDownManager>();
         playerAnim = GetComponent<PlayerAnimation>();
         weaponManager = GetComponentInChildren<WeaponManager>();
+    }
+
+    private void Start()
+    {
+        sloMo = GameManager.Instance.SlowManager;
     }
 
     void Update()

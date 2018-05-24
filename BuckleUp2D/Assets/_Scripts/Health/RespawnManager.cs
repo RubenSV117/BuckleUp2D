@@ -9,7 +9,7 @@ using UnityEngine.Events;
 /// 5/10/18
 /// </summary>
 
-public class Respawn : MonoBehaviour
+public class RespawnManager : MonoBehaviour
  {
      [SerializeField]
      private float respawnTime = 2;
