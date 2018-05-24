@@ -60,7 +60,7 @@ public class TouchInputManager : MonoBehaviour
 	            {
 	                Vector2 direction = Vector3.Normalize(delta);
 
-                    _playerMove.Move(direction);
+                    _playerMove.Move();
 	                directionalArrows.UpdateMoveArrow(delta);
                     onMoveTouch.Invoke();
                 }
@@ -74,7 +74,7 @@ public class TouchInputManager : MonoBehaviour
 	            if (delta.magnitude > minDeltaThreshold)
 	            {
 	                Vector2 direction = Vector3.Normalize(delta);
-	                _playerMove.Move(direction);
+	                _playerMove.Move();
 	            }
 
 	            onMoveRelease.Invoke();

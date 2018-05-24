@@ -23,7 +23,7 @@ public class PlayerAimMovement : PlayerMovement
         playerAnim.OverTheShoulderAim();
     }
 
-    public override void Move(Vector3 direction)
+    public override void Move()
      {
          Vector3 moveDirection = Vector3.zero;
 
@@ -35,7 +35,7 @@ public class PlayerAimMovement : PlayerMovement
          rigidB.velocity = moveDirection * walkSpeed;
      }
 
-    public override void Turn(Vector3 direction)
+    public override void Turn()
     {
         player.Rotate(Vector3.up, Input.GetAxis("HorizontalAim") * Time.deltaTime * xSensitivity);
         player.Rotate(Vector3.right, Input.GetAxis("VerticalAim") * Time.deltaTime * -ySensitivity);

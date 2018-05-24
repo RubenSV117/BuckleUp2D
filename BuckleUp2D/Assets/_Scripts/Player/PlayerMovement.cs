@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected Transform player;
     [SerializeField] private float runSpeed = 10f;
     [SerializeField] protected float walkSpeed = 5f;
+    [SerializeField] protected float turnSpeed = 5f;
     [SerializeField] private UnityEvent onMove;
 
     [SerializeField] private float speedMultiplier = 2f;
@@ -53,8 +54,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        Move(GameManager.Instance.InputManager.MoveDirection);
-        Turn(GameManager.Instance.InputManager.AimDirection);
+        Move();
+        Turn();
 
         if (!canRoll)
         {
@@ -71,25 +72,26 @@ public class PlayerMovement : MonoBehaviour
             rigidB.velocity += Vector3.down * runSpeed;
     }
 
-    public virtual void Turn(Vector3 direction)
+    public virtual void Turn()
     {
         if(canControlMove)
-            player.forward = direction;
+            player.Rotate(Vector3.up, GameManager.Instance.InputManager.AimDirection.x * turnSpeed);
     }
 
-    public virtual void Move(Vector3 direction)
+    public virtual void Move ()
     {
         if (canControlMove)
         {
-            if(direction.magnitude > 0)
-                onMove.Invoke();
+            Vector3 direction = GameManager.Instance.InputManager.MoveDirection;
 
-            else
-                onIdle.Invoke();
+            Vector3 dirRelativeToPlayer = Vector3.zero;
+            dirRelativeToPlayer += direction.x * player.right;
+            dirRelativeToPlayer += direction.z * player.forward;
+            dirRelativeToPlayer = Vector3.Normalize(dirRelativeToPlayer);
 
             float speed = direction.magnitude > .5f ? runSpeed : walkSpeed;
-            
-            Vector3 moveVelocity = isSprinting ? direction * speed * speedMultiplier : direction * speed;
+            Vector3 moveVelocity = isSprinting ? dirRelativeToPlayer * speed * speedMultiplier : dirRelativeToPlayer * speed;
+
             rigidB.velocity =  new Vector3(moveVelocity.x, rigidB.velocity.y, moveVelocity.z);
 
             playerAnim.SetSpeed(direction.magnitude);
