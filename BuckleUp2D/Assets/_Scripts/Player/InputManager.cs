@@ -10,6 +10,9 @@ using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
+    public Vector2 AimSensitivity;
+    public Vector2 AimDamping;
+
     [HideInInspector] public Vector3 MoveDirection;
     [HideInInspector] public Vector3 AimDirection;
 
@@ -32,14 +35,9 @@ public class InputManager : MonoBehaviour
     public event SprintStateChange OnSprintChange;
 
     void Update()
-    {
-        //normalized move direction
-        MoveDirection = new Vector3(Input.GetAxis("HorizontalMove"), 0, MoveDirection.z = Input.GetAxis("VerticalMove"));
-        MoveDirection = Vector3.Normalize(MoveDirection);
-
-        //normalized aim direction
+    { 
+        MoveDirection = new Vector3(Input.GetAxis("HorizontalMove"), 0, Input.GetAxis("VerticalMove"));      
         AimDirection = new Vector3(Input.GetAxis("HorizontalAim"), 0, Input.GetAxis("VerticalAim"));
-        AimDirection = Vector3.Normalize(AimDirection);
 
         //attack
         if (Input.GetAxis("Attack") != 0)

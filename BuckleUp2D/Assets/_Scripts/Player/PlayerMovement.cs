@@ -42,14 +42,22 @@ public class PlayerMovement : MonoBehaviour
     private bool isSprinting;
 
     protected PlayerAnimation playerAnim;
+    private InputManager input;
+    private float turnInput; 
 
 
     private void Awake()
     {
         rigidB = GetComponent<Rigidbody>();
         playerAnim = GetComponent<PlayerAnimation>();
+     
+    }
+
+    private void Start()
+    {
         GameManager.Instance.InputManager.OnRoll += Roll;
         GameManager.Instance.InputManager.OnSprintChange += SetSprint;
+        input = GameManager.Instance.InputManager;
     }
 
     private void Update()
@@ -74,27 +82,31 @@ public class PlayerMovement : MonoBehaviour
 
     public virtual void Turn()
     {
-        if(canControlMove)
-            player.Rotate(Vector3.up, GameManager.Instance.InputManager.AimDirection.x * turnSpeed);
+        if (canControlMove)
+        {
+            turnInput = Mathf.Lerp(turnInput, input.AimDirection.x, 1f / input.AimDamping.x);
+            player.Rotate(Vector3.up, turnInput * turnSpeed);
+        }
+            
     }
 
     public virtual void Move ()
     {
         if (canControlMove)
         {
-            Vector3 direction = GameManager.Instance.InputManager.MoveDirection;
+            Vector3 direction = Vector3.Normalize(input.MoveDirection);
 
-            Vector3 dirRelativeToPlayer = Vector3.zero;
+            Vector3 dirRelativeToPlayer = new Vector3();
             dirRelativeToPlayer += direction.x * player.right;
             dirRelativeToPlayer += direction.z * player.forward;
             dirRelativeToPlayer = Vector3.Normalize(dirRelativeToPlayer);
 
-            float speed = direction.magnitude > .5f ? runSpeed : walkSpeed;
+            float speed = input.MoveDirection.magnitude > .5f ? runSpeed : walkSpeed;
             Vector3 moveVelocity = isSprinting ? dirRelativeToPlayer * speed * speedMultiplier : dirRelativeToPlayer * speed;
 
             rigidB.velocity =  new Vector3(moveVelocity.x, rigidB.velocity.y, moveVelocity.z);
 
-            playerAnim.SetSpeed(direction.magnitude);
+            playerAnim.SetSpeed(input.MoveDirection.magnitude);
         }
     }
 
@@ -108,7 +120,15 @@ public class PlayerMovement : MonoBehaviour
         if (canRoll)
         {
             canControlMove = false;
-            rigidB.velocity = GameManager.Instance.InputManager.MoveDirection * rollSpeed;
+
+            Vector3 direction = Vector3.Normalize(input.MoveDirection);
+
+            Vector3 dirRelativeToPlayer = new Vector3();
+            dirRelativeToPlayer += direction.x * player.right;
+            dirRelativeToPlayer += direction.z * player.forward;
+            dirRelativeToPlayer = Vector3.Normalize(dirRelativeToPlayer);
+
+            rigidB.velocity = dirRelativeToPlayer * rollSpeed;
 
             if (rollCoroutine == null)
                 rollCoroutine = StartCoroutine(RollCo());

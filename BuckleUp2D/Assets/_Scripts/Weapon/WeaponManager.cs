@@ -23,11 +23,14 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.InputManager.OnAttack += Attack;
-        GameManager.Instance.InputManager.OnWeaponCycle += CycleWeapons;
-
         equippedWeapon = weapons[0];
         meshRenderer.sharedMesh = equippedWeapon.meshRenderer.sharedMesh;
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.InputManager.OnAttack += Attack;
+        GameManager.Instance.InputManager.OnWeaponCycle += CycleWeapons;
     }
 
     public void Attack()

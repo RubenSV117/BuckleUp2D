@@ -22,6 +22,10 @@ public class Health : MonoBehaviour
     [SerializeField]
     private UnityEvent onDeath;
 
+    [SerializeField]
+    private UnityEvent onDamage;
+
+
     void Start ()
 	{
 	    currentHealth = startingHealth;
@@ -30,12 +34,14 @@ public class Health : MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
+        onDamage.Invoke();
 
         if (currentHealth <= 0)
-        {
             onDeath.Invoke();
-            body.SetActive(false);
-            currentHealth = startingHealth;
-        }
+    }
+
+    public void ResetHealth()
+    {
+        currentHealth = startingHealth;
     }
 }

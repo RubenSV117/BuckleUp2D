@@ -20,6 +20,11 @@ public class PlayerAnimation : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
+    private void Start()
+    {
+        GameManager.Instance.InputManager.OnAim += OverTheShoulderAim;
+    }
+
     public void FreeRunAim(Vector3 moveDirection, Vector3 aimDirection)
     {
         //not aiming
