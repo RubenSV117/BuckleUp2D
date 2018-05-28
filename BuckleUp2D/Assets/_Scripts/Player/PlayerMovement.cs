@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Controls player movement
+/// Controls player horizontal movement
 /// 
 /// Ruben Sanchez
 /// 5/27/28
@@ -25,22 +23,16 @@ public class PlayerMovement : MonoBehaviour
         mTransform = transform;
     }
 
-    void Update ()
-    {
-        Move();
-        Turn();
-    }
-
-    private void Move()
+    public void Move()
     {
         Vector3 moveDirection = input.MoveDirection.z * mTransform.forward;
         moveDirection += input.MoveDirection.x * mTransform.right;
-        moveDirection = Vector3.Normalize(moveDirection);
 
-        rigidB.velocity = moveDirection * moveSpeed;
+        Vector3 moveVelocity = Vector3.Normalize(moveDirection) * moveSpeed;
+        rigidB.velocity = new Vector3(moveVelocity.x, rigidB.velocity.y, moveVelocity.z);
     }
 
-    private void Turn()
+    public void Turn()
     {
         mTransform.Rotate(Vector3.up, input.AimDirection.x * turnSpeed);
     }

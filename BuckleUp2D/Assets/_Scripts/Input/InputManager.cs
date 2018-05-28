@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour
         AimDirection = new Vector3(Input.GetAxis("HorizontalAim"), 0, Input.GetAxis("VerticalAim"));
 
         //attack
-        if (Input.GetAxis("Attack") != 0)
+        if (Input.GetAxis("Attack") != 0 && OnAttack != null)
             OnAttack.Invoke();
 
         //aim
