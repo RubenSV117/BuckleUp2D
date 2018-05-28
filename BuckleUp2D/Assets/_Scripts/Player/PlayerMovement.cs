@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = input.MoveDirection.z * mTransform.forward;
         moveDirection += input.MoveDirection.x * mTransform.right;
 
-        Vector3 moveVelocity = Vector3.Normalize(moveDirection) * moveSpeed;
+        Vector3 moveVelocity = moveDirection * moveSpeed;
         rigidB.velocity = new Vector3(moveVelocity.x, rigidB.velocity.y, moveVelocity.z);
     }
 
