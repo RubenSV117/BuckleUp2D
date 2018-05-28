@@ -11,11 +11,11 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private InputManager input;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float turnSpeed;
 
     private Rigidbody rigidB;
     private Transform mTransform;
 
+    private float horizontalTurnValue; // value used for spin lerping
 
     private void Awake()
     {
@@ -32,8 +32,9 @@ public class PlayerMovement : MonoBehaviour
         rigidB.velocity = new Vector3(moveVelocity.x, rigidB.velocity.y, moveVelocity.z);
     }
 
-    public void Turn()
+    public void HorizontalTurn()
     {
-        mTransform.Rotate(Vector3.up, input.AimDirection.x * turnSpeed);
+        horizontalTurnValue = Mathf.Lerp(horizontalTurnValue, input.AimDirection.x, Time.deltaTime * (1 / input.AimDamping.x));
+        mTransform.Rotate(Vector3.up, horizontalTurnValue * input.AimSensitivity.x);
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 /// <summary>
 /// Manages controller input
@@ -25,13 +26,16 @@ public class InputManager : MonoBehaviour
     public event SlowMo OnSlowMo;
 
     public delegate void Aim();
-    public event Aim OnAim;
+    public event Aim OnAimBegin;
+    public event Aim OnAimEnd;
 
     public delegate void WeaponCycle();
     public event WeaponCycle OnWeaponCycle;
 
     public delegate void SprintStateChange(bool isSprinting);
     public event SprintStateChange OnSprintChange;
+
+    private bool isAiming;
 
     void Update()
     {
@@ -42,9 +46,20 @@ public class InputManager : MonoBehaviour
         if (Input.GetAxis("Attack") != 0 && OnAttack != null)
             OnAttack.Invoke();
 
-        //aim
-        if (Input.GetAxis("Aim") != 0 && OnAim != null)
-            OnAim.Invoke();
+        //aim begin
+        if (Input.GetAxis("Aim") != 0 && OnAimBegin != null && !isAiming)
+        {
+            isAiming = true;
+            OnAimBegin.Invoke();
+        }
+
+        //aim end
+        if (Input.GetAxis("Aim") == 0 && OnAimEnd != null && isAiming)
+        {
+            isAiming = false;
+            OnAimEnd.Invoke();
+        }
+
 
         //roll
         if (Input.GetButtonDown("Roll") && OnRoll != null)
