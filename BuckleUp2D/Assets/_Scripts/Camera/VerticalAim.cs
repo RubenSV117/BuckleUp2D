@@ -12,15 +12,23 @@ using UnityEngine;
 public class VerticalAim : MonoBehaviour
 {
     public CinemachineVirtualCamera activeCam;
+    public Transform targetTransform;
 
     [SerializeField] private InputManager input;
+    [SerializeField] private float maxHeight;
+    [SerializeField] private float minHeight;
 
-    private float verticalTurnValue;
+    private float verticalValue;
 
     public void VerticalTurn()
     {
-        verticalTurnValue = Mathf.Lerp(verticalTurnValue, input.AimDirection.z, Time.deltaTime * (1 / input.AimDamping.y));
+       
+        targetTransform.localPosition += targetTransform.up * input.AimDirection.z * input.AimSensitivity.y;
 
-       activeCam.LookAt.Rotate(activeCam.LookAt.right, verticalTurnValue * input.AimSensitivity.y);
+        if(targetTransform.localPosition.y > maxHeight)
+            targetTransform.localPosition = new Vector3(targetTransform.localPosition.x, maxHeight, targetTransform.localPosition.z);
+
+        else if (targetTransform.localPosition.y < minHeight)
+            targetTransform.localPosition = new Vector3(targetTransform.localPosition.x, minHeight, targetTransform.localPosition.z);
     }
 }

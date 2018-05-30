@@ -15,18 +15,32 @@ public class PlayerAnimationController : MonoBehaviour
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
+        input.OnSprintChange += SetSprint;
+        input.OnRoll += Roll;
     }
 
-    void Update () 
-	{
-	    // movement
-	    anim.SetBool("moving", input.MoveDirection.magnitude != 0);
+    public void SetMoving()
+    {
+        // movement
+        anim.SetBool("moving", input.MoveDirection.magnitude != 0);
+    }
 
+    public void SetMovementDirection()
+    {
         // move direction
         anim.SetFloat("horizontal", input.MoveDirection.x);
-	    anim.SetFloat("vertical", input.MoveDirection.z);
-
-     
-
+        anim.SetFloat("vertical", input.MoveDirection.z);
     }
+
+    private void SetSprint(bool isSprinting)
+    {
+        anim.SetBool("sprint", isSprinting);
+    }
+
+    public void Roll()
+    {
+        anim.Play("Roll");
+    }
+
+
 }

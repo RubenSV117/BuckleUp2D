@@ -32,8 +32,8 @@ public class InputManager : MonoBehaviour
     public delegate void WeaponCycle();
     public event WeaponCycle OnWeaponCycle;
 
-    public delegate void SprintStateChange(bool isSprinting);
-    public event SprintStateChange OnSprintChange;
+    public delegate void Sprint(bool isSprinting);
+    public event Sprint OnSprintChange;
 
     private bool isAiming;
 
@@ -60,7 +60,6 @@ public class InputManager : MonoBehaviour
             OnAimEnd.Invoke();
         }
 
-
         //roll
         if (Input.GetButtonDown("Roll") && OnRoll != null)
             OnRoll.Invoke();
@@ -73,11 +72,14 @@ public class InputManager : MonoBehaviour
         if (Input.GetButtonDown("CycleWeapon") && OnWeaponCycle != null)
             OnWeaponCycle.Invoke();
 
-        //sprint state change
+        //sprint begin
         if (Input.GetButtonDown("Sprint") && OnSprintChange != null)
             OnSprintChange.Invoke(true);
-
+        
+        //sprint end
         if (Input.GetButtonUp("Sprint") && OnSprintChange != null)
             OnSprintChange.Invoke(false);
+        
+            
     }
 }

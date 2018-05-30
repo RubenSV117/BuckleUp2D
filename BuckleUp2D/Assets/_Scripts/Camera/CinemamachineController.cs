@@ -15,13 +15,15 @@ public class CinemamachineController : MonoBehaviour
     [SerializeField] private GameObject[] vCams;
     [SerializeField] private GameObject defaultCam;
     [SerializeField] private GameObject aimCam;
+    [SerializeField] private GameObject sprintCam;
 
     [SerializeField] private InputManager input;
 
     private void Awake()
     {
-        input.OnAimBegin += ActivateAimBeginCam;
+        input.OnAimBegin += ActivateAimCam;
         input.OnAimEnd += ActivateDefaultCam;
+        input.OnSprintChange += ActivateSprintCam;
     }
 
     void Start () 
@@ -45,8 +47,13 @@ public class CinemamachineController : MonoBehaviour
         ActivateCam(defaultCam);
     }
 
-    public void ActivateAimBeginCam()
+    public void ActivateAimCam()
     {
         ActivateCam(aimCam);
+    }
+
+    public void ActivateSprintCam(bool isSprinting)
+    {
+        ActivateCam(isSprinting ? sprintCam : defaultCam);
     }
 }
