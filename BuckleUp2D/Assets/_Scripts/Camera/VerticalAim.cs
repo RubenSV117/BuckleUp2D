@@ -22,9 +22,10 @@ public class VerticalAim : MonoBehaviour
 
     public void VerticalTurn()
     {
-       
+        // adjust target transform vertically based on input
         targetTransform.localPosition += targetTransform.up * input.AimDirection.z * input.AimSensitivity.y;
 
+        // readjust target transform if out of bounds
         if(targetTransform.localPosition.y > maxHeight)
             targetTransform.localPosition = new Vector3(targetTransform.localPosition.x, maxHeight, targetTransform.localPosition.z);
 

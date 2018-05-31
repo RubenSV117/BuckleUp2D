@@ -15,6 +15,8 @@ public class PlayerAnimationController : MonoBehaviour
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
+
+        // subscribe event methods to input events
         input.OnSprintChange += SetSprint;
         input.OnRoll += Roll;
     }
