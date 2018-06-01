@@ -20,15 +20,16 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("In Seconds")]
     [SerializeField] private float rollLength;
 
+    [SerializeField] private Transform mTransform;
+
     [SerializeField] private UnityEvent OnRollBegin;
     [SerializeField] private UnityEvent OnRollEnd;
 
     [SerializeField] private UnityEvent OnSprintBegin;
     [SerializeField] private UnityEvent OnSprintEnd;
-
+    
     private Rigidbody rigidB;
-    private Transform mTransform;
-
+   
     private float horizontalTurnValue; // value used for spin lerping
     private bool isSprinting;
     private bool canControlMove = true;
@@ -53,8 +54,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 moveDirection = input.MoveDirection.z * mTransform.forward; // move front/back relative to player based on input
 
-            if (!isSprinting) 
-                moveDirection += input.MoveDirection.x * mTransform.right; // add strafing only if not sprinting
+            moveDirection += input.MoveDirection.x * mTransform.right; // add strafing only if not sprinting
 
             Vector3 moveVelocity = moveDirection * (isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed); // apply speed boost if sprinting
             rigidB.velocity = new Vector3(moveVelocity.x, rigidB.velocity.y, moveVelocity.z);

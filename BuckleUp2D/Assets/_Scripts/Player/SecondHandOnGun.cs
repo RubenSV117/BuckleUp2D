@@ -20,9 +20,9 @@ public class SecondHandOnGun : MonoBehaviour
     void Start()
     {
         // Disabling (and initiating) the IK components
-        aim.Disable();
-        ik.Disable();
-        look.Disable();
+        aim.enabled = false;
+        ik.enabled = false;
+        look.enabled = false;
 
         ik.solver.OnPostUpdate += OnPostFBBIK; // Add to the OnPostUpdate delegate of the FBBIK solver
     }
@@ -43,7 +43,7 @@ public class SecondHandOnGun : MonoBehaviour
 
         // Position the left hand on the gun
         leftHand.position = rightHand.bone.TransformPoint(toLeftHandRelative);
-        leftHand.positionWeight = .7f;
+        leftHand.positionWeight = 1;
 
         // Making sure the right hand won't budge during solving
         rightHand.position = rightHand.bone.position;
