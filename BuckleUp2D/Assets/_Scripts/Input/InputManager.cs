@@ -25,9 +25,8 @@ public class InputManager : MonoBehaviour
     public delegate void SlowMo();
     public event SlowMo OnSlowMo;
 
-    public delegate void Aim();
-    public event Aim OnAimBegin;
-    public event Aim OnAimEnd;
+    public delegate void Aim(bool isAiming);
+    public event Aim OnAimChange;
 
     public delegate void WeaponCycle();
     public event WeaponCycle OnWeaponCycle;
@@ -47,17 +46,17 @@ public class InputManager : MonoBehaviour
             OnAttack.Invoke();
 
         //aim begin
-        if (Input.GetAxis("Aim") != 0 && OnAimBegin != null && !isAiming)
+        if (Input.GetAxis("Aim") != 0 && OnAimChange != null && !isAiming)
         {
             isAiming = true;
-            OnAimBegin.Invoke();
+            OnAimChange.Invoke(true);
         }
 
         //aim end
-        if (Input.GetAxis("Aim") == 0 && OnAimEnd != null && isAiming)
+        if (Input.GetAxis("Aim") == 0 && OnAimChange != null && isAiming)
         {
             isAiming = false;
-            OnAimEnd.Invoke();
+            OnAimChange.Invoke(false);
         }
 
         //roll

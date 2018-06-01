@@ -19,6 +19,7 @@ public class PlayerAnimationController : MonoBehaviour
         // subscribe event methods to input events
         input.OnSprintChange += SetSprint;
         input.OnRoll += Roll;
+        input.OnAimChange += Aim;
     }
 
     public void SetMoving()
@@ -42,6 +43,11 @@ public class PlayerAnimationController : MonoBehaviour
     public void Roll()
     {
         anim.Play("Roll");
+    }
+
+    public void Aim(bool isAiming)
+    {
+        anim.SetBool("aiming", isAiming);
     }
 
 
