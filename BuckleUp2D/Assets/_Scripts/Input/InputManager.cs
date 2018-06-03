@@ -34,6 +34,8 @@ public class InputManager : MonoBehaviour
     public delegate void Sprint(bool isSprinting);
     public event Sprint OnSprintChange;
 
+    [Tooltip("Amount of normal sensitivity to use when zoomed aiming")]
+    [SerializeField] private float aimSensitivityMultiplier = .7f;
     private bool isAiming;
 
     void Update()
@@ -50,6 +52,7 @@ public class InputManager : MonoBehaviour
         {
             isAiming = true;
             OnAimChange.Invoke(true);
+            AimSensitivity *= aimSensitivityMultiplier;
         }
 
         //aim end
@@ -57,6 +60,7 @@ public class InputManager : MonoBehaviour
         {
             isAiming = false;
             OnAimChange.Invoke(false);
+            AimSensitivity /= aimSensitivityMultiplier;
         }
 
         //roll
