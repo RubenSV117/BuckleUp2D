@@ -43,7 +43,7 @@ public class SecondHandOnGun : MonoBehaviour
 
         // Position the left hand on the gun
         leftHand.position = rightHand.bone.TransformPoint(toLeftHandRelative);
-        leftHand.positionWeight = 1;
+        leftHand.positionWeight = 1f;
 
         // Making sure the right hand won't budge during solving
         rightHand.position = rightHand.bone.position;

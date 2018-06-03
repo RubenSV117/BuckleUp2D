@@ -25,12 +25,19 @@ public class VerticalAim : MonoBehaviour
     [SerializeField] private float minFollowHeight;
 
     private float verticalValue;
+    private float aimFollowRatio;
+
+    private void Awake()
+    {
+        aimFollowRatio = (maxFollowHeight - minFollowHeight) / (maxAimHeight - minAimHeight);
+    }
+
 
     public void VerticalTurn()
     {
         // adjust target transform vertically based on input
         targetTransform.localPosition += targetTransform.up * input.AimDirection.z * input.AimSensitivity.y;
-        followTransform.localPosition -= targetTransform.up * input.AimDirection.z * .5f * input.AimSensitivity.y;
+        followTransform.localPosition -= targetTransform.up * input.AimDirection.z * (aimFollowRatio) * input.AimSensitivity.y;
 
         // readjust target transform if out of bounds
         if (targetTransform.localPosition.y > maxAimHeight)

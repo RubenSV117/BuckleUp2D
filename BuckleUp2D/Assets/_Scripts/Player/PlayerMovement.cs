@@ -20,13 +20,14 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("In Seconds")]
     [SerializeField] private float rollLength;
 
-    [SerializeField] private Transform mTransform;
+    [SerializeField] private Transform meshTransform;
 
     [SerializeField] private UnityEvent OnRollBegin;
     [SerializeField] private UnityEvent OnRollEnd;
 
     [SerializeField] private UnityEvent OnSprintBegin;
     [SerializeField] private UnityEvent OnSprintEnd;
+
     
     private Rigidbody rigidB;
    
@@ -41,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rigidB = GetComponent<Rigidbody>();
-        mTransform = transform;
+        meshTransform = transform;
 
         // subscribe movement methods to input events
         input.OnSprintChange += SetSprint;
@@ -52,9 +53,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canControlMove) // control deactivated during roll
         {
-            Vector3 moveDirection = input.MoveDirection.z * mTransform.forward; // move front/back relative to player based on input
+            Vector3 moveDirection = input.MoveDirection.z * meshTransform.forward; // move front/back relative to player based on input
 
-            moveDirection += input.MoveDirection.x * mTransform.right; // add strafing only if not sprinting
+            moveDirection += input.MoveDirection.x * meshTransform.right; // add strafing only if not sprinting
 
             Vector3 moveVelocity = moveDirection * (isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed); // apply speed boost if sprinting
             rigidB.velocity = new Vector3(moveVelocity.x, rigidB.velocity.y, moveVelocity.z);
@@ -66,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         if (canControlMove) // turn player horizontally based on input
         {
             horizontalTurnValue = Mathf.Lerp(horizontalTurnValue, input.AimDirection.x, Time.deltaTime * (1 / input.AimDamping.x));
-            mTransform.Rotate(Vector3.up, horizontalTurnValue * input.AimSensitivity.x);
+            meshTransform.Rotate(Vector3.up, horizontalTurnValue * input.AimSensitivity.x);
         }
     }
 

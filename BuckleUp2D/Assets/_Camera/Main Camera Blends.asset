@@ -16,12 +16,12 @@ MonoBehaviour:
     m_To: VCamAim
     m_Blend:
       m_Style: 1
-      m_Time: 0.25
+      m_Time: 0.2
   - m_From: VCamAim
     m_To: VCamDefault
     m_Blend:
       m_Style: 1
-      m_Time: 0.25
+      m_Time: 0.2
   - m_From: '**ANY CAMERA**'
     m_To: VCamSprint
     m_Blend:
