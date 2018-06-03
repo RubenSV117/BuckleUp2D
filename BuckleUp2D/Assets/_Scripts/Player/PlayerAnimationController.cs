@@ -31,8 +31,12 @@ public class PlayerAnimationController : MonoBehaviour
     public void SetMovementDirection()
     {
         // move direction
-        anim.SetFloat("horizontal", input.MoveDirection.x);
-        anim.SetFloat("vertical", input.MoveDirection.z);
+        anim.SetFloat("horizontalMove", input.MoveDirection.x);
+        anim.SetFloat("verticalMove", input.MoveDirection.z);
+
+        // aim direction
+        anim.SetFloat("horizontalAim", input.AimDirection.x);
+        anim.SetFloat("verticalAim", input.AimDirection.z);
     }
 
     private void SetSprint(bool isSprinting)
