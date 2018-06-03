@@ -17,6 +17,8 @@ public class SecondHandOnGun : MonoBehaviour
 
     private Quaternion leftHandRotationRelative;
 
+    private Vector3 toLeftHandRelative;
+
     void Start()
     {
         // Disabling (and initiating) the IK components
@@ -25,16 +27,16 @@ public class SecondHandOnGun : MonoBehaviour
         look.enabled = false;
 
         ik.solver.OnPostUpdate += OnPostFBBIK; // Add to the OnPostUpdate delegate of the FBBIK solver
-    }
 
-    void LateUpdate()
-    {
         // Find out how the left hand is positioned relative to the right hand rotation
-        Vector3 toLeftHandRelative = rightHand.bone.InverseTransformPoint(leftHand.bone.position);
+        toLeftHandRelative = rightHand.bone.InverseTransformPoint(leftHand.bone.position);
 
         // Rotation of the left hand relative to the rotation of the right hand
         leftHandRotationRelative = Quaternion.Inverse(rightHand.bone.rotation) * leftHand.bone.rotation;
+    }
 
+    void LateUpdate()
+    {        
         // Match AimIK target with the LookAtIK target
         aim.solver.IKPosition = look.solver.IKPosition;
 

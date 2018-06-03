@@ -56,8 +56,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        aimIk.enabled = (!isSprinting && !isRolling);
-        secondHandGun.enabled = (!isSprinting && !isRolling);
+        //aimIk.enabled = (!isSprinting && !isRolling);
+        //secondHandGun.enabled = (!isSprinting && !isRolling);
     }
 
     public void Move()
