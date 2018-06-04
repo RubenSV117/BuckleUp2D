@@ -113,6 +113,7 @@ public class ProjectileWeapon : Weapon
 
         // wait for the next burst to be available
         yield return new WaitForSeconds(burstCooldown);
+        onCooldown = false;
         burstFireCoroutine = null;
     }
 

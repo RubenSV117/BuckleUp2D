@@ -25,6 +25,9 @@ public class InputManager : MonoBehaviour
     public delegate void SlowMo();
     public event SlowMo OnSlowMo;
 
+    public delegate void Interact();
+    public event Interact OnInteract;
+
     public delegate void Aim(bool isAiming);
     public event Aim OnAimChange;
 
@@ -82,7 +85,9 @@ public class InputManager : MonoBehaviour
         //sprint end
         if (Input.GetButtonUp("Sprint") && OnSprintChange != null)
             OnSprintChange.Invoke(false);
-        
-            
+
+        //interact
+        if (Input.GetButtonDown("Interact") && OnInteract != null)
+            OnInteract.Invoke();
     }
 }

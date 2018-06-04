@@ -13,6 +13,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private int maxWeapons;
     [SerializeField] private InputManager input;
     [SerializeField] private List<Weapon> weapons;
+    [SerializeField] private Transform attachPoint;
 
     private Weapon equippedWeapon;
 
@@ -27,7 +28,11 @@ public class WeaponManager : MonoBehaviour
         // add weapon to the list if not full and disable it
         if(weapons.Count < maxWeapons)
             weapons.Add(w);
-        
+
+        w.transform.SetParent(attachPoint);
+        w.transform.localPosition = Vector3.zero;
+        w.transform.localEulerAngles = Vector3.zero;
+
         w.gameObject.SetActive(false);
     }
 
@@ -41,7 +46,8 @@ public class WeaponManager : MonoBehaviour
 
     public void Attack()
     {
-        equippedWeapon.Attack();
+        if (equippedWeapon)
+            equippedWeapon.Attack();
     }
 
 
