@@ -10,9 +10,10 @@ using System.Collections.Generic;
 /// </summary>
 public class WeaponManager : MonoBehaviour
 {
+    [SerializeField] private List<Weapon> weapons;
+
     [SerializeField] private int maxWeapons;
     [SerializeField] private InputManager input;
-    [SerializeField] private List<Weapon> weapons;
     [SerializeField] private Transform attachPoint;
 
     private Weapon equippedWeapon;
@@ -20,6 +21,7 @@ public class WeaponManager : MonoBehaviour
     private void Awake()
     {
         input.OnAttack += Attack;
+        input.OnWeaponCycle += CycleWeapon;
         equippedWeapon = weapons[0];
     }
 
@@ -29,6 +31,7 @@ public class WeaponManager : MonoBehaviour
         if(weapons.Count < maxWeapons)
             weapons.Add(w);
 
+        //parent new weapon to attach point
         w.transform.SetParent(attachPoint);
         w.transform.localPosition = Vector3.zero;
         w.transform.localEulerAngles = Vector3.zero;
@@ -38,16 +41,22 @@ public class WeaponManager : MonoBehaviour
 
     public void CycleWeapon()
     {
-        // disable the equipped weapon, set it to the next index on the list and enable the new weapon
+        // unsubscribe and disable the equipped weapon
+        input.OnAttack -= equippedWeapon.Attack;
         equippedWeapon.gameObject.SetActive(false);
+
+
+        // cycle equipped weapon
         equippedWeapon = weapons[(weapons.IndexOf(equippedWeapon) + 1) % weapons.Count];
+
+        // subscribe and enable new equipped weapon
         equippedWeapon.gameObject.SetActive(true);
+        input.OnAttack += equippedWeapon.Attack;
     }
 
     public void Attack()
     {
-        if (equippedWeapon)
-            equippedWeapon.Attack();
+        equippedWeapon.Attack();
     }
 
 

@@ -15,7 +15,7 @@ public class WeaponPickUp : MonoBehaviour
         if (other.gameObject.transform.root.GetComponent<InputManager>() != null && other.gameObject.transform.root.GetComponent<WeaponManager>() != null)
         {
             weaponManger = other.gameObject.transform.root.GetComponent<WeaponManager>();
-            other.gameObject.transform.root.GetComponent<InputManager>().OnInteract += Equip; print("ree");
+            other.gameObject.transform.root.GetComponent<InputManager>().OnInteract += Equip; 
         }
     }
 

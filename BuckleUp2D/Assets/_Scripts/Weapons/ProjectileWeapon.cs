@@ -13,6 +13,7 @@ public class ProjectileWeapon : Weapon
     [SerializeField] private Transform shootPoint;
     [SerializeField] private float range;
     [SerializeField] private int damage;
+    [SerializeField] private LayerMask layersToIgnore;
 
     [Header("Auto Mode")]
     [Tooltip("Shot per second on auto")]
@@ -91,7 +92,7 @@ public class ProjectileWeapon : Weapon
         RaycastHit hit;
         Debug.DrawRay(shootPoint.position, shootPoint.forward * 100, Color.red, 1f);
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~layersToIgnore))
         {
             Instantiate(impactParticle, hit.point, Quaternion.LookRotation(hit.normal));
 
