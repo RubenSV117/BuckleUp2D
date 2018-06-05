@@ -10,6 +10,7 @@
 public class PlayerAnimationController : MonoBehaviour
 {
     [SerializeField] private InputManager input;
+    [SerializeField] private PlayerMovement playerMove;
     private Animator anim;
 
     private void Awake()
@@ -30,9 +31,13 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void SetMovementDirection()
     {
-        // move direction
-        anim.SetFloat("horizontalMove", input.MoveDirection.x);
-        anim.SetFloat("verticalMove", input.MoveDirection.z);
+        // move direction, do not update if currently rolling
+        if (!playerMove.isRolling)
+        {
+            anim.SetFloat("horizontalMove", input.MoveDirection.x);
+            anim.SetFloat("verticalMove", input.MoveDirection.z);
+        }
+       
 
         // aim direction
         anim.SetFloat("horizontalAim", input.AimDirection.x);

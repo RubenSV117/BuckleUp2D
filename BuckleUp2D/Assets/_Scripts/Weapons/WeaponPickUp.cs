@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Manages weapon pick ups
@@ -8,6 +9,8 @@
 /// </summary>
 public class WeaponPickUp : MonoBehaviour
 {
+    [SerializeField] private UnityEvent onPickUp;
+
     private WeaponManager weaponManger;
 
     private void OnTriggerEnter(Collider other)
@@ -31,6 +34,7 @@ public class WeaponPickUp : MonoBehaviour
     public void Equip()
     {
         weaponManger.Equip(GetComponent<Weapon>());
+        onPickUp.Invoke();
     }
 }
 

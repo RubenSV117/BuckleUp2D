@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     private Transform mTransform;
     private float horizontalTurnValue; // value used for spin lerping
     private bool isSprinting;
-    private bool isRolling;
+    public bool isRolling { get; private set; }
     private bool canControlMove = true;
 
     private Coroutine rollCoroutine;

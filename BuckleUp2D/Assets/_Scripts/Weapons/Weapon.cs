@@ -10,7 +10,5 @@ using System.Collections;
 
 public abstract class Weapon : MonoBehaviour
 {
-    [SerializeField] protected GameObject weaponModel;
-
     public abstract void Attack();
 }

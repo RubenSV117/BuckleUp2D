@@ -49,7 +49,12 @@ public class ProjectileWeapon : Weapon
     private bool onCooldown;
     private Coroutine burstFireCoroutine;
 
-    private WeaponManager weaponManager;
+    private void OnDisable()
+    {
+        onCooldown = false;
+        StopAllCoroutines();
+        burstFireCoroutine = null;
+    }
 
     public override void Attack()
     {
@@ -75,15 +80,6 @@ public class ProjectileWeapon : Weapon
                 burstFireCoroutine = StartCoroutine(BurstFire());
         }
     }
-
-    //public override void Equip(WeaponManager wp)
-    //{
-    //    shootPoint = wp.gunShootPoint;
-    //    muzzleFlash = wp.gunMuzzleFlash;
-    //    transform.root.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-    //    aimPoint = wp.aimPoint;
-    //    weaponManager = wp;
-    //}
 
     private void FireSingleShot()
     {

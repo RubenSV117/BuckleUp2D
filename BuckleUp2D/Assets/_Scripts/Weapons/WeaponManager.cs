@@ -31,27 +31,26 @@ public class WeaponManager : MonoBehaviour
         if(weapons.Count < maxWeapons)
             weapons.Add(w);
 
-        //parent new weapon to attach point
+        //parent new weapon to attach point and disable it
         w.transform.SetParent(attachPoint);
         w.transform.localPosition = Vector3.zero;
         w.transform.localEulerAngles = Vector3.zero;
-
         w.gameObject.SetActive(false);
     }
 
     public void CycleWeapon()
     {
-        // unsubscribe and disable the equipped weapon
-        input.OnAttack -= equippedWeapon.Attack;
-        equippedWeapon.gameObject.SetActive(false);
+        if (weapons.Count <= 1)
+            return;
 
+        // disable the equipped weapon
+        equippedWeapon.gameObject.SetActive(false);
 
         // cycle equipped weapon
         equippedWeapon = weapons[(weapons.IndexOf(equippedWeapon) + 1) % weapons.Count];
 
-        // subscribe and enable new equipped weapon
+        // enable new equipped weapon
         equippedWeapon.gameObject.SetActive(true);
-        input.OnAttack += equippedWeapon.Attack;
     }
 
     public void Attack()
