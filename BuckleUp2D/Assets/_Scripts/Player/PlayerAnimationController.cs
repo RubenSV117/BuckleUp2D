@@ -21,6 +21,7 @@ public class PlayerAnimationController : MonoBehaviour
         input.OnSprintChange += SetSprint;
         input.OnRoll += Roll;
         input.OnAimChange += Aim;
+        input.OnAttack += CancelSprint;
     }
 
     public void SetMoving()
@@ -57,6 +58,11 @@ public class PlayerAnimationController : MonoBehaviour
     public void Aim(bool isAiming)
     {
         anim.SetBool("aiming", isAiming);
+    }
+
+    public void CancelSprint()
+    {
+        anim.SetBool("sprint", false);
     }
 
 

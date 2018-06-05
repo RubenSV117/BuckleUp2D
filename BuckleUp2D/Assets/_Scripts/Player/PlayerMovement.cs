@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rigidB;
     private Transform mTransform;
     private float horizontalTurnValue; // value used for spin lerping
-    private bool isSprinting;
+    public bool isSprinting;
     public bool isRolling { get; private set; }
     private bool canControlMove = true;
 
@@ -52,12 +52,13 @@ public class PlayerMovement : MonoBehaviour
         // subscribe movement methods to input events
         input.OnSprintChange += SetSprint;
         input.OnRoll += Roll;
+        input.OnAttack += CancelSprint;
     }
 
     private void Update()
     {
-        aimIk.enabled = (!isSprinting && !isRolling);
-        secondHandGun.enabled = (!isSprinting && !isRolling);
+        //aimIk.enabled = (!isSprinting && !isRolling);
+        //secondHandGun.enabled = (!isSprinting && !isRolling);
     }
 
     public void Move()
@@ -91,6 +92,11 @@ public class PlayerMovement : MonoBehaviour
             OnSprintEnd.Invoke();
 
         this.isSprinting = isSprinting;
+    }
+
+    public void CancelSprint()
+    {
+        isSprinting = false;
     }
 
     public void Roll()
