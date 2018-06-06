@@ -44,13 +44,13 @@ public class WeaponManager : MonoBehaviour
             return;
 
         // disable the equipped weapon
-        equippedWeapon.gameObject.SetActive(false);
+        //equippedWeapon.gameObject.SetActive(false);
 
         // cycle equipped weapon
         equippedWeapon = weapons[(weapons.IndexOf(equippedWeapon) + 1) % weapons.Count];
 
         // enable new equipped weapon
-        equippedWeapon.gameObject.SetActive(true);
+       // equippedWeapon.gameObject.SetActive(true);
     }
 
     public void Attack()

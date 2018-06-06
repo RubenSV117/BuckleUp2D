@@ -22,6 +22,7 @@ public class PlayerAnimationController : MonoBehaviour
         input.OnRoll += Roll;
         input.OnAimChange += Aim;
         input.OnAttack += CancelSprint;
+        input.OnWeaponCycle += WeaponCycle;
     }
 
     public void SetMoving()
@@ -55,6 +56,12 @@ public class PlayerAnimationController : MonoBehaviour
         anim.Play("Roll");
     }
 
+    public void WeaponCycle()
+    {
+        anim.Play("WeaponCycle");
+    }
+
+
     public void Aim(bool isAiming)
     {
         anim.SetBool("aiming", isAiming);
@@ -64,6 +71,5 @@ public class PlayerAnimationController : MonoBehaviour
     {
         anim.SetBool("sprint", false);
     }
-
 
 }
