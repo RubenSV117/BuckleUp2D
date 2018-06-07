@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEditor.Animations;
+using UnityEngine;
 
 /// <summary>
 /// Controls player animations
@@ -11,17 +13,19 @@ public class PlayerAnimationController : MonoBehaviour
 {
     [SerializeField] private InputManager input;
     [SerializeField] private PlayerMovement playerMove;
+
+    private WeaponManager weaponManager;
     private Animator anim;
 
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
+        weaponManager = GetComponent<WeaponManager>();
 
         // subscribe event methods to input events
         input.OnSprintChange += SetSprint;
         input.OnRoll += Roll;
         input.OnAimChange += Aim;
-        input.OnAttack += CancelSprint;
         input.OnWeaponCycle += WeaponCycle;
     }
 
@@ -58,18 +62,12 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void WeaponCycle()
     {
-        anim.Play("WeaponCycle");
+        if(weaponManager.weapons.Count > 1)
+            anim.Play("WeaponCycle", anim.GetLayerIndex("Both Arms"));
     }
-
 
     public void Aim(bool isAiming)
     {
         anim.SetBool("aiming", isAiming);
     }
-
-    public void CancelSprint()
-    {
-        anim.SetBool("sprint", false);
-    }
-
 }

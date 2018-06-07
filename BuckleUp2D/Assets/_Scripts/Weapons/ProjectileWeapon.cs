@@ -9,8 +9,8 @@ using UnityEngine.Events;
 /// 6/3/18
 /// </summary>
 public class ProjectileWeapon : Weapon
-{    
-    [SerializeField] private Transform shootPoint;
+{
+    public Transform shootPoint;
     [SerializeField] private float range;
     [SerializeField] private int damage;
     [SerializeField] private LayerMask layersToIgnore;

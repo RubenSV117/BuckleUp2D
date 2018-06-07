@@ -22,8 +22,8 @@ public class CinemamachineController : MonoBehaviour
     private void Awake()
     {
         // subscribe all camera enabling methods to input manager events
-        input.OnAimChange += AimChange;
-        input.OnSprintChange += ActivateSprintCam;
+        input.OnAimChange += AimCamChange;
+        input.OnSprintChange += SprintCamChange;
     }
 
     void Start () 
@@ -49,13 +49,17 @@ public class CinemamachineController : MonoBehaviour
         ActivateCam(defaultCam);
     }
 
-    public void AimChange(bool isAiming)
+    public void AimCamChange(bool isAiming)
     {
        ActivateCam(isAiming ? aimCam : defaultCam);
     }
 
-    public void ActivateSprintCam(bool isSprinting)
-    {
-        ActivateCam(isSprinting ? sprintCam : defaultCam);
+    public void SprintCamChange(bool isSprinting)
+    { 
+        if(!input.isAiming) // from sprinting to default
+            ActivateCam(isSprinting ? sprintCam : defaultCam);
+
+        else // from sprinting to aiming
+            ActivateCam(aimCam);
     }
 }

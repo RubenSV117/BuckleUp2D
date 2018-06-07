@@ -24,11 +24,9 @@ public class SecondHandOnGun : MonoBehaviour
         // Disabling (and initiating) the IK components
         aim.enabled = false;
         ik.enabled = false;
-        look.enabled = false;
+        //look.enabled = false;
 
         ik.solver.OnPostUpdate += OnPostFBBIK; // Add to the OnPostUpdate delegate of the FBBIK solver
-
-      
     }
 
     void LateUpdate()

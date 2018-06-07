@@ -10,11 +10,12 @@ using System.Collections.Generic;
 /// </summary>
 public class WeaponManager : MonoBehaviour
 {
-    [SerializeField] private List<Weapon> weapons;
+    public List<Weapon> weapons;
 
     [SerializeField] private int maxWeapons;
     [SerializeField] private InputManager input;
-    [SerializeField] private Transform attachPoint;
+    [SerializeField] private Transform attachPoint; // attach point for unequipped weapon
+    [SerializeField] private WeaponModelSwap modelSwap; // on the animator object, used for animation events during weapon swap
 
     private Weapon equippedWeapon;
 
@@ -28,14 +29,16 @@ public class WeaponManager : MonoBehaviour
     public void Equip(Weapon w)
     {
         // add weapon to the list if not full and disable it
-        if(weapons.Count < maxWeapons)
-            weapons.Add(w);
-
+        if (weapons.Count < maxWeapons)
+        {
+            modelSwap.weapons.Add(w.transform); // add to the list for WeaponModelSwap on the animator object
+            weapons.Add(w); // add Weapon script to this list 
+        }
+          
         //parent new weapon to attach point and disable it
         w.transform.SetParent(attachPoint);
         w.transform.localPosition = Vector3.zero;
         w.transform.localEulerAngles = Vector3.zero;
-        w.gameObject.SetActive(false);
     }
 
     public void CycleWeapon()
@@ -43,14 +46,8 @@ public class WeaponManager : MonoBehaviour
         if (weapons.Count <= 1)
             return;
 
-        // disable the equipped weapon
-        //equippedWeapon.gameObject.SetActive(false);
-
         // cycle equipped weapon
         equippedWeapon = weapons[(weapons.IndexOf(equippedWeapon) + 1) % weapons.Count];
-
-        // enable new equipped weapon
-       // equippedWeapon.gameObject.SetActive(true);
     }
 
     public void Attack()

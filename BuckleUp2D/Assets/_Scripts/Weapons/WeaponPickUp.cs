@@ -54,7 +54,8 @@ public class WeaponPickUp : MonoBehaviour
 
     public void Equip()
     {
-        StartCoroutine(EquipCo());
+        weaponManger.Equip(GetComponent<Weapon>()); // equip weapon on the players WeaponManager
+        onPickUp.Invoke();
     }
 
     private IEnumerator EquipCo()
@@ -68,8 +69,7 @@ public class WeaponPickUp : MonoBehaviour
         }
 
 
-        //weaponManger.Equip(GetComponent<Weapon>()); // equip weapon on the players WeaponManager
-        onPickUp.Invoke();
+       
     }
 }
 
