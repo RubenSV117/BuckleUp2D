@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Manages controller input
+/// Manages controller Input
 /// 
 /// Ruben Sanchez
 /// 5/16/18
@@ -10,8 +10,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public Vector2 AimSensitivity;
-    public Vector2 AimDamping;
+    public Vector2 AimSensitivity = new Vector2(6, .6f);
+    public Vector2 AimDamping = new Vector2(.05f, .1f);
 
     [HideInInspector] public Vector3 MoveDirection;
     [HideInInspector] public Vector3 AimDirection;
@@ -38,7 +38,7 @@ public class InputManager : MonoBehaviour
     public event Sprint OnSprintChange;
 
     [Tooltip("Amount of normal sensitivity to use when zoomed aiming")]
-    [SerializeField] private float aimSensitivityMultiplier = .7f;
+    [SerializeField] private float aimSensitivityMultiplier = .2f;
     public bool isAiming;
 
     void Update()

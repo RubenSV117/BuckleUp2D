@@ -50,13 +50,13 @@ namespace Cinemachine
         /// </summary>
         public static bool sShowHiddenObjects = false;
 
-        /// <summary>Delegate for overriding Unity's default input system.  Returns the value
+        /// <summary>Delegate for overriding Unity's default Input system.  Returns the value
         /// of the named axis.</summary>
         public delegate float AxisInputDelegate(string axisName);
 
-        /// <summary>Delegate for overriding Unity's default input system.
+        /// <summary>Delegate for overriding Unity's default Input system.
         /// If you set this, then your delegate will be called instead of
-        /// System.Input.GetAxis(axisName) whenever in-game user input is needed.</summary>
+        /// System.Input.GetAxis(axisName) whenever in-game user Input is needed.</summary>
         public static AxisInputDelegate GetInputAxis = UnityEngine.Input.GetAxis;
 
         /// <summary>List of all active CinemachineBrains.</summary>

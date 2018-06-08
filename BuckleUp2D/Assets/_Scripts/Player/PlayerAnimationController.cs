@@ -4,16 +4,17 @@ using UnityEngine;
 
 /// <summary>
 /// Controls player animations
-/// Gets input info from InputManager
+/// Gets Input info from InputManager
 /// 
 /// Ruben Sanchez
 /// 5/28/19
 /// </summary>
 public class PlayerAnimationController : MonoBehaviour
 {
-    [SerializeField] private InputManager input;
     [SerializeField] private PlayerMovement playerMove;
 
+
+    private InputManager input;
     private WeaponManager weaponManager;
     private Animator anim;
 
@@ -22,11 +23,14 @@ public class PlayerAnimationController : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         weaponManager = GetComponent<WeaponManager>();
 
-        // subscribe event methods to input events
+        input = GameManager.Instance.Input;
+
+        // subscribe event methods to Input events
         input.OnSprintChange += SetSprint;
         input.OnRoll += Roll;
         input.OnAimChange += Aim;
         input.OnWeaponCycle += WeaponCycle;
+
     }
 
     public void SetMoving()

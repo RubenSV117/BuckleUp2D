@@ -14,22 +14,22 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("Vertical axis as defined in the Input Manager")]
 		public FsmString verticalAxis;
 		
-		[Tooltip("Event to send if input is to the left.")]
+		[Tooltip("Event to send if Input is to the left.")]
 		public FsmEvent leftEvent;
 		
-		[Tooltip("Event to send if input is to the right.")]
+		[Tooltip("Event to send if Input is to the right.")]
 		public FsmEvent rightEvent;
 		
-		[Tooltip("Event to send if input is to the up.")]
+		[Tooltip("Event to send if Input is to the up.")]
 		public FsmEvent upEvent;
 		
-		[Tooltip("Event to send if input is to the down.")]
+		[Tooltip("Event to send if Input is to the down.")]
 		public FsmEvent downEvent;
 		
-		[Tooltip("Event to send if input is in any direction.")]
+		[Tooltip("Event to send if Input is in any direction.")]
 		public FsmEvent anyDirection;
 		
-		[Tooltip("Event to send if no axis input (centered).")]
+		[Tooltip("Event to send if no axis Input (centered).")]
 		public FsmEvent noDirection;
 		
 		public override void Reset()

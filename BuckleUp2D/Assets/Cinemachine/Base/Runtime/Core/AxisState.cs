@@ -6,8 +6,8 @@ using UnityEngine.Serialization;
 namespace Cinemachine
 {
     /// <summary>
-    /// Axis state for defining to react to player input.  
-    /// The settings here control the responsiveness of the axis to player input.
+    /// Axis state for defining to react to player Input.  
+    /// The settings here control the responsiveness of the axis to player Input.
     /// </summary>
     [DocumentationSorting(6.4f, DocumentationSortingAttribute.Level.UserRef)]
     [Serializable]
@@ -19,7 +19,7 @@ namespace Cinemachine
         public float Value;
 
         /// <summary>How fast the axis value can travel.  Increasing this number
-        /// makes the behaviour more responsive to joystick input</summary>
+        /// makes the behaviour more responsive to joystick Input</summary>
         [Tooltip("The maximum speed of this axis in units/second")]
         public float m_MaxSpeed;
 
@@ -39,18 +39,18 @@ namespace Cinemachine
         [Tooltip("The name of this axis as specified in Unity Input manager. Setting to an empty string will disable the automatic updating of this axis")]
         public string m_InputAxisName;
 
-        /// <summary>The value of the input axis.  A value of 0 means no input
+        /// <summary>The value of the Input axis.  A value of 0 means no Input
         /// You can drive this directly from a
-        /// custom input system, or you can set the Axis Name and have the value
+        /// custom Input system, or you can set the Axis Name and have the value
         /// driven by the internal Input Manager</summary>
         [NoSaveDuringPlay]
-        [Tooltip("The value of the input axis.  A value of 0 means no input.  You can drive this directly from a custom input system, or you can set the Axis Name and have the value driven by the internal Input Manager")]
+        [Tooltip("The value of the Input axis.  A value of 0 means no Input.  You can drive this directly from a custom Input system, or you can set the Axis Name and have the value driven by the internal Input Manager")]
         public float m_InputAxisValue;
 
-        /// <summary>If checked, then the raw value of the input axis will be inverted 
+        /// <summary>If checked, then the raw value of the Input axis will be inverted 
         /// before it is used.</summary>
         [NoSaveDuringPlay]
-        [Tooltip("If checked, then the raw value of the input axis will be inverted before it is used")]
+        [Tooltip("If checked, then the raw value of the Input axis will be inverted before it is used")]
         public bool m_InvertAxis;
 
         private float mCurrentSpeed;
@@ -106,7 +106,7 @@ namespace Cinemachine
         /// by AxisState.m_AxisName
         /// </summary>
         /// <param name="deltaTime">Delta time in seconds</param>
-        /// <returns>Returns <b>true</b> if this axis' input was non-zero this Update,
+        /// <returns>Returns <b>true</b> if this axis' Input was non-zero this Update,
         /// <b>flase</b> otherwise</returns>
         public bool Update(float deltaTime)
         {

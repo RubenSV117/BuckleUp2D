@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Adjust current Vcam look at height to match aiming input
+/// Adjust current Vcam look at height to match aiming Input
 /// 
 /// Ruben Sanchez
 /// 5/28/18
@@ -17,25 +17,25 @@ public class VerticalAim : MonoBehaviour
     [Tooltip("The 'Follow' Transform for VCams")]
     public Transform followTransform;
 
-    [SerializeField] private InputManager input;
     [SerializeField] private float maxAimHeight;
     [SerializeField] private float minAimHeight;
 
     [SerializeField] private float maxFollowHeight;
     [SerializeField] private float minFollowHeight;
 
+    private InputManager input;
     private float verticalValue;
     private float aimToFollowDistanceRatio; // distance ratio between the follow and aim transforms
 
     private void Awake()
     {
         aimToFollowDistanceRatio = (maxFollowHeight - minFollowHeight) / (maxAimHeight - minAimHeight);
+        input = GameManager.Instance.Input;
     }
-
 
     public void VerticalTurn()
     {
-        // adjust target transform vertically based on input
+        // adjust target transform vertically based on Input
         targetTransform.localPosition += targetTransform.up * input.AimDirection.z * input.AimSensitivity.y;
         followTransform.localPosition -= targetTransform.up * input.AimDirection.z * (aimToFollowDistanceRatio) * input.AimSensitivity.y;
 

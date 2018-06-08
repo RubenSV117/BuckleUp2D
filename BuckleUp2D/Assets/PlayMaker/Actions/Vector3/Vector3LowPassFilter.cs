@@ -10,7 +10,7 @@ namespace HutongGames.PlayMaker.Actions
 	{
 		[RequiredField]
 		[UIHint(UIHint.Variable)]
-		[Tooltip("Vector3 Variable to filter. Should generally come from some constantly updated input, e.g., acceleration.")]
+		[Tooltip("Vector3 Variable to filter. Should generally come from some constantly updated Input, e.g., acceleration.")]
 		public FsmVector3 vector3Variable;
 		[Tooltip("Determines how much influence new changes have. E.g., 0.1 keeps 10 percent of the unfiltered vector and 90 percent of the previously filtered value.")]
 		public FsmFloat filteringFactor;		

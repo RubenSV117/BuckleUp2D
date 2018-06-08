@@ -19,14 +19,14 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The name of the horizontal input axis. See Unity Input Manager.")]
 		public FsmString horizontalAxis;
 		
-		[Tooltip("The name of the vertical input axis. See Unity Input Manager.")]
+		[Tooltip("The name of the vertical Input axis. See Unity Input Manager.")]
 		public FsmString verticalAxis;
 		
 		[Tooltip("Input axis are reported in the range -1 to 1, this multiplier lets you set a new range.")]
 		public FsmFloat multiplier;
 		
 		[RequiredField]
-		[Tooltip("The world plane to map the 2d input onto.")]
+		[Tooltip("The world plane to map the 2d Input onto.")]
 		public AxisPlane mapToPlane;
 		
 		[Tooltip("Make the result relative to a GameObject, typically the main camera.")]

@@ -149,7 +149,7 @@ namespace RootMotion.FinalIK {
 					// Store point for undo
 					Vector3 oldPoint = script.points[i].point;
 					
-					// Manual input for the point position
+					// Manual Input for the point position
 					Inspector.AddVector3(ref script.points[i].point, "Point", script, GUILayout.Width(210));
 					
 					EditorGUILayout.Space();

@@ -48,7 +48,7 @@ namespace ProBuilder2.Examples
 		[Range(0, 3)]
 		public int icoSubdivisions = 2;
 
-		// How far along the normal should each face be extruded when at idle (no audio input).
+		// How far along the normal should each face be extruded when at idle (no audio Input).
 		[Range(0f, 1f)]
 		public float startingExtrusion = .1f;
 

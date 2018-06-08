@@ -4,7 +4,7 @@ namespace Cinemachine
 {
     /// <summary>
     /// This is a CinemachineComponent in the Aim section of the component pipeline.
-    /// Its job is to aim the camera in response to the user's mouse or joystick input.
+    /// Its job is to aim the camera in response to the user's mouse or joystick Input.
     /// 
     /// The composer does not change the camera's position.  It will only pan and tilt the 
     /// camera where it is, in order to get the desired framing.  To move the camera, you have

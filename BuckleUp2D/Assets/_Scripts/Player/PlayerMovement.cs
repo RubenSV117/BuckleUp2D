@@ -12,7 +12,6 @@ using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private InputManager input;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float sprintSpeedMultiplier;
 
@@ -32,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AimIK aimIk;
     [SerializeField] private SecondHandOnGun secondHandGun;
 
-
+    private InputManager input;
     private Rigidbody rigidB;
     private Transform mTransform;
     private float horizontalTurnValue; // value used for spin lerping
@@ -42,14 +41,14 @@ public class PlayerMovement : MonoBehaviour
 
     private Coroutine rollCoroutine;
 
-
-
     private void Awake()
     {
         rigidB = GetComponent<Rigidbody>();
         mTransform = transform;
 
-        // subscribe movement methods to input events
+        input = GameManager.Instance.Input;
+
+        // subscribe movement methods to Input events
         input.OnSprintChange += SetSprint;
         input.OnRoll += Roll;
         input.OnAttack += CancelSprint;
@@ -65,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canControlMove) // control deactivated during roll
         {
-            Vector3 moveDirection = input.MoveDirection.z * mTransform.forward; // move front/back relative to player based on input
+            Vector3 moveDirection = input.MoveDirection.z * mTransform.forward; // move front/back relative to player based on Input
 
             moveDirection += input.MoveDirection.x * mTransform.right; // add strafing only if not sprinting
 
@@ -76,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void HorizontalTurn()
     {
-        if (canControlMove) // turn player horizontally based on input
+        if (canControlMove) // turn player horizontally based on Input
         {
             horizontalTurnValue = Mathf.Lerp(horizontalTurnValue, input.AimDirection.x, Time.deltaTime * (1 / input.AimDamping.x));
             mTransform.Rotate(Vector3.up, horizontalTurnValue * input.AimSensitivity.x);

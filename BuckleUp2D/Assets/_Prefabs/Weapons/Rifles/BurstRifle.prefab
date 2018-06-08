@@ -339,10 +339,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc9131f0caf4cf29ca4c5cf3b49e094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponModel: {fileID: 1148516568386430}
   shootPoint: {fileID: 4689902885025532}
   range: 100
   damage: 1
+  maxReloadAmmo: 126
+  maxClipAmmo: 33
   layersToIgnore:
     serializedVersion: 2
     m_Bits: 2340
@@ -351,7 +352,6 @@ MonoBehaviour:
   fireBurstCount: 3
   fireRate: 15
   burstCooldown: 0.2
-  basicBulletTag: BasicBullet
   muzzleFlash: {fileID: 198661254403152516}
   impactParticle: {fileID: 198038549338707534, guid: be49b2ca4e84a8740b3003d358d93bd3,
     type: 2}
@@ -371,6 +371,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b16d46143ff93a46b66c5a914ae11e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onPickUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!198 &198304420001965370
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -13,17 +13,21 @@ public class WeaponManager : MonoBehaviour
     public List<Weapon> weapons;
 
     [SerializeField] private int maxWeapons;
-    [SerializeField] private InputManager input;
     [SerializeField] private Transform attachPoint; // attach point for unequipped weapon
     [SerializeField] private WeaponModelSwap modelSwap; // on the animator object, used for animation events during weapon swap
 
+    private InputManager input;
     private Weapon equippedWeapon;
 
     private void Awake()
     {
+        equippedWeapon = weapons[0];
+
+        input = GameManager.Instance.Input;
+
+        // subscribe events 
         input.OnAttack += Attack;
         input.OnWeaponCycle += CycleWeapon;
-        equippedWeapon = weapons[0];
     }
 
     public void Equip(Weapon w)
@@ -36,6 +40,7 @@ public class WeaponManager : MonoBehaviour
         }
           
         //parent new weapon to attach point and disable it
+        w.transform.GetComponent<Rigidbody>().isKinematic = true;
         w.transform.SetParent(attachPoint);
         w.transform.localPosition = Vector3.zero;
         w.transform.localEulerAngles = Vector3.zero;

@@ -302,7 +302,7 @@ namespace Cinemachine
         /// <summary>
         /// Adjust the rigOrientation to put the camera within the screen bounds.
         /// If deltaTime >= 0 then damping will be applied.
-        /// Assumes that currentOrientation fwd is such that input rigOrientation's
+        /// Assumes that currentOrientation fwd is such that Input rigOrientation's
         /// local up is NEVER NEVER NEVER pointing downwards, relative to
         /// state.ReferenceUp.  If this condition is violated
         /// then you will see crazy spinning.  That's the symptom.

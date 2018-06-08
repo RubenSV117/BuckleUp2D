@@ -17,18 +17,22 @@ public class CinemamachineController : MonoBehaviour
     [SerializeField] private GameObject aimCam;
     [SerializeField] private GameObject sprintCam;
 
-    [SerializeField] private InputManager input;
+    private InputManager input;
 
     private void Awake()
     {
-        // subscribe all camera enabling methods to input manager events
+        GameManager.Instance.OnLocalPlayerJoined += TargetLocalPlayer;
+
+        input = GameManager.Instance.Input;
+
+        // subscribe all camera enabling methods to Input manager events
         input.OnAimChange += AimCamChange;
         input.OnSprintChange += SprintCamChange;
     }
 
-    void Start () 
-	{
-	    ActivateCam(defaultCam);
+    void Start ()
+    {
+        ActivateCam(defaultCam);
 	}
 
     
@@ -61,5 +65,14 @@ public class CinemamachineController : MonoBehaviour
 
         else // from sprinting to aiming
             ActivateCam(aimCam);
+    }
+
+    public void TargetLocalPlayer(Player p)
+    {
+        foreach (var cam in vCams)
+        {
+            cam.GetComponent<CinemachineVirtualCamera>().Follow = p.FollowTransform;
+            cam.GetComponent<CinemachineVirtualCamera>().m_LookAt = p.AimTransform;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Cinemachine
     /// Follow target object, with offsets and damping.
     /// 
     /// This component is typically used to implement a camera that follows its target.
-    /// It can accept player input from an input device, which allows the player to 
+    /// It can accept player Input from an Input device, which allows the player to 
     /// dynamically control the relationship between the camera and the target, 
     /// for example with a joystick.
     /// 
@@ -20,7 +20,7 @@ namespace Cinemachine
     /// the camera in relationship to the heading, which is by default directly behind the target.
     /// You can control the default relationship by adjusting the Heading Bias setting.
     /// 
-    /// If you attach an input controller to the OrbitalTransposer, then the player can also
+    /// If you attach an Input controller to the OrbitalTransposer, then the player can also
     /// control the way the camera positions itself in relation to the target heading.  This allows
     /// the camera to move to any spot on an orbit around the target.
     /// </summary>
@@ -106,9 +106,9 @@ namespace Cinemachine
             [Tooltip("If checked, will enable automatic recentering of the camera based on the heading definition. If unchecked, recenting is disabled.")]
             public bool m_enabled;
 
-            /// <summary>If no input has been detected, the camera will wait
+            /// <summary>If no Input has been detected, the camera will wait
             /// this long in seconds before moving its heading to the default heading.</summary>
-            [Tooltip("If no input has been detected, the camera will wait this long in seconds before moving its heading to the zero position.")]
+            [Tooltip("If no Input has been detected, the camera will wait this long in seconds before moving its heading to the zero position.")]
             public float m_RecenterWaitTime;
 
             /// <summary>Maximum angular speed of recentering.  Will accelerate into and decelerate out of this</summary>
@@ -148,12 +148,12 @@ namespace Cinemachine
         };
 
         /// <summary>Parameters that control Automating Heading Recentering</summary>
-        [Tooltip("Automatic heading recentering.  The settings here defines how the camera will reposition itself in the absence of player input.")]
+        [Tooltip("Automatic heading recentering.  The settings here defines how the camera will reposition itself in the absence of player Input.")]
         public Recentering m_RecenterToTargetHeading = new Recentering(true, 1, 2);
 
         /// <summary>Axis representing the current heading.  Value is in degrees
         /// and represents a rotation about the up vector</summary>
-        [Tooltip("Heading Control.  The settings here control the behaviour of the camera in response to the player's input.")]
+        [Tooltip("Heading Control.  The settings here control the behaviour of the camera in response to the player's Input.")]
         public AxisState m_XAxis = new AxisState(300f, 2f, 1f, 0f, "Mouse X", true);
 
         // Legacy support

@@ -10,7 +10,7 @@ namespace HutongGames.PlayMaker.Actions
 	{
 		[RequiredField]
 		[UIHint(UIHint.Variable)]
-		[Tooltip("quaternion Variable to filter. Should generally come from some constantly updated input")]
+		[Tooltip("quaternion Variable to filter. Should generally come from some constantly updated Input")]
 		public FsmQuaternion quaternionVariable;
 		[Tooltip("Determines how much influence new changes have. E.g., 0.1 keeps 10 percent of the unfiltered quaternion and 90 percent of the previously filtered value.")]
 		public FsmFloat filteringFactor;		

@@ -6,7 +6,7 @@ namespace HutongGames.PlayMaker.Actions
 {
     [NoActionTargets]
 	[ActionCategory(ActionCategory.Input)]
-	[Tooltip("Transforms 2d input into a 3d world space vector. E.g., can be used to transform input from a touch joystick to a movement vector.")]
+	[Tooltip("Transforms 2d Input into a 3d world space vector. E.g., can be used to transform Input from a touch joystick to a movement vector.")]
 	public class TransformInputToWorldSpace : FsmStateAction
 	{
 		public enum AxisPlane
@@ -17,18 +17,18 @@ namespace HutongGames.PlayMaker.Actions
 		}
 		
 		[UIHint(UIHint.Variable)]
-		[Tooltip("The horizontal input.")]
+		[Tooltip("The horizontal Input.")]
 		public FsmFloat horizontalInput;
 
 		[UIHint(UIHint.Variable)]
-		[Tooltip("The vertical input.")]
+		[Tooltip("The vertical Input.")]
 		public FsmFloat verticalInput;
 		
 		[Tooltip("Input axis are reported in the range -1 to 1, this multiplier lets you set a new range.")]
 		public FsmFloat multiplier;
 		
 		[RequiredField]
-		[Tooltip("The world plane to map the 2d input onto.")]
+		[Tooltip("The world plane to map the 2d Input onto.")]
 		public AxisPlane mapToPlane;
 		
 		[Tooltip("Make the result relative to a GameObject, typically the main camera.")]

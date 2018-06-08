@@ -50,7 +50,7 @@ namespace ProBuilder2.Examples
 				eulerRotation.x += rot_y * orbitSpeed;
 				eulerRotation.y += rot_x * orbitSpeed;
 
-				// idle direction is derived from last user input.
+				// idle direction is derived from last user Input.
 				dir.x = rot_x;
 				dir.y = rot_y;
 				dir.Normalize();

@@ -40,10 +40,10 @@ namespace Cinemachine
         public bool m_ShowCameraFrustum = true;
 
         /// <summary>
-        /// When enabled, the cameras will always respond in real-time to user input and damping, 
+        /// When enabled, the cameras will always respond in real-time to user Input and damping, 
         /// even if the game is running in slow motion
         /// </summary>
-        [Tooltip("When enabled, the cameras will always respond in real-time to user input and damping, even if the game is running in slow motion")]
+        [Tooltip("When enabled, the cameras will always respond in real-time to user Input and damping, even if the game is running in slow motion")]
         public bool m_IgnoreTimeScale = false;
 
         /// <summary>

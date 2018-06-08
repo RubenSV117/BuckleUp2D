@@ -13,6 +13,8 @@ public class ProjectileWeapon : Weapon
     public Transform shootPoint;
     [SerializeField] private float range;
     [SerializeField] private int damage;
+    [SerializeField] private int maxReloadAmmo;
+    [SerializeField] private int maxClipAmmo;
     [SerializeField] private LayerMask layersToIgnore;
 
     [Header("Auto Mode")]
@@ -40,7 +42,6 @@ public class ProjectileWeapon : Weapon
     [Range(0, 3)]
     private float burstCooldown = .5f;
 
-    [SerializeField] private string basicBulletTag = "BasicBullet"; // tag for the bullet object pooling
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] private ParticleSystem impactParticle;
 
@@ -49,11 +50,20 @@ public class ProjectileWeapon : Weapon
     private bool onCooldown;
     private Coroutine burstFireCoroutine;
 
+    private float currentReloadAmmo;
+    private float currentClipAmmo;
+
     private void OnDisable()
     {
         onCooldown = false;
         StopAllCoroutines();
         burstFireCoroutine = null;
+    }
+
+    private void Awake()
+    {
+        currentReloadAmmo = maxReloadAmmo;
+        currentClipAmmo = maxClipAmmo;
     }
 
     public override void Attack()
@@ -83,21 +93,60 @@ public class ProjectileWeapon : Weapon
 
     private void FireSingleShot()
     {
-        muzzleFlash.Play();
-
-        RaycastHit hit;
-        Debug.DrawRay(shootPoint.position, shootPoint.forward * 100, Color.red, 1f);
-
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~layersToIgnore))
+        // if weapon still has ammo in the clip
+        if (currentClipAmmo > 0) 
         {
-            Instantiate(impactParticle, hit.point, Quaternion.LookRotation(hit.normal));
+            muzzleFlash.Play();
 
-            if (hit.transform.GetComponent<Health>())
+            currentClipAmmo--;
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~layersToIgnore))
             {
-                hit.transform.GetComponent<Health>().TakeDamage(damage);
+                Instantiate(impactParticle, hit.point, Quaternion.LookRotation(hit.normal));
+
+                if (hit.transform.GetComponent<Health>())
+                {
+                    hit.transform.GetComponent<Health>().TakeDamage(damage);
+                }
             }
+
+            // if you're out of ammo in the clip but have enough to reload
+            if (currentClipAmmo == 0 && currentReloadAmmo > 0) 
+                Reload();
+        }
+        
+    }
+
+    public void Reload()
+    {
+        // if you still have enough ammo for a full clip
+        if (currentReloadAmmo > maxClipAmmo)
+        {
+            currentReloadAmmo -= (maxClipAmmo - currentClipAmmo); // subtract only the ammo missing from the clip
+            currentClipAmmo = maxClipAmmo;
+        }
+        
+        // else reload the rest of the ammo
+        else
+        {
+            currentClipAmmo = currentReloadAmmo;
+            currentReloadAmmo = 0;
         }
     }
+
+    public void AddAmo(int amount)
+    {
+        // if amount would fill up your max
+        if (currentReloadAmmo + amount >= maxReloadAmmo)
+            currentReloadAmmo = maxReloadAmmo;
+
+        // else just add the amount
+        else
+            currentReloadAmmo += amount;
+    }
+
 
     public IEnumerator BurstFire()
     {
