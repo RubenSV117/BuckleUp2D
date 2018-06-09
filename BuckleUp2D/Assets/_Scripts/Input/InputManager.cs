@@ -13,11 +13,14 @@ public class InputManager : MonoBehaviour
     public Vector2 AimSensitivity = new Vector2(6, .6f);
     public Vector2 AimDamping = new Vector2(.05f, .1f);
 
+    public bool IsAiming;
+
     [HideInInspector] public Vector3 MoveDirection;
     [HideInInspector] public Vector3 AimDirection;
 
     public delegate void Attack();
     public event Attack OnAttack;
+    public event Attack OnAttackEnd;
 
     public delegate void Roll();
     public event Roll OnRoll;
@@ -39,8 +42,9 @@ public class InputManager : MonoBehaviour
 
     [Tooltip("Amount of normal sensitivity to use when zoomed aiming")]
     [SerializeField] private float aimSensitivityMultiplier = .2f;
-    public bool isAiming;
 
+    private bool isAttacking;
+ 
     void Update()
     {
         MoveDirection = new Vector3(Input.GetAxis("HorizontalMove"), 0, Input.GetAxis("VerticalMove"));
@@ -49,23 +53,34 @@ public class InputManager : MonoBehaviour
         //attack
         if (Input.GetAxis("Attack") != 0 && OnAttack != null)
         {
+            if (!isAttacking)
+                isAttacking = true;
+
             OnAttack.Invoke();
             OnSprintChange.Invoke(false); // cancel sprint on attack
         }
-           
+
+        // attack end
+        if (Input.GetAxis("Attack") == 0 && OnAttackEnd != null && isAttacking)
+        {
+            isAttacking = false;
+
+            OnAttackEnd.Invoke();
+        }
+
 
         //aim begin
-        if (Input.GetAxis("Aim") != 0 && OnAimChange != null && !isAiming)
+        if (Input.GetAxis("Aim") != 0 && OnAimChange != null && !IsAiming)
         {
-            isAiming = true;
+            IsAiming = true;
             OnAimChange.Invoke(true);
             AimSensitivity *= aimSensitivityMultiplier;
         }
 
         //aim end
-        if (Input.GetAxis("Aim") == 0 && OnAimChange != null && isAiming)
+        if (Input.GetAxis("Aim") == 0 && OnAimChange != null && IsAiming)
         {
-            isAiming = false;
+            IsAiming = false;
             OnAimChange.Invoke(false);
             AimSensitivity /= aimSensitivityMultiplier;
         }

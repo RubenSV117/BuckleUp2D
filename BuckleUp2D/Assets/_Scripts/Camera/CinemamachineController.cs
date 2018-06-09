@@ -35,7 +35,6 @@ public class CinemamachineController : MonoBehaviour
         ActivateCam(defaultCam);
 	}
 
-    
     // Activate target camera, deactive the rest
     public void ActivateCam(GameObject targetCam)
     {
@@ -60,7 +59,7 @@ public class CinemamachineController : MonoBehaviour
 
     public void SprintCamChange(bool isSprinting)
     { 
-        if(!input.isAiming) // from sprinting to default
+        if(!input.IsAiming) // from sprinting to default
             ActivateCam(isSprinting ? sprintCam : defaultCam);
 
         else // from sprinting to aiming

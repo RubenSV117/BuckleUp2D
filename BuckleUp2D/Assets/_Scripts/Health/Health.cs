@@ -9,9 +9,9 @@ using System.Collections;
 /// </summary>
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int startingHealth;
+    public int startingHealth;
 
-    private int currentHealth;
+    public int currentHealth;
 
     private void Awake()
     {

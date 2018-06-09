@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using RootMotion.FinalIK;
 
 /// <summary>
 /// Manages weapon inventory and cycling
@@ -14,14 +15,19 @@ public class WeaponManager : MonoBehaviour
 
     [SerializeField] private int maxWeapons;
     [SerializeField] private Transform attachPoint; // attach point for unequipped weapon
-    [SerializeField] private WeaponModelSwap modelSwap; // on the animator object, used for animation events during weapon swap
 
+    private WeaponModelSwap modelSwap; // on the animator object, used for animation events during weapon swap
+    private AimIK aimIK;
     private InputManager input;
     private Weapon equippedWeapon;
 
     private void Awake()
     {
+        aimIK = GetComponentInChildren<AimIK>();
+        modelSwap = GetComponentInChildren<WeaponModelSwap>();
+
         equippedWeapon = weapons[0];
+        aimIK.solver.transform = equippedWeapon.aimTransform;
 
         input = GameManager.Instance.Input;
 
@@ -37,13 +43,13 @@ public class WeaponManager : MonoBehaviour
         {
             modelSwap.weapons.Add(w.transform); // add to the list for WeaponModelSwap on the animator object
             weapons.Add(w); // add Weapon script to this list 
+
+            //parent new weapon to attach point and disable it
+            w.transform.GetComponent<Rigidbody>().isKinematic = true;
+            w.transform.SetParent(attachPoint);
+            w.transform.localPosition = Vector3.zero;
+            w.transform.localEulerAngles = Vector3.zero;
         }
-          
-        //parent new weapon to attach point and disable it
-        w.transform.GetComponent<Rigidbody>().isKinematic = true;
-        w.transform.SetParent(attachPoint);
-        w.transform.localPosition = Vector3.zero;
-        w.transform.localEulerAngles = Vector3.zero;
     }
 
     public void CycleWeapon()
@@ -53,13 +59,12 @@ public class WeaponManager : MonoBehaviour
 
         // cycle equipped weapon
         equippedWeapon = weapons[(weapons.IndexOf(equippedWeapon) + 1) % weapons.Count];
+        aimIK.solver.transform = equippedWeapon.aimTransform;
     }
 
     public void Attack()
     {
         equippedWeapon.Attack();
     }
-
-
 
 }

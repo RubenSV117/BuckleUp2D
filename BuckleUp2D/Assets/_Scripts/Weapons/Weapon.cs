@@ -11,4 +11,7 @@ using System.Collections;
 public abstract class Weapon : MonoBehaviour
 {
     public abstract void Attack();
+    public Transform aimTransform; // transform used for aiming IK
+
+    [SerializeField] protected LayerMask layersToIgnore;
 }

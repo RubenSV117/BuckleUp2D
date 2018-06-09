@@ -72,7 +72,7 @@ public class WeaponModelSwap : MonoBehaviour
             w.localEulerAngles = Vector3.zero;
 
             if (w == equippedModel && w.GetComponent<ProjectileWeapon>())
-                aimIk.solver.transform = w.GetComponent<ProjectileWeapon>().shootPoint;
+                aimIk.solver.transform = w.GetComponent<ProjectileWeapon>().aimTransform;
         }
     }
 

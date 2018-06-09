@@ -10,12 +10,10 @@ using UnityEngine.Events;
 /// </summary>
 public class ProjectileWeapon : Weapon
 {
-    public Transform shootPoint;
     [SerializeField] private float range;
     [SerializeField] private int damage;
     [SerializeField] private int maxReloadAmmo;
     [SerializeField] private int maxClipAmmo;
-    [SerializeField] private LayerMask layersToIgnore;
 
     [Header("Auto Mode")]
     [Tooltip("Shot per second on auto")]

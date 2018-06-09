@@ -292,7 +292,7 @@ MeshCollider:
   m_GameObject: {fileID: 1382406224006882}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: -1
@@ -339,14 +339,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc9131f0caf4cf29ca4c5cf3b49e094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootPoint: {fileID: 4694112535854152}
+  aimTransform: {fileID: 0}
+  layersToIgnore:
+    serializedVersion: 2
+    m_Bits: 2340
   range: 100
   damage: 1
   maxReloadAmmo: 32
   maxClipAmmo: 128
-  layersToIgnore:
-    serializedVersion: 2
-    m_Bits: 2340
   autoFireRate: 15
   burst: 0
   fireBurstCount: 3

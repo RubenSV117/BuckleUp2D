@@ -35,8 +35,9 @@ public class WeaponPickUp : MonoBehaviour
 
     public void Equip()
     {
-        GameManager.Instance.Input.OnInteract -= Equip; // unsubscribe once its equiped
-        weaponManger.Equip(GetComponent<Weapon>()); // equip weapon on the players WeaponManager
+        if (weaponManger)
+            weaponManger.Equip(GetComponent<Weapon>()); // equip weapon on the players WeaponManager
+
         onPickUp.Invoke();
     }
 }
