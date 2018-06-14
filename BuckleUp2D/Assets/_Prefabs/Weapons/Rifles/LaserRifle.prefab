@@ -549,7 +549,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2, z: 0.32}
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0.01, z: 0}
 --- !u!114 &114190741110993454
 MonoBehaviour:
@@ -585,8 +585,8 @@ MonoBehaviour:
   chargeTime: 2
   range: 100
   laser: {fileID: 120627102742651646}
-  chargeStartLaserWidth: 0.1
-  chargeEndLaserWidth: 0.5
+  chargeStartLaserWidth: 0.05
+  chargeEndLaserWidth: 0.3
 --- !u!120 &120627102742651646
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -627,7 +627,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.1
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:
