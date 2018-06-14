@@ -100,7 +100,7 @@ public class ProjectileWeapon : Weapon
 
             RaycastHit hit;
 
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~layersToIgnore))
+            if (Physics.Raycast(transform.root.position, muzzleFlash.transform.root.forward, out hit, range, ~layersToIgnore))
             {
                 Instantiate(impactParticle, hit.point, Quaternion.LookRotation(hit.normal));
 

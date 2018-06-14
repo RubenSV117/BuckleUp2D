@@ -20,8 +20,6 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("In Seconds")]
     [SerializeField] private float rollLength;
 
-    
-
     [SerializeField] private UnityEvent OnRollBegin;
     [SerializeField] private UnityEvent OnRollEnd;
 
@@ -31,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AimIK aimIk;
     [SerializeField] private SecondHandOnGun secondHandGun;
 
-    private InputManager input;
+    private TouchInputManager input;
     private Rigidbody rigidB;
     private Transform mTransform;
     private float horizontalTurnValue; // value used for spin lerping
@@ -54,32 +52,26 @@ public class PlayerMovement : MonoBehaviour
         input.OnAttack += CancelSprint;
     }
 
-    private void Update()
-    {
-        aimIk.enabled = (!isSprinting && !isRolling);
-        secondHandGun.enabled = (!isSprinting && !isRolling);
-    }
-
     public void Move()
     {
         if (canControlMove) // control deactivated during roll
         {
-            Vector3 moveDirection = input.MoveDirection.z * mTransform.forward; // move front/back relative to player based on Input
+            //Vector3 moveDirection = input.MoveDirection.z * mTransform.forward; // move front/back relative to player based on Input
 
-            moveDirection += input.MoveDirection.x * mTransform.right; // add strafing only if not sprinting
+            //moveDirection += input.MoveDirection.x * mTransform.right; // add strafing only if not sprinting
 
-            Vector3 moveVelocity = moveDirection * (isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed); // apply speed boost if sprinting
+            Vector3 moveVelocity = input.MoveDirection * (isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed); // apply speed boost if sprinting
             rigidB.velocity = new Vector3(moveVelocity.x, rigidB.velocity.y, moveVelocity.z);
         }
     }
 
     public void HorizontalTurn()
     {
-        if (canControlMove) // turn player horizontally based on Input
-        {
-            horizontalTurnValue = Mathf.Lerp(horizontalTurnValue, input.AimDirection.x, Time.deltaTime * (1 / input.AimDamping.x));
-            mTransform.Rotate(Vector3.up, horizontalTurnValue * input.AimSensitivity.x);
-        }
+        if (input.AimDirection.magnitude != 0)
+            mTransform.forward = input.AimDirection;
+
+        else if (input.MoveDirection.magnitude != 0)
+            mTransform.forward = input.MoveDirection;
     }
 
     public void SetSprint(bool isSprinting)

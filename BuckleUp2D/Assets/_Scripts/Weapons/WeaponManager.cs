@@ -17,17 +17,14 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private Transform attachPoint; // attach point for unequipped weapon
 
     private WeaponModelSwap modelSwap; // on the animator object, used for animation events during weapon swap
-    private AimIK aimIK;
-    private InputManager input;
+    private TouchInputManager input;
     private Weapon equippedWeapon;
 
     private void Awake()
     {
-        aimIK = GetComponentInChildren<AimIK>();
         modelSwap = GetComponentInChildren<WeaponModelSwap>();
 
         equippedWeapon = weapons[0];
-        aimIK.solver.transform = equippedWeapon.aimTransform;
 
         input = GameManager.Instance.Input;
 
@@ -59,7 +56,6 @@ public class WeaponManager : MonoBehaviour
 
         // cycle equipped weapon
         equippedWeapon = weapons[(weapons.IndexOf(equippedWeapon) + 1) % weapons.Count];
-        aimIK.solver.transform = equippedWeapon.aimTransform;
     }
 
     public void Attack()

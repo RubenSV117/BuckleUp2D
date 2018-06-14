@@ -24,7 +24,7 @@ public class GameManager
             {
                 mInstance = new GameManager();
                 mInstance.gameObj = new GameObject("GameManager");
-                mInstance.gameObj.AddComponent<InputManager>();
+                mInstance.gameObj.AddComponent<TouchInputManager>();
             }
 
             return mInstance;
@@ -49,13 +49,13 @@ public class GameManager
     }
 
     private GameObject gameObj;
-    private InputManager mInput;
-    public InputManager Input
+    private TouchInputManager mInput;
+    public TouchInputManager Input
     {
         get
         {
             if (mInput == null)
-                mInput = gameObj.GetComponent<InputManager>();
+                mInput = gameObj.GetComponent<TouchInputManager>();
 
             return mInput;
         }

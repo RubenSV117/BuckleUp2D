@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEditor.Animations;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Controls player animations
@@ -14,7 +12,7 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private PlayerMovement playerMove;
 
 
-    private InputManager input;
+    private TouchInputManager input;
     private WeaponManager weaponManager;
     private Animator anim;
 

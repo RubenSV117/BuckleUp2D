@@ -30,7 +30,7 @@ public class VerticalAim : MonoBehaviour
     private void Awake()
     {
         aimToFollowDistanceRatio = (maxFollowHeight - minFollowHeight) / (maxAimHeight - minAimHeight);
-        input = GameManager.Instance.Input;
+        //input = GameManager.Instance.Input;
     }
 
     public void VerticalTurn()

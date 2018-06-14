@@ -17,7 +17,7 @@ public class CinemamachineController : MonoBehaviour
     [SerializeField] private GameObject aimCam;
     [SerializeField] private GameObject sprintCam;
 
-    private InputManager input;
+    private TouchInputManager input;
 
     private void Awake()
     {
