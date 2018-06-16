@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AimIK aimIk;
     [SerializeField] private SecondHandOnGun secondHandGun;
 
-    private TouchInputManager input;
+    private InputManager input;
     private Rigidbody rigidB;
     private Transform mTransform;
     private float horizontalTurnValue; // value used for spin lerping
@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
             //moveDirection += input.MoveDirection.x * mTransform.right; // add strafing only if not sprinting
 
             Vector3 moveVelocity = input.MoveDirection * (isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed); // apply speed boost if sprinting
-            rigidB.velocity = new Vector3(moveVelocity.x, rigidB.velocity.y, moveVelocity.z);
+            rigidB.velocity = new Vector2(moveVelocity.x, moveVelocity.z);
         }
     }
 

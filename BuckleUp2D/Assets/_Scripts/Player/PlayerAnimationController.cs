@@ -12,7 +12,7 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private PlayerMovement playerMove;
 
 
-    private TouchInputManager input;
+    private InputManager input;
     private WeaponManager weaponManager;
     private Animator anim;
 

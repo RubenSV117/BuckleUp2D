@@ -44,9 +44,72 @@ public class InputManager : MonoBehaviour
     [SerializeField] private float aimSensitivityMultiplier = .2f;
 
     private bool isAttacking;
- 
+
+    private Vector2 initialMoveTouchPosition;
+    private Vector2 initialShootTouchPosition;
+    private float minDeltaThreshold = .75f;
+
     void Update()
     {
+        // Touch Input
+#if UNITY_ANDROID || UNITY_IOS
+        {
+
+
+
+            // Manage current touches
+            foreach (Touch touch in Input.touches)
+            {
+                // initial left side touch for movement
+                if (touch.phase == TouchPhase.Began && Camera.main.ScreenToViewportPoint(touch.position).x < .5f)
+                {
+                    initialMoveTouchPosition = touch.position;
+                }
+
+                // movement touch dragged passed threshold
+                if ((touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved) &&
+                    Camera.main.ScreenToViewportPoint(touch.position).x < .5f)
+                {
+                    Vector2 delta = touch.position - initialMoveTouchPosition;
+
+                    MoveDirection = delta.magnitude > minDeltaThreshold
+                        ? Vector3.Normalize(new Vector3(delta.x, 0, delta.y))
+                        : Vector3.zero;
+                }
+
+                // release of move touch
+                else if (touch.phase == TouchPhase.Ended && Camera.main.ScreenToViewportPoint(touch.position).x < .5f)
+                    MoveDirection = Vector3.zero;
+
+
+                // initial right side touch for aiming
+                else if (touch.phase == TouchPhase.Began && Camera.main.ScreenToViewportPoint(touch.position).x > .5f)
+                {
+                    initialShootTouchPosition = touch.position;
+                }
+
+                // aim touch dragged passed threshold
+                if (touch.phase == TouchPhase.Moved && Camera.main.ScreenToViewportPoint(touch.position).x > .5f)
+                {
+                    Vector2 delta = touch.position - initialShootTouchPosition;
+
+                    AimDirection = delta.magnitude > minDeltaThreshold
+                        ? Vector3.Normalize(new Vector3(delta.x, 0, delta.y))
+                        : Vector3.zero;
+
+                    OnAttack.Invoke();
+
+                }
+
+                // release of aim touch
+                else if (touch.phase == TouchPhase.Ended && Camera.main.ScreenToViewportPoint(touch.position).x > .5f)
+                    AimDirection = Vector3.zero;
+            }
+
+        }
+        // Contoller/Keyboard Input
+#else
+        {
         MoveDirection = new Vector3(Input.GetAxis("HorizontalMove"), 0, Input.GetAxis("VerticalMove"));
         AimDirection = new Vector3(Input.GetAxis("HorizontalAim"), 0, Input.GetAxis("VerticalAim"));
 
@@ -108,5 +171,8 @@ public class InputManager : MonoBehaviour
         //interact
         if (Input.GetButtonDown("Interact") && OnInteract != null)
             OnInteract.Invoke();
+    }
+    
+#endif
     }
 }

@@ -17,7 +17,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private Transform attachPoint; // attach point for unequipped weapon
 
     private WeaponModelSwap modelSwap; // on the animator object, used for animation events during weapon swap
-    private TouchInputManager input;
+    private InputManager input;
     private Weapon equippedWeapon;
 
     private void Awake()
