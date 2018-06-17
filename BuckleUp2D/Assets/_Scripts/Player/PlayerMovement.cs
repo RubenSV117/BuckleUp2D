@@ -29,9 +29,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AimIK aimIk;
     [SerializeField] private SecondHandOnGun secondHandGun;
 
+    [SerializeField] private Transform meshTransform;
+
     private InputManager input;
     private Rigidbody rigidB;
-    private Transform mTransform;
+   
     private float horizontalTurnValue; // value used for spin lerping
     public bool isSprinting;
     public bool isRolling { get; private set; }
@@ -42,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rigidB = GetComponent<Rigidbody>();
-        mTransform = transform;
 
         input = GameManager.Instance.Input;
 
@@ -68,10 +69,10 @@ public class PlayerMovement : MonoBehaviour
     public void HorizontalTurn()
     {
         if (input.AimDirection.magnitude != 0)
-            mTransform.forward = input.AimDirection;
+            meshTransform.forward = input.AimDirection;
 
         else if (input.MoveDirection.magnitude != 0)
-            mTransform.forward = input.MoveDirection;
+            meshTransform.forward = input.MoveDirection;
     }
 
     public void SetSprint(bool isSprinting)

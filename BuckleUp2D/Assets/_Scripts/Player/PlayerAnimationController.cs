@@ -35,6 +35,10 @@ public class PlayerAnimationController : MonoBehaviour
     {
         // movement
         anim.SetBool("moving", input.MoveDirection.magnitude != 0);
+
+        // attacking
+        anim.SetBool("attacking", input.AimDirection.magnitude != 0);
+        TurnToDirectionOfAttack(input.MoveDirection, input.AimDirection);
     }
 
     public void SetMovementDirection()
@@ -45,11 +49,6 @@ public class PlayerAnimationController : MonoBehaviour
             anim.SetFloat("horizontalMove", input.MoveDirection.x);
             anim.SetFloat("verticalMove", input.MoveDirection.z);
         }
-       
-
-        // aim direction
-        anim.SetFloat("horizontalAim", input.AimDirection.x);
-        anim.SetFloat("verticalAim", input.AimDirection.z);
     }
 
     private void SetSprint(bool isSprinting)
@@ -71,5 +70,51 @@ public class PlayerAnimationController : MonoBehaviour
     public void Aim(bool isAiming)
     {
         anim.SetBool("aiming", isAiming);
+    }
+
+    public void TurnToDirectionOfAttack(Vector3 moveDirection, Vector3 aimDirection)
+    {
+        //not aiming
+        if (aimDirection.magnitude == 0)
+            return;
+
+        else
+        {
+            anim.SetBool("attacking", true);
+
+            // aiming without moving
+            if (moveDirection.magnitude == 0)
+            {
+                anim.SetFloat("horizontalAim", 0);
+                anim.SetFloat("verticalAim", 0);
+            }
+
+            // moving and aiming
+            else
+            {
+                // aiming in the direction of movement
+                if (Vector3.Dot(moveDirection, aimDirection) >= .5f)
+                    SetAnimAim(0, 1);
+
+                // aiming in opposite direction of movement
+                else if (Vector3.Dot(moveDirection, aimDirection) <= -.5f)
+                    SetAnimAim(0, -1);
+
+                // aiming while strafing right
+                else if (Vector3.Dot(transform.right, moveDirection) >= .5f)
+                    SetAnimAim(1, 0);
+
+                // aiming while strafing left
+                else if (Vector3.Dot(transform.right, moveDirection) <= -.5f)
+                    SetAnimAim(-1, 0);
+            }
+        }
+    }
+
+    public void SetAnimAim(float x, float y)
+    {
+        print("ree");
+        anim.SetFloat("horizontalAim", x);
+        anim.SetFloat("verticalAim", y);
     }
 }
