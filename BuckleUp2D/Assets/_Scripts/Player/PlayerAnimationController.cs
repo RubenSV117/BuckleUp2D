@@ -113,7 +113,6 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void SetAnimAim(float x, float y)
     {
-        print("ree");
         anim.SetFloat("horizontalAim", x);
         anim.SetFloat("verticalAim", y);
     }

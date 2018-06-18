@@ -54,9 +54,6 @@ public class InputManager : MonoBehaviour
         // Touch Input
 #if UNITY_ANDROID || UNITY_IOS
         {
-
-
-
             // Manage current touches
             foreach (Touch touch in Input.touches)
             {
@@ -86,10 +83,11 @@ public class InputManager : MonoBehaviour
                 else if (touch.phase == TouchPhase.Began && Camera.main.ScreenToViewportPoint(touch.position).x > .5f)
                 {
                     initialShootTouchPosition = touch.position;
+                    OnAttack.Invoke();
                 }
 
                 // aim touch dragged passed threshold
-                if (touch.phase == TouchPhase.Moved && Camera.main.ScreenToViewportPoint(touch.position).x > .5f)
+                if ((touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved) && Camera.main.ScreenToViewportPoint(touch.position).x > .5f)
                 {
                     Vector2 delta = touch.position - initialShootTouchPosition;
 
