@@ -62,17 +62,17 @@ public class PlayerMovement : MonoBehaviour
             //moveDirection += input.MoveDirection.x * mTransform.right; // add strafing only if not sprinting
 
             Vector3 moveVelocity = input.MoveDirection * (isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed); // apply speed boost if sprinting
-            rigidB.velocity = new Vector2(moveVelocity.x, moveVelocity.z);
+            rigidB.velocity = new Vector2(moveVelocity.x, moveVelocity.y);
         }
     }
 
     public void HorizontalTurn()
     {
         if (input.AimDirection.magnitude != 0)
-            meshTransform.forward = input.AimDirection;
+            meshTransform.forward = new Vector3(input.AimDirection.x, 0, input.AimDirection.y);
 
         else if (input.MoveDirection.magnitude != 0)
-            meshTransform.forward = input.MoveDirection;
+            meshTransform.forward = new Vector3(input.MoveDirection.x, 0, input.MoveDirection.y);
     }
 
     public void SetSprint(bool isSprinting)

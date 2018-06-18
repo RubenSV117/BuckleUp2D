@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Manages controller Input
+/// Manages controller and touch Input
 /// 
 /// Ruben Sanchez
 /// 5/16/18
@@ -70,7 +70,7 @@ public class InputManager : MonoBehaviour
                     Vector2 delta = touch.position - initialMoveTouchPosition;
 
                     MoveDirection = delta.magnitude > minDeltaThreshold
-                        ? Vector3.Normalize(new Vector3(delta.x, 0, delta.y))
+                        ? Vector3.Normalize(new Vector3(delta.x, delta.y, 0))
                         : Vector3.zero;
                 }
 
@@ -92,7 +92,7 @@ public class InputManager : MonoBehaviour
                     Vector2 delta = touch.position - initialShootTouchPosition;
 
                     AimDirection = delta.magnitude > minDeltaThreshold
-                        ? Vector3.Normalize(new Vector3(delta.x, 0, delta.y))
+                        ? Vector3.Normalize(new Vector3(delta.x, delta.y, 0))
                         : Vector3.zero;
 
                     OnAttack.Invoke();

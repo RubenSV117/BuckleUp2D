@@ -47,7 +47,7 @@ public class PlayerAnimationController : MonoBehaviour
         if (!playerMove.isRolling)
         {
             anim.SetFloat("horizontalMove", input.MoveDirection.x);
-            anim.SetFloat("verticalMove", input.MoveDirection.z);
+            anim.SetFloat("verticalMove", input.MoveDirection.y);
         }
     }
 
