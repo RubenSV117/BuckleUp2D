@@ -47,7 +47,7 @@ public class InputManager : MonoBehaviour
 
     private Vector2 initialMoveTouchPosition;
     private Vector2 initialShootTouchPosition;
-    private float minDeltaThreshold = .75f;
+    private float minDeltaThreshold = .3f;
 
     void Update()
     {

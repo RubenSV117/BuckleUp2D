@@ -34,11 +34,11 @@ public class PlayerAnimationController : MonoBehaviour
     public void SetMoving()
     {
         // movement
-        anim.SetBool("moving", input.MoveDirection.magnitude != 0);
+        anim.SetBool("Run", input.MoveDirection.magnitude != 0);
 
-        // attacking
-        anim.SetBool("attacking", input.AimDirection.magnitude != 0);
-        TurnToDirectionOfAttack(input.MoveDirection, input.AimDirection);
+        //// attacking
+        //anim.SetBool("attacking", input.AimDirection.magnitude != 0);
+        //TurnToDirectionOfAttack(input.MoveDirection, input.AimDirection);
     }
 
     public void SetMovementDirection()

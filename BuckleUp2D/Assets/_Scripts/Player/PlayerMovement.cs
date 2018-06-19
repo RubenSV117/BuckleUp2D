@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AimIK aimIk;
     [SerializeField] private SecondHandOnGun secondHandGun;
 
-    [SerializeField] private Transform meshTransform;
+    [SerializeField] private Transform mTransform;
 
     private InputManager input;
     private Rigidbody rigidB;
@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isSprinting;
     public bool isRolling { get; private set; }
     private bool canControlMove = true;
+    private Vector3 originalScale;
 
     private Coroutine rollCoroutine;
 
@@ -51,6 +52,9 @@ public class PlayerMovement : MonoBehaviour
         input.OnSprintChange += SetSprint;
         input.OnRoll += Roll;
         input.OnAttack += CancelSprint;
+
+        mTransform = transform;
+        originalScale = mTransform.localScale;
     }
 
     public void Move()
@@ -69,10 +73,11 @@ public class PlayerMovement : MonoBehaviour
     public void HorizontalTurn()
     {
         if (input.AimDirection.magnitude != 0)
-            meshTransform.forward = new Vector3(input.AimDirection.x, 0, input.AimDirection.y);
+            mTransform.localScale = new Vector3(input.AimDirection.x > 0 ? originalScale.x : -originalScale.x, originalScale.y, originalScale.z); 
+
 
         else if (input.MoveDirection.magnitude != 0)
-            meshTransform.forward = new Vector3(input.MoveDirection.x, 0, input.MoveDirection.y);
+            mTransform.localScale = new Vector3(input.MoveDirection.x > 0 ? originalScale.x : -originalScale.x, originalScale.y, originalScale.z);
     }
 
     public void SetSprint(bool isSprinting)

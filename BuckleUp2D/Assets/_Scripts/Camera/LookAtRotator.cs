@@ -7,9 +7,14 @@
 /// 6/17/18
 /// </summary>
 
-public class LookAtRotator : MonoBehaviour 
+public class LookAtRotator : MonoBehaviour
 {
+    [SerializeField] private float damping;
+    [SerializeField] private float lookAhead = 3f;
+    [SerializeField] private Transform transformToMove;
     private InputManager input;
+    private Vector3 currentPosition;
+
 
     private void Awake()
     {
@@ -18,10 +23,12 @@ public class LookAtRotator : MonoBehaviour
 
 	void Update ()
 	{
-        if(input.AimDirection.magnitude != 0)
-            transform.right = input.AimDirection;
+	    print(input.MoveDirection);
 
-        else if (input.MoveDirection.magnitude != 0)
-            transform.right = input.MoveDirection;
+        if (input.AimDirection.magnitude != 0 || input.MoveDirection.magnitude != 0)
+	    {
+            currentPosition = Vector3.Lerp(currentPosition, transform.position + (input.AimDirection.magnitude != 0 ? input.AimDirection : input.MoveDirection * 1.4f) * lookAhead, Time.deltaTime / damping);
+	        transformToMove.position = currentPosition;
+        }
     }
 }
