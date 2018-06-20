@@ -10,8 +10,12 @@
 public class LookAtRotator : MonoBehaviour
 {
     [SerializeField] private float damping;
+
+    [Tooltip("Offset from the parent transform")]
     [SerializeField] private float lookAhead = 3f;
+
     [SerializeField] private Transform transformToMove;
+
     private InputManager input;
     private Vector3 currentPosition;
 
@@ -21,9 +25,8 @@ public class LookAtRotator : MonoBehaviour
         input = GameManager.Instance.Input;
     }
 
-	void Update ()
+    void Update ()
 	{
-	    print(input.MoveDirection);
 
         if (input.AimDirection.magnitude != 0 || input.MoveDirection.magnitude != 0)
 	    {

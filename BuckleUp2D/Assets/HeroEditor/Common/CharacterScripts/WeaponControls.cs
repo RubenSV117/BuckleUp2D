@@ -17,6 +17,7 @@ namespace Assets.HeroEditor.Common.CharacterScripts
 
         private bool _locked;
         private InputManager input;
+        private float aimDistance = 50f;
 
         private void Awake()
         {
@@ -86,7 +87,7 @@ namespace Assets.HeroEditor.Common.CharacterScripts
                     return;
             }
 
-            RotateArm(arm, weapon, -180, 180);
+            RotateArm(arm, weapon, -90, 90);
         }
 
         /// <summary>
@@ -97,10 +98,10 @@ namespace Assets.HeroEditor.Common.CharacterScripts
             Vector2 target = transform.right * transform.localScale.x;
 
             if(GameManager.Instance.Input.AimDirection.magnitude != 0)
-                target =  GameManager.Instance.Input.AimDirection;
+                target = transform.position + GameManager.Instance.Input.AimDirection * aimDistance;
 
             else if (GameManager.Instance.Input.MoveDirection.magnitude != 0)
-                target = GameManager.Instance.Input.MoveDirection;
+                target = transform.position + GameManager.Instance.Input.MoveDirection * aimDistance;
 
             target *= transform.localScale;
 

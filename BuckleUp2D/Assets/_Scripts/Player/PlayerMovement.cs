@@ -13,6 +13,7 @@ using UnityEngine.Events;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveSpeedWhileFiring;
     [SerializeField] private float sprintSpeedMultiplier;
 
     [Tooltip("Added Speed")]
@@ -32,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform mTransform;
 
     private InputManager input;
-    private Rigidbody rigidB;
+    private Rigidbody2D rigidB;
    
     private float horizontalTurnValue; // value used for spin lerping
     public bool isSprinting;
@@ -44,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        rigidB = GetComponent<Rigidbody>();
+        rigidB = GetComponent<Rigidbody2D>();
 
         input = GameManager.Instance.Input;
 
@@ -61,11 +62,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canControlMove) // control deactivated during roll
         {
-            //Vector3 moveDirection = input.MoveDirection.z * mTransform.forward; // move front/back relative to player based on Input
-
-            //moveDirection += input.MoveDirection.x * mTransform.right; // add strafing only if not sprinting
-
-            Vector3 moveVelocity = input.MoveDirection * (isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed); // apply speed boost if sprinting
+            float currentSpeed = input.AimDirection.magnitude == 0 ? moveSpeed : moveSpeedWhileFiring; // set speed according to firing state
+            Vector3 moveVelocity = input.MoveDirection * (isSprinting ? currentSpeed * sprintSpeedMultiplier : currentSpeed); // apply speed boost if sprinting
             rigidB.velocity = new Vector2(moveVelocity.x, moveVelocity.y);
         }
     }
@@ -107,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
         isRolling = true;
         OnRollBegin.Invoke();
         canControlMove = false; // deactivate control
-        rigidB.velocity += Vector3.Normalize(rigidB.velocity) * rollSpeedBoost; // apply speed boost in direction of roll
+        rigidB.velocity += (Vector2)Vector3.Normalize(rigidB.velocity) * rollSpeedBoost; // apply speed boost in direction of roll
 
         yield return new WaitForSeconds(rollLength);
 
