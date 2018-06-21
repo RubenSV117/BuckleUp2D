@@ -14,10 +14,11 @@ namespace Assets.HeroEditor.Common.CharacterScripts
         public Transform ArmR;
         public KeyCode ReloadButton;
 	    public bool FixHorizontal;
+        public Transform AlignedArm;
 
         private bool _locked;
         private InputManager input;
-        private float aimDistance = 50f;
+
 
         private void Awake()
         {
@@ -87,50 +88,21 @@ namespace Assets.HeroEditor.Common.CharacterScripts
                     return;
             }
 
-            RotateArm(arm, weapon, -90, 90);
+            RotateArm();
         }
 
         /// <summary>
         /// Selected arm to position (world space) rotation, with limits.
         /// </summary>
-        public void RotateArm(Transform arm, Transform weapon, float angleMin, float angleMax) // TODO: Very hard to understand logic
+        public void RotateArm()
         {
-            Vector2 target = transform.right * transform.localScale.x;
 
-            if(GameManager.Instance.Input.AimDirection.magnitude != 0)
-                target = transform.position + GameManager.Instance.Input.AimDirection * aimDistance;
+            if(input.AimDirection.magnitude != 0)
+                AlignedArm.right = input.AimDirection * transform.localScale.x;
 
-            else if (GameManager.Instance.Input.MoveDirection.magnitude != 0)
-                target = transform.position + GameManager.Instance.Input.MoveDirection * aimDistance;
+            else if(input.MoveDirection.magnitude != 0)
+                AlignedArm.right = input.MoveDirection * transform.localScale.x;
 
-            target *= transform.localScale;
-
-            var angleToTarget = Vector2.SignedAngle(Vector2.right, target);
-            var angleToFirearm = Vector2.SignedAngle(weapon.right, arm.transform.right) * Math.Sign(weapon.lossyScale.x);
-            var angleFix = Mathf.Asin(weapon.InverseTransformPoint(arm.transform.position).y / target.magnitude) * Mathf.Rad2Deg;
-            var angle = angleToTarget + angleToFirearm + angleFix;
-
-            angleMin += angleToFirearm;
-            angleMax += angleToFirearm;
-
-            var z = arm.transform.localEulerAngles.z;
-
-            if (z > 180) z -= 360;
-
-            if (z + angle > angleMax)
-            {
-                angle = angleMax;
-            }
-            else if (z + angle < angleMin)
-            {
-                angle = angleMin;
-            }
-            else
-            {
-                angle += z;
-            }
-
-            arm.transform.localEulerAngles = new Vector3(0, 0, angle);
         }
     }
 }

@@ -17,12 +17,12 @@ namespace Assets.HeroEditor.Common.CharacterScripts
             Destroy(gameObject, 5);
         }
 
-        public void OnTriggerEnter(Collider other)
+        public void OnTriggerEnter2D(Collider2D other)
         {
             Bang(other.gameObject);
         }
 
-        public void OnCollisionEnter(Collision other)
+        public void OnCollisionEnter2D(Collision2D other)
         {
             Bang(other.gameObject);
         }
@@ -32,7 +32,7 @@ namespace Assets.HeroEditor.Common.CharacterScripts
             ReplaceImpactSound(other);
             Impact.SetActive(true);
             Destroy(GetComponent<SpriteRenderer>());
-            Destroy(GetComponent<Rigidbody>());
+            Destroy(GetComponent<Rigidbody2D>());
             Destroy(GetComponent<Collider>());
             Destroy(gameObject, 1);
 

@@ -3410,6 +3410,7 @@ MonoBehaviour:
   ArmR: {fileID: 4530056366575010}
   ReloadButton: 114
   FixHorizontal: 0
+  AlignedArm: {fileID: 0}
 --- !u!114 &114317397656896664
 MonoBehaviour:
   m_ObjectHideFlags: 1

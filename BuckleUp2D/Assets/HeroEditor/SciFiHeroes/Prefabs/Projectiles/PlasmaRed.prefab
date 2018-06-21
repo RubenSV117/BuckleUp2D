@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4715462159102526}
   - component: {fileID: 198968380826532764}
   - component: {fileID: 199927322026490300}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4216397350179576}
   - component: {fileID: 96759425717465544}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4857565276656612}
   - component: {fileID: 198241973399819348}
   - component: {fileID: 199428197595473564}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4136537345766904}
   - component: {fileID: 82141928862889960}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Impact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 212345446127342588}
   - component: {fileID: 135233695494537526}
   - component: {fileID: 54549259837912152}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlasmaRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}

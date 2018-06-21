@@ -15,8 +15,8 @@ public class InputManager : MonoBehaviour
 
     public bool IsAiming;
 
-    [HideInInspector] public Vector3 MoveDirection;
-    [HideInInspector] public Vector3 AimDirection;
+    [HideInInspector] public Vector2 MoveDirection;
+    [HideInInspector] public Vector2 AimDirection;
 
     public delegate void Attack();
     public event Attack OnAttack;
@@ -70,7 +70,7 @@ public class InputManager : MonoBehaviour
                     Vector2 delta = touch.position - initialMoveTouchPosition;
 
                     MoveDirection = delta.magnitude > minDeltaThreshold
-                        ? Vector3.Normalize(new Vector3(delta.x, delta.y, 0))
+                        ? Vector3.Normalize(delta)
                         : Vector3.zero;
                 }
 
@@ -92,7 +92,7 @@ public class InputManager : MonoBehaviour
                     Vector2 delta = touch.position - initialShootTouchPosition;
 
                     AimDirection = delta.magnitude > minDeltaThreshold
-                        ? Vector3.Normalize(new Vector3(delta.x, delta.y, 0))
+                        ? Vector3.Normalize(delta)
                         : Vector3.zero;
 
                     OnAttack.Invoke();

@@ -17,7 +17,7 @@ public class LookAtRotator : MonoBehaviour
     [SerializeField] private Transform transformToMove;
 
     private InputManager input;
-    private Vector3 currentPosition;
+    private Vector2 currentPosition;
 
 
     private void Awake()
@@ -30,7 +30,7 @@ public class LookAtRotator : MonoBehaviour
 
         if (input.AimDirection.magnitude != 0 || input.MoveDirection.magnitude != 0)
 	    {
-            currentPosition = Vector3.Lerp(currentPosition, transform.position + (input.AimDirection.magnitude != 0 ? input.AimDirection : input.MoveDirection * 1.4f) * lookAhead, Time.deltaTime / damping);
+            currentPosition = Vector3.Lerp(currentPosition, (Vector2)transform.position + (input.AimDirection.magnitude != 0 ? input.AimDirection : input.MoveDirection * 1.4f) * lookAhead, Time.deltaTime / damping);
 	        transformToMove.position = currentPosition;
         }
     }
