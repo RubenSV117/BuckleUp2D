@@ -47,6 +47,7 @@ public class InputManager : MonoBehaviour
 
     private Vector2 initialMoveTouchPosition;
     private Vector2 initialShootTouchPosition;
+
     private float minDeltaThreshold = .3f;
 
     void Update()
@@ -77,7 +78,6 @@ public class InputManager : MonoBehaviour
                 // release of move touch
                 else if (touch.phase == TouchPhase.Ended && Camera.main.ScreenToViewportPoint(touch.position).x < .5f)
                     MoveDirection = Vector3.zero;
-
 
                 // initial right side touch for aiming
                 else if (touch.phase == TouchPhase.Began && Camera.main.ScreenToViewportPoint(touch.position).x > .5f)

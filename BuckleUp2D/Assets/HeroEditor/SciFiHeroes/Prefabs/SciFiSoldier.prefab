@@ -3953,7 +3953,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da2382af43c8914392b1d38bb454337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damping: 0
+  dampingWhileMoving: 0
+  dampingWhileStationary: 0
   lookAhead: 3
   transformToMove: {fileID: 0}
 --- !u!114 &114949025596057800
